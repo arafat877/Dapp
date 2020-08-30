@@ -42,7 +42,7 @@ const ConnectWallet = () => {
 
   return (
     <div>
-      <p>Log In to Thirm Wallet with</p>
+      <h1>Log In to Thirm Wallet with</h1>
       {Object.keys(connectorsByName).map(name => {
         const currentConnector = connectorsByName[name];
         const activating = currentConnector === activatingConnector;
