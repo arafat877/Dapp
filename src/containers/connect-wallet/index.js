@@ -1,8 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
+import { Button } from 'antd';
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useEagerConnect, useInactiveListener } from "../../hooks";
 import { injected } from "../../hooks/connectors";
+
 const connectorsByName = {
   Injected: injected,
 };
@@ -15,6 +17,7 @@ const ConnectWallet = () => {
     error,
   } = context;
 
+  // state for connectot activation
   const [activatingConnector, setActivatingConnector] = React.useState();
   React.useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
@@ -30,15 +33,16 @@ const ConnectWallet = () => {
 
   const history = useHistory();
 
+  // Activate the current connector
   const activateWallet = (currentConnector, name) => {
     setActivatingConnector(currentConnector);
     activate(connectorsByName[name]);
-    history.push("/wallet");
+    history.push("/overview");
   }
 
   return (
     <div>
-      <p>Log In to Thirm</p>
+      <p>Log In to Thirm Wallet with</p>
       {Object.keys(connectorsByName).map(name => {
         const currentConnector = connectorsByName[name];
         const activating = currentConnector === activatingConnector;
@@ -46,7 +50,8 @@ const ConnectWallet = () => {
         const disabled =
           !triedEager || !!activatingConnector || connected || !!error;
         return (
-          <button className="wallet-connect-button"
+          <Button
+            type="primary"
             disabled={disabled}
             key={name}
             onClick={() => {
@@ -58,9 +63,9 @@ const ConnectWallet = () => {
             {connected ? (
               <span role="img" aria-label="check">
                 ✅ Connected
-              </span>) : (<span>Connect Wallet</span>
+              </span>) : (<span>Connect with Metamask</span>
               )}
-          </button>
+          </Button>
         );
       })}
     </div>

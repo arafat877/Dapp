@@ -2,6 +2,14 @@ import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { injected } from "./connectors";
 
+/*
+  ****************************************************************
+  * The functions are imported from
+  * https://codesandbox.io/s/8rg3h?file=/src/hooks.js
+  * Used to build the hook for injected method connection
+  ****************************************************************
+*/
+
 export function useEagerConnect() {
   const { activate, active } = useWeb3React();
 
@@ -25,7 +33,6 @@ export function useEagerConnect() {
       setTried(true);
     }
   }, [tried, active]);
-
   return tried;
 }
 

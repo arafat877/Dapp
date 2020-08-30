@@ -1,7 +1,7 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
+import { Layout } from 'antd';
 import React from 'react';
-import { Col, Grid, Row } from 'react-flexbox-grid';
 import {
   BrowserRouter as Router,
   Route, Switch
@@ -9,9 +9,12 @@ import {
 import './App.css';
 import SideBar from './components/sidebar';
 import ConnectWallet from './containers/connect-wallet';
+import OverView from './containers/overview';
 import Wallet from './containers/wallet';
-import { useEagerConnect, useInactiveListener } from './hooks';
 
+const { Content } = Layout;
+
+// Use web3 library inside react-web3
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
   library.pollingInterval = 8000;
@@ -20,37 +23,23 @@ function getLibrary(provider) {
 
 function App() {
   return (
-    <Web3ReactProvider getLibrary={getLibrary}
-    >
-      <Web3Init>
-        <Router>
+    <Router>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <Layout>
           <SideBar />
-          <div className="content-wrapper">
-            <Grid fluid>
-              <Row>
-                <Col xs={10} md={9}>
-                  <Switch>
-                    <Route exact path="/" component={ConnectWallet} />
-                    <Route path="/wallet" component={Wallet} />
-                  </Switch>
-                </Col>
-              </Row>
-            </Grid>
-          </div>
-        </Router>
-      </Web3Init>
-    </Web3ReactProvider>
+          <Layout className="content-wrapper">
+            <Content>
+              <Switch>
+                <Route exact path="/" component={ConnectWallet} />
+                <Route exact path="/overview" component={OverView} />
+                <Route path="/history" component={Wallet} />
+              </Switch>
+            </Content>
+          </Layout>
+        </Layout>
+      </Web3ReactProvider>
+    </Router>
   );
-}
-
-function Web3Init(props) {
-
-
-
-  const triedEager = useEagerConnect();
-  useInactiveListener(!triedEager);
-
-  return (props.children);
 }
 
 export default App;

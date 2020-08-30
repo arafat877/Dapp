@@ -1,5 +1,6 @@
 .content-wrapper {
-  margin-left: 300px;
+  margin-left: 250px;
+  padding: 36px;
 }
 
 .wallet-connect-button {
@@ -7,4 +8,3 @@
  border: 1px solid #e3e3e3;
  background-color: #e3e3e3;
 }
-
