@@ -1,13 +1,14 @@
 import { useWeb3React } from "@web3-react/core";
-import { Button } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useEagerConnect, useInactiveListener } from "../../hooks";
 import { injected } from "../../hooks/connectors";
-
+import { AvatarIcon, ConnectorButton, ConnectWalletBox, ConnectWalletWrapper, LoginInfo } from './style';
 const connectorsByName = {
   Injected: injected,
 };
+
 
 const ConnectWallet = () => {
   const context = useWeb3React();
@@ -40,35 +41,51 @@ const ConnectWallet = () => {
     history.push("/overview");
   }
 
+  const MetaMaskIcon = require("../../assets/images/metamask.png");
+
   return (
-    <div>
-      <h1>Log In to Thirm Wallet with</h1>
-      {Object.keys(connectorsByName).map(name => {
-        const currentConnector = connectorsByName[name];
-        const activating = currentConnector === activatingConnector;
-        const connected = currentConnector === connector;
-        const disabled =
-          !triedEager || !!activatingConnector || connected || !!error;
-        return (
-          <Button
-            type="primary"
-            disabled={disabled}
-            key={name}
-            onClick={() => {
-              activateWallet(currentConnector, name);
-            }}>
-            {activating && (
-              <div>Loading</div>
-            )}
-            {connected ? (
-              <span role="img" aria-label="check">
-                ✅ Connected
-              </span>) : (<span>Connect with Metamask</span>
-              )}
-          </Button>
-        );
-      })}
-    </div>
+    <ConnectWalletWrapper>
+      <ConnectWalletBox>
+        <LoginInfo>Log In to Thirm</LoginInfo>
+        <Row>
+          {Object.keys(connectorsByName).map(name => {
+            const currentConnector = connectorsByName[name];
+            const connected = currentConnector === connector;
+            const disabled =
+              !triedEager || !!activatingConnector || connected || !!error;
+            if (name === "Injected") {
+              return (
+                <Col span={24}>
+                  <ConnectorButton
+                    type="primary"
+                    key={name}
+                    onClick={() => {
+                      activateWallet(currentConnector, name);
+                    }}>
+                    <AvatarIcon src={MetaMaskIcon} />
+                    Connect with Metamask
+                      </ConnectorButton>
+                </Col>
+              );
+            }
+            return (
+              <Col span={{ xs: 24, sm: 12 }}>
+                <ConnectorButton
+                  type="primary"
+                  disabled={disabled}
+                  key={name}
+                  onClick={() => {
+                    activateWallet(currentConnector, name);
+                  }}>
+                  Connect with Metamask
+                  </ConnectorButton>
+              </Col>
+            );
+          })}
+        </Row>
+      </ConnectWalletBox>
+    </ConnectWalletWrapper>
+
   );
 }
 

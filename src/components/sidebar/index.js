@@ -1,9 +1,11 @@
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, EyeOutlined, HistoryOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Dropdown, Menu } from 'antd';
-import React from 'react';
+import { Layout, Menu } from 'antd';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import { AccountAvatar, AccountDropDown, AccountSwitch, Intro, SideBarArea, SideMenu } from './style';
+
+const { Sider } = Layout;
 
 const menu = ({ active, error, deactivate }) => (
   <Menu>
@@ -44,36 +46,54 @@ const SideBar = () => {
     account
   } = context;
 
-  return (<div className="sidebar">
-    <div className="accounts-switch">
-      <Dropdown overlay={menu({ active, error, deactivate })} trigger={['click']}>
-        <Link>
-          <Avatar style={{ marginRight: 8 }}>U</Avatar>
-          {`${account && account.substr(0, 20)}...`}
-          <DownOutlined />
-        </Link>
-      </Dropdown>
-    </div>
-    <div className="intro">
-      <h3>Welcome to Thirm</h3>
-      <p>Connect an Ethereum wallet to manage your DeFi portfolio</p>
-    </div>
-    <Menu
-      style={{ width: 233, backgroundColor: '#f9f9f9' }}
-      mode="vertical"
-    >
-      <Menu.Item
-        key="01"
-      >
-        <Link to="/overview">Overview</Link>
-      </Menu.Item>
-      <Menu.Item
-        key="02"
-      >
-        <Link to="/history">History</Link>
-      </Menu.Item>
-    </Menu>
-  </div>);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const onCollapse = collapsed => {
+    setCollapsed(collapsed);
+  };
+
+  return (
+    <Sider width={260} collapsible={true} breakpoint="sm" collapsedWidth={80} onCollapse={onCollapse} collapsed={collapsed}>
+      <SideBarArea>
+        {
+          account && <AccountSwitch>
+            <AccountDropDown overlay={menu({ active, error, deactivate })} trigger={['click']}>
+              <Link>
+                <AccountAvatar src={`https://robohash.org/${account}?set=set5`} />
+                {!collapsed && <>
+                  <span>
+                    {`${account.substr(0, 20)}...`}
+                  </span>
+                  <DownOutlined />
+                </>}
+              </Link>
+            </AccountDropDown>
+          </AccountSwitch>
+        }
+        {!collapsed && !active && <Intro>
+          <h3>Welcome to Thirm</h3>
+          <p>Connect an Ethereum wallet to manage your DeFi portfolio</p>
+        </Intro>}
+        <SideMenu
+          mode="vertical"
+          inlineCollapsed={collapsed}
+        >
+          <Menu.Item icon={<EyeOutlined />}
+            key="01"
+          >
+            <Link to="/overview">Overview</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="02"
+            icon={<HistoryOutlined />}
+          >
+            <Link to="/history">History</Link>
+          </Menu.Item>
+        </SideMenu>
+      </SideBarArea>
+    </Sider>
+
+  );
 }
 
 export default SideBar;
