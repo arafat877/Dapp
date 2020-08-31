@@ -19,6 +19,7 @@ const menu = ({ active, error, deactivate, history }) => (
         {(active || error) && (
           <Link
             onClick={() => {
+              localStorage.removeItem('wallet');
               deactivate();
               history.push("/");
             }}

@@ -16,7 +16,9 @@ export function useEagerConnect() {
   const [tried, setTried] = useState(false);
 
   useEffect(() => {
-    injected.isAuthorized().then(isAuthorized => {
+    const wallet = localStorage.getItem('wallet');
+
+    wallet && injected.isAuthorized().then(isAuthorized => {
       if (isAuthorized) {
 
         activate(injected, undefined, true).catch(() => {
@@ -26,7 +28,7 @@ export function useEagerConnect() {
         setTried(true);
       }
     });
-  }, [activate]);
+  }, [activate, active]);
 
   useEffect(() => {
     if (!tried && active) {

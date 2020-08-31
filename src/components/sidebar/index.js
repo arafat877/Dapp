@@ -30,11 +30,14 @@ const SideBar = () => {
           mode="vertical"
           inlineCollapsed={collapsed}
         >
-          <Menu.Item icon={<EyeOutlined />}
-            key="01"
-          >
-            <Link to="/overview">Overview</Link>
-          </Menu.Item>
+          {
+            active && <Menu.Item icon={<EyeOutlined />}
+              key="01"
+            >
+              <Link to="/overview">Overview</Link>
+            </Menu.Item>
+          }
+
         </SideMenu>
       </SideBarArea>
     </Sider>

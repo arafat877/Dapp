@@ -32,6 +32,7 @@ function MainContent() {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
     }
+
   }, [activatingConnector, connector]);
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
@@ -39,6 +40,7 @@ function MainContent() {
 
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector);
+
 
   return (
     <Router>
@@ -49,7 +51,7 @@ function MainContent() {
           <ContentWrapper>
             <Switch>
               <Route exact path="/" component={() => <ConnectWallet setActivatingConnector={setActivatingConnector} activate={activate} connectorsByName={connectorsByName} triedEager={triedEager} activatingConnector={activatingConnector} />} />
-              <Route exact path="/overview" component={OverView} />
+              <Route exact path="/overview" component={() => <OverView />} />
             </Switch>
           </ContentWrapper>
         </Layout>
