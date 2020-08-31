@@ -42,6 +42,11 @@ export function useInactiveListener(suppress = false) {
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && ethereum.on && !active && !error && !suppress) {
+      const handleConnect = () => {
+        console.log("Handling 'connect' event")
+        activate(injected)
+      }
+
       const handleChainChanged = chainId => {
         console.log("chainChanged", chainId);
         activate(injected);
@@ -58,13 +63,14 @@ export function useInactiveListener(suppress = false) {
         console.log("networkChanged", networkId);
         activate(injected);
       };
-
+      ethereum.on('connect', handleConnect)
       ethereum.on("chainChanged", handleChainChanged);
       ethereum.on("accountsChanged", handleAccountsChanged);
       ethereum.on("networkChanged", handleNetworkChanged);
 
       return () => {
         if (ethereum.removeListener) {
+          ethereum.removeListener("connect", handleChainChanged);
           ethereum.removeListener("chainChanged", handleChainChanged);
           ethereum.removeListener("accountsChanged", handleAccountsChanged);
           ethereum.removeListener("networkChanged", handleNetworkChanged);
