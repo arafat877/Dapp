@@ -1,4 +1,4 @@
-import { DownOutlined, EyeOutlined, HistoryOutlined } from '@ant-design/icons';
+import { DownOutlined, EyeOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
@@ -83,16 +83,9 @@ const SideBar = () => {
           >
             <Link to="/overview">Overview</Link>
           </Menu.Item>
-          <Menu.Item
-            key="02"
-            icon={<HistoryOutlined />}
-          >
-            <Link to="/history">History</Link>
-          </Menu.Item>
         </SideMenu>
       </SideBarArea>
     </Sider>
-
   );
 }
 

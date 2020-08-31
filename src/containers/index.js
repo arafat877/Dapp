@@ -8,7 +8,6 @@ import SideBar from '../components/sidebar';
 import ConnectWallet from './connect-wallet';
 import { ContentWrapper } from './globalStyle';
 import OverView from './overview';
-import Wallet from './wallet';
 
 function MainContent() {
   return (
@@ -20,7 +19,6 @@ function MainContent() {
             <Switch>
               <Route exact path="/" component={ConnectWallet} />
               <Route exact path="/overview" component={OverView} />
-              <Route path="/history" component={Wallet} />
             </Switch>
           </ContentWrapper>
         </Layout>
