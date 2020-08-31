@@ -59,7 +59,7 @@ const SideBar = () => {
           account && <AccountSwitch>
             <AccountDropDown overlay={menu({ active, error, deactivate })} trigger={['click']}>
               <Link>
-                <AccountAvatar src={`https://robohash.org/${account}?set=set5`} />
+                <AccountAvatar src={`https://robohash.org/${account}?set=set3`} />
                 {!collapsed && <>
                   <span>
                     {`${account.substr(0, 20)}...`}
