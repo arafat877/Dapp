@@ -55,7 +55,7 @@ const HeaderBar = (props) => {
             account && <AccountSwitch>
               <AccountDropDown overlay={menu({ active, error, deactivate, history })} trigger={['click']}>
                 <Link>
-                  <AccountAvatar src={`https://robohash.org/${account}?set=set5`} />
+                  <AccountAvatar src={`https://robohash.org/${account}?set=set3`} />
                   <span>
                     {`${account.substr(0, 20)}...`}
                   </span>
