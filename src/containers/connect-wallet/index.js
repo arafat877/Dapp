@@ -13,7 +13,7 @@ const ConnectWallet = (props) => {
   const activateWallet = (currentConnector, name) => {
     setActivatingConnector(currentConnector);
     activate(connectorsByName[name]);
-    window.localStorage.setItem('wallet', connectorsByName[name]);
+    window.localStorage.setItem('wallet', name);
   }
 
   return (

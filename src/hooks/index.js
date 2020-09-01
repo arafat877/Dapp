@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import { injected } from "./connectors";
+import { injected, walletlink } from "./connectors";
 
 /*
   ****************************************************************
@@ -18,16 +18,23 @@ export function useEagerConnect() {
   useEffect(() => {
     const wallet = localStorage.getItem('wallet');
 
-    wallet && injected.isAuthorized().then(isAuthorized => {
-      if (isAuthorized) {
-
-        activate(injected, undefined, true).catch(() => {
+    if (wallet === 'Injected') {
+      injected.isAuthorized().then(isAuthorized => {
+        if (isAuthorized) {
+          activate(injected, undefined, true).catch(() => {
+            setTried(true);
+          });
+        } else {
           setTried(true);
-        });
-      } else {
+        }
+      });
+    } else if (wallet === 'walletlink') {
+      console.log(walletlink);
+      activate(walletlink, undefined, true).catch(() => {
         setTried(true);
-      }
-    });
+      });
+    }
+
   }, [activate, active]);
 
   useEffect(() => {
