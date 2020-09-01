@@ -1,8 +1,16 @@
-import { Layout } from 'antd';
+import { Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
-const ContentWrapper = styled(Layout.Content)`
+export const ContentWrapper = styled(Layout.Content)`
   padding: 36px;
 `;
 
-export { ContentWrapper };
+export const StyledSider = styled(Layout.Sider)`
+  background-color: #fafafa;
+`;
+
+export const StyledDrawer = styled(Drawer)`
+  background-color: #fafafa;
+`;
+
+

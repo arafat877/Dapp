@@ -1,30 +1,10 @@
-import { Avatar, Dropdown, Layout, Menu } from 'antd';
+import { Avatar, Button, Layout, Menu } from 'antd';
 import styled from 'styled-components';
 
 const { Header } = Layout;
 
 export const HeaderBarArea = styled(Header)`
   background-color: #fbfbfb;
-`;
-
-export const SideBarArea = styled.div`
-  background-color: #fbfbfb;
-  height: 100%;
-  display: flex;
-  position: sticky;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  flex-direction: column;
-`;
-
-export const Intro = styled.div`
-  text-align: center;
-  padding: 8px 16px;
-`;
-
-export const AccountSwitch = styled.div`
-  display: grid;
 `;
 
 export const SideMenu = styled(Menu)`
@@ -35,12 +15,49 @@ export const SideMenu = styled(Menu)`
   border-top: 1px solid #e3e3e3;
 `;
 
-export const AccountAvatar = styled(Avatar)`
-  margin-right: 8px;
-  margin-left: 8px;
+export const ConnectorButton = styled(Button)`
+  width: 100%;
+  height: 80px;
+  margin: 8px 4px;
+  padding: 10px;
+  &:focus, &:hover, &:active &:focus-within {
+    outline: none;
+    border: 1px solid #f9f9f9;
+    background-color: #f9f9f9;
+  }
 `;
 
-export const AccountDropDown = styled(Dropdown)`
-  padding: 4px 0;
-  margin: 0;
+export const AvatarIcon = styled(Avatar)`
+  padding: 6px;
+  margin: 4px;
 `;
+
+export const ConnectButton = styled(Button)`
+  width: 180px;
+  margin: 4px;
+  height: 45px;
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+  &:focus, &:hover, &:active &:focus-within {
+    outline: none;
+    border: 1px solid #e3e3e3;
+  }
+`;
+
+export const PopverWrapper = styled.div`
+ width: 250px;
+`;
+
+export const DisconnectButton = styled(Button)`
+  margin: 16px 0 8px 0;
+  height: 45px;
+  padding: 10px 16px;
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+  width: 100%;
+  &:focus, &:hover, &:active &:focus-within {
+    outline: none;
+    border: 1px solid #e3e3e3;
+  }
+`;
+

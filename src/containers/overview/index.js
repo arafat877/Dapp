@@ -1,10 +1,7 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
-import { Grid, Row } from 'react-flexbox-grid';
-import { injected } from '../../hooks/connectors';
-import { walletlink } from './../../hooks/connectors';
 
 const OverView = (props) => {
 
@@ -13,15 +10,9 @@ const OverView = (props) => {
     library,
     chainId,
     account,
-    connector
   } = context;
 
-  let connectionType = "";
-  if (connector === injected) {
-    connectionType = "Meta Mask";
-  } else if (connector === walletlink) {
-    connectionType = "Wallet Link";
-  }
+
 
   // State to set the ether balance
   const [ethBalance, setEthBalance] = React.useState();
@@ -53,10 +44,9 @@ const OverView = (props) => {
   }, [library, account, chainId]);
 
 
-  return (<Grid fluid>
+  return (
     <Row>
-      <Col>
-        <h4>Connected to {connectionType}</h4>
+      <Col xs={24}>
         <p>
           {ethBalance === undefined
             ? "..."
@@ -66,7 +56,7 @@ const OverView = (props) => {
         </p>
       </Col>
     </Row>
-  </Grid>);
+  );
 }
 
 export default OverView;
