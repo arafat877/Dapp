@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { AvatarIcon, ConnectButton, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
+import { AvatarIcon, ConnectButton, ConnectedAvatar, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -98,7 +98,7 @@ const HeaderBar = (props) => {
 
   return (
     <Row fluid justify="space-between" align="middle">
-      <Col span={{ xs: 6 }}>
+      <Col span={{ xs: 12 }}>
         <ThirmLogo>
           {collapsed && <MenuOutlined onClick={onDrawerOpen} icon="menu" size="large" />}
           <Link to="/">
@@ -107,7 +107,7 @@ const HeaderBar = (props) => {
           </Link>
         </ThirmLogo>
       </Col>
-      <Col span={{ xs: 6 }}>
+      <Col span={{ xs: 12 }}>
         {
           <Popover trigger="click" placement="bottomRight" content={() => account ? <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} /> : <InActivePopoverContent connectorsByName={connectorsByName} activateWallet={activateWallet} />}>
             <ConnectButton
@@ -115,16 +115,16 @@ const HeaderBar = (props) => {
               {
                 active ? <Row justify="space-between" align="middle">
                   <Col>
-                    <Avatar src={`https://robohash.org/${account}?set=set3`} />
+                    <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
                   </Col>
                   <Col>
-                    <span>
-                      {`${account && account.substr(0, 10)}...`}
+                    {!collapsed && account && <span>
+                      {`${account.substr(0, 10)}...`}
                       <DownOutlined />
-                    </span>
+                    </span>}
                   </Col>
                 </Row> : <Row justify="space-around" align="middle">
-                    <Col><ThunderboltOutlined /> Connect</Col></Row>
+                    <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
               }
             </ConnectButton>
           </Popover>

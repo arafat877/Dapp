@@ -4,17 +4,17 @@ import styled from 'styled-components';
 const { Header } = Layout;
 
 export const ThirmLogo = styled.div`
-  margin-left: 8px;
+  margin-left: 4px;
   display: flex;
   flex-direction: row;
   justify-content: middle;
   align-items: center;
   .logo {
-    margin-left: 24px;
+    margin-left: 12px;
   }
   .logo-text {
     margin-left: 8px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
   }
 `;
@@ -53,6 +53,9 @@ export const AvatarIcon = styled(Avatar)`
 
 export const ConnectButton = styled(Button)`
   width: 180px;
+  @media only screen and (max-width: 576px) {
+    width: 40px;
+  }
   margin: 4px;
   height: 45px;
   border: 1px solid #e3e3e3;
@@ -79,4 +82,15 @@ export const DisconnectButton = styled(Button)`
     border: 1px solid #e3e3e3;
   }
 `;
+
+export const ConnectedAvatar = styled(Avatar)`
+  height: 32px;
+  width: 32px;
+  @media only screen and (max-width: 576px) {
+    height: 24px;
+    width: 24px;
+    margin-left: -6px;
+  }
+`;
+
 
