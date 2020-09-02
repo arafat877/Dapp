@@ -2,10 +2,10 @@ import { DownOutlined, MenuOutlined, ThunderboltOutlined } from '@ant-design/ico
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Col, Popover, Row } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { AvatarIcon, ConnectButton, ConnectorButton, DisconnectButton, HeaderBarArea, PopverWrapper } from './style';
+import { AvatarIcon, ConnectButton, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -45,14 +45,13 @@ const InActivePopoverContent = ({ connectorsByName, activateWallet }) => (
   </PopverWrapper>
 );
 
-const ActivePopoverContent = ({ account, active, error, deactivate, history, connector }) => (
+const ActivePopoverContent = ({ account, active, error, deactivate, connector }) => (
   <PopverWrapper>
     <Row justify="space-between" align="middle">
-      <Col >
+      <Col>
         {connector === injected ? <Avatar src={MetaMaskIcon} /> : connector === walletlink ? <Avatar src={WalletConnectIcon} /> : null}
       </Col>
       <Col>
-        <Avatar src={`https://robohash.org/${account}?set=set3`} />
         {account && account.substr(0, 15)}...
       </Col>
       <Col xs={24}>
@@ -88,8 +87,6 @@ const HeaderBar = (props) => {
 
   const { onDrawerOpen, collapsed } = props;
 
-  const history = useHistory();
-
   const { connectorsByName, activate, setActivatingConnector } = props;
 
   // Activate the current connector
@@ -100,37 +97,40 @@ const HeaderBar = (props) => {
   }
 
   return (
-    <HeaderBarArea>
-      <Row justify="space-between">
-        <Col span={{ xs: 6 }}>
+    <Row fluid justify="space-between" align="middle">
+      <Col span={{ xs: 6 }}>
+        <ThirmLogo>
           {collapsed && <MenuOutlined onClick={onDrawerOpen} icon="menu" size="large" />}
-        </Col>
-        <Col span={{ xs: 6 }}>
-          {
-            <Popover trigger="click" placement="bottomRight" content={() => account ? <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} history={history} connector={connector} /> : <InActivePopoverContent connectorsByName={connectorsByName} activateWallet={activateWallet} />}>
-              <ConnectButton
-                type="secondary">
-                {
-                  active ? <Row justify="space-between" align="middle">
-                    <Col>
-                      <Avatar src={`https://robohash.org/${account}?set=set3`} />
-                    </Col>
-                    <Col>
-                      <span>
-                        {`${account && account.substr(0, 10)}...`}
-                        <DownOutlined />
-                      </span>
-                    </Col>
-                  </Row> : <Row justify="space-around" align="middle">
-                      <Col><ThunderboltOutlined /> Connect</Col></Row>
-                }
-              </ConnectButton>
-            </Popover>
-          }
-        </Col>
-      </Row>
-
-    </HeaderBarArea >
+          <Link to="/">
+            <Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
+            <span className="logo-text">THIRM WALLET</span>
+          </Link>
+        </ThirmLogo>
+      </Col>
+      <Col span={{ xs: 6 }}>
+        {
+          <Popover trigger="click" placement="bottomRight" content={() => account ? <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} /> : <InActivePopoverContent connectorsByName={connectorsByName} activateWallet={activateWallet} />}>
+            <ConnectButton
+              type="secondary">
+              {
+                active ? <Row justify="space-between" align="middle">
+                  <Col>
+                    <Avatar src={`https://robohash.org/${account}?set=set3`} />
+                  </Col>
+                  <Col>
+                    <span>
+                      {`${account && account.substr(0, 10)}...`}
+                      <DownOutlined />
+                    </span>
+                  </Col>
+                </Row> : <Row justify="space-around" align="middle">
+                    <Col><ThunderboltOutlined /> Connect</Col></Row>
+              }
+            </ConnectButton>
+          </Popover>
+        }
+      </Col>
+    </Row>
   );
 }
 

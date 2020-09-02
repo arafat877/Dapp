@@ -3,8 +3,27 @@ import styled from 'styled-components';
 
 const { Header } = Layout;
 
+export const ThirmLogo = styled.div`
+  margin-left: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: middle;
+  align-items: center;
+  .logo {
+    margin-left: 24px;
+  }
+  .logo-text {
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+`;
+
 export const HeaderBarArea = styled(Header)`
   background-color: #fbfbfb;
+  position: relative;
+  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+  padding: 0 8px;
 `;
 
 export const SideMenu = styled(Menu)`

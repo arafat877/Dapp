@@ -10,7 +10,7 @@ import SideBar from '../components/sidebar';
 import { injected, walletlink } from '../hooks/connectors';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import ConnectWallet from './connect-wallet';
-import { ContentWrapper, StyledDrawer, StyledSider } from './globalStyle';
+import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview';
 
 const connectorsByName = {
@@ -58,9 +58,6 @@ function MainContent() {
   return (
     <Router>
       <Layout style={{ height: '100vh' }}>
-        <StyledSider width={250} breakpoint="sm" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
-          <SideBar collapsed={collapsed} />
-        </StyledSider>
         <StyledDrawer
           title={
             <div className="logo-area">
@@ -73,14 +70,19 @@ function MainContent() {
         >
           <SideBar />
         </StyledDrawer>
-        <Layout>
+        <StyledHeader>
           <HeaderBar onDrawerOpen={onDrawerOpen} collapsed={collapsed} setActivatingConnector={setActivatingConnector} activate={activate} connectorsByName={connectorsByName} triedEager={triedEager} activatingConnector={activatingConnector} />
-          <ContentWrapper>
+        </StyledHeader>
+        <Layout>
+          <StyledSider width={250} breakpoint="sm" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
+            <SideBar collapsed={collapsed} />
+          </StyledSider>
+          <StyledContent>
             <Switch>
               <Route exact path="/" component={() => <ConnectWallet />} />
               <Route exact path="/overview" component={() => <OverView />} />
             </Switch>
-          </ContentWrapper>
+          </StyledContent>
         </Layout>
       </Layout>
     </Router>
