@@ -1,7 +1,38 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Col, Row } from 'antd';
+import { Button, Col, Row, Table } from 'antd';
 import React from 'react';
+import { AssetWrapper, StyledBalance } from './style';
+
+const columns = [
+  {
+    title: 'All Assets',
+    dataIndex: 'assets',
+  },
+  {
+    title: 'Equity',
+    dataIndex: 'equity',
+    align: "right"
+  }
+];
+
+const data = [
+  {
+    key: '1',
+    assets: 'Ether',
+    equity: 32
+  },
+  {
+    key: '2',
+    assets: 'Thirm',
+    equity: 42,
+  },
+  {
+    key: '3',
+    assets: 'T Bitcoin',
+    equity: 32
+  },
+];
 
 const OverView = (props) => {
 
@@ -11,8 +42,6 @@ const OverView = (props) => {
     chainId,
     account,
   } = context;
-
-
 
   // State to set the ether balance
   const [ethBalance, setEthBalance] = React.useState();
@@ -43,17 +72,47 @@ const OverView = (props) => {
     }
   }, [library, account, chainId]);
 
+  const balanceUnit = "ETH";
+
+  let balanceFront = "";
+  let balanceEnd = "";
+  if (ethBalance !== null && ethBalance !== undefined) {
+    const balanceSplit = parseFloat(formatEther(ethBalance)).toPrecision(3).toString().split('.');
+    balanceFront = balanceSplit[0];
+    balanceEnd = balanceSplit[1];
+  }
 
   return (
     <Row>
-      <Col xs={24}>
-        <p>
-          {ethBalance === undefined
-            ? "..."
-            : ethBalance === null
-              ? "Error"
-              : `Ether ${parseFloat(formatEther(ethBalance)).toPrecision(4)}`}
-        </p>
+      <Col flex={2} sm={{ span: 24, offset: 0 }} md={{ span: 16, offset: 4 }}>
+        <Row justify="space-between" align="middle">
+          <Col xs={12}>
+            <StyledBalance>
+              {balanceFront && balanceEnd && <><span className="balance-unit">{balanceUnit}</span>
+                <span className="balance-front">{balanceFront}</span>
+                <span className="balance-end">{`.${balanceEnd}`}</span>
+              </>}
+
+            </StyledBalance>
+          </Col>
+          <Col xs={12}>
+            <Row justify="end">
+              <Button type="primary">Add Funds</Button>
+            </Row>
+          </Col>
+        </Row>
+
+        <Row>
+
+          <Col sm={{ span: 24 }} lg={{ span: 18 }}>
+            <AssetWrapper>
+              <h3>Assets</h3>
+              <Table columns={columns} dataSource={data} size="middle" pagination={false} responsive="xs"
+                showHeader={false}
+                tableLayout="fixed" />
+            </AssetWrapper>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

@@ -100,7 +100,7 @@ const HeaderBar = (props) => {
     <Row fluid justify="space-between" align="middle">
       <Col span={{ xs: 12 }}>
         <ThirmLogo>
-          {collapsed && <MenuOutlined onClick={onDrawerOpen} icon="menu" size="large" />}
+          {collapsed && <MenuOutlined onClick={onDrawerOpen} style={{ fontSize: 18 }} />}
           <Link to="/">
             <Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
             <span className="logo-text">THIRM WALLET</span>

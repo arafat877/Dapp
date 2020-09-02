@@ -55,6 +55,7 @@ export const ConnectButton = styled(Button)`
   width: 180px;
   @media only screen and (max-width: 576px) {
     width: 40px;
+    padding: 4px;
   }
   margin: 4px;
   height: 45px;
@@ -89,7 +90,7 @@ export const ConnectedAvatar = styled(Avatar)`
   @media only screen and (max-width: 576px) {
     height: 24px;
     width: 24px;
-    margin-left: -6px;
+    margin-left: 4px;
   }
 `;
 
