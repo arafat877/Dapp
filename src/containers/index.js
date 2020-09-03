@@ -18,6 +18,7 @@ const connectorsByName = {
   walletlink: walletlink
 };
 
+
 function MainContent() {
   const context = useWeb3React();
   const {
@@ -26,13 +27,14 @@ function MainContent() {
   } = context;
 
   // state for connectot activation
-  const [activatingConnector, setActivatingConnector] = React.useState();
+  const [activatingConnector, setActivatingConnector] = useState();
+
   React.useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
     }
 
-  }, [activatingConnector, connector]);
+  }, [activatingConnector, connector, setActivatingConnector]);
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();

@@ -4,9 +4,11 @@ import { Redirect, Route } from "react-router";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const context = useWeb3React();
+
   const {
     active
   } = context;
+
 
   return (
     <Route
