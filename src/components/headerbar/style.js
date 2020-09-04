@@ -45,7 +45,7 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ConnectButton = styled(Button)`
-  width: 250px;
+  width: 230px;
   @media only screen and (max-width: 768px) {
     width: 40px;
     padding: 4px;

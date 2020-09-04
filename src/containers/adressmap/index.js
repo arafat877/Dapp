@@ -102,25 +102,29 @@ const AddressMap = () => {
         renderItem={(item, id) => (
           <List.Item>
             <TokenCard
-              onClick={() => showModal(id)}>
+              onClick={() => {
+                if (item.address === "") {
+                  showModal(id);
+                }
+              }}>
               <Meta
                 avatar={<Avatar src={item.image} />}
                 title={item.name}
-                description={<p>{item.address !== "" ? `Address set` : `Address not set`}</p>}
+                description={<p>{item.address !== "" ? item.address : `Address not set`}</p>}
               />
             </TokenCard>
           </List.Item>
         )}
       />
       <Modal
-        title={selectedToken.address === "" ? `Set address for ${selectedToken.name}` : `${selectedToken.name}`}
+        title={`Set address for ${selectedToken.name}`}
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
         {
-          selectedToken.address !== "" ? <p>{selectedToken.address}</p> : <Form
+          <Form
             form={form}
             layout="vertical"
             onFinish={onAddressSubmitted}

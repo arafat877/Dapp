@@ -1,4 +1,4 @@
-import { BorderlessTableOutlined, EyeOutlined } from '@ant-design/icons';
+import { BorderlessTableOutlined, EyeOutlined, MoneyCollectOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import React from 'react';
@@ -31,6 +31,13 @@ const SideBar = () => {
             key="addressmap"
           >
             <Link to="/addressmap">Address Map</Link>
+          </Menu.Item>
+        }
+        {
+          active && <Menu.Item icon={<MoneyCollectOutlined />}
+            key="tokens"
+          >
+            <Link to="/tokens">Tokens</Link>
           </Menu.Item>
         }
       </SideMenu>

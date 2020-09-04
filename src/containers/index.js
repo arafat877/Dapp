@@ -13,6 +13,7 @@ import AddressMap from './adressmap';
 import ConnectWallet from './connect-wallet';
 import { SideWrapper, StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview';
+import Tokens from './tokens/index';
 
 const connectorsByName = {
   Injected: injected,
@@ -87,6 +88,7 @@ function MainContent() {
               <Route exact path="/" component={() => <ConnectWallet />} />
               <Route exact path="/overview" component={() => <OverView />} />
               <Route exact path="/addressmap" component={() => <AddressMap />} />
+              <Route exact path="/tokens" component={() => <Tokens />} />
             </Switch>
           </StyledContent>
         </Layout>

@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DownOutlined, MenuOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Col, Popover, Row } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
@@ -82,10 +83,27 @@ const HeaderBar = (props) => {
     active,
     error,
     account,
-    connector
+    connector,
+    chainId
   } = context;
 
   const { onDrawerOpen, collapsed } = props;
+
+  const [networkName, setNetworkName] = useState("");
+
+  useEffect(() => {
+    changeNetworkName();
+  }, [chainId]);
+
+  const changeNetworkName = () => {
+    if (chainId && chainId === 1) {
+      setNetworkName("MainNet");
+    } else if (chainId && chainId === 3) {
+      setNetworkName("Ropsten");
+    } else {
+      setNetworkName("");
+    }
+  }
 
   const { connectorsByName, activate, setActivatingConnector } = props;
 
@@ -97,7 +115,7 @@ const HeaderBar = (props) => {
   }
 
   return (
-    <Row fluid justify="space-between" align="middle">
+    <Row justify="space-between" align="middle">
       <Col span={{ xs: 12 }}>
         <ThirmLogo>
           {collapsed && <MenuOutlined onClick={onDrawerOpen} style={{ fontSize: 18 }} />}
@@ -108,27 +126,34 @@ const HeaderBar = (props) => {
         </ThirmLogo>
       </Col>
       <Col span={{ xs: 12 }}>
-        {
-          <Popover trigger="click" placement="bottomRight" content={() => account ? <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} /> : <InActivePopoverContent connectorsByName={connectorsByName} activateWallet={activateWallet} />}>
-            <ConnectButton
-              type="secondary">
-              {
-                active ? <Row justify="space-between" align="middle">
-                  <Col>
-                    <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
-                  </Col>
-                  <Col>
-                    {!collapsed && account && <span>
-                      {`${account.substr(0, 20)}...`}
-                      <DownOutlined />
-                    </span>}
-                  </Col>
-                </Row> : <Row justify="space-around" align="middle">
-                    <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
-              }
-            </ConnectButton>
-          </Popover>
-        }
+        <Row>
+          <Col span={{ xs: 12 }}>
+            {networkName}
+          </Col>
+          <Col span={{ xs: 12 }}>
+            {
+              <Popover trigger="click" placement="bottomRight" content={() => account ? <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} /> : <InActivePopoverContent connectorsByName={connectorsByName} activateWallet={activateWallet} />}>
+                <ConnectButton
+                  type="secondary">
+                  {
+                    active ? <Row justify="space-between" align="middle">
+                      <Col>
+                        <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
+                      </Col>
+                      <Col>
+                        {!collapsed && account && <span>
+                          {`${account.substr(0, 12)}...`}
+                          <DownOutlined />
+                        </span>}
+                      </Col>
+                    </Row> : <Row justify="space-around" align="middle">
+                        <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
+                  }
+                </ConnectButton>
+              </Popover>
+            }
+          </Col>
+        </Row>
       </Col>
     </Row>
   );
