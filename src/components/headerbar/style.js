@@ -1,7 +1,5 @@
-import { Avatar, Button, Layout, Menu } from 'antd';
+import { Avatar, Button, Menu } from 'antd';
 import styled from 'styled-components';
-
-const { Header } = Layout;
 
 export const ThirmLogo = styled.div`
   margin-left: 4px;
@@ -45,7 +43,7 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ConnectButton = styled(Button)`
-  width: 230px;
+  width: 400px;
   @media only screen and (max-width: 768px) {
     width: 40px;
     padding: 4px;

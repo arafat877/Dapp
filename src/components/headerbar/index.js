@@ -142,7 +142,7 @@ const HeaderBar = (props) => {
                       </Col>
                       <Col>
                         {!collapsed && account && <span>
-                          {`${account.substr(0, 12)}...`}
+                          {`${account}`}
                           <DownOutlined />
                         </span>}
                       </Col>
