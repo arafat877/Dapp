@@ -11,7 +11,7 @@ import { injected, walletlink } from '../hooks/connectors';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
 import ConnectWallet from './connect-wallet';
-import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
+import { SideWrapper, StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview';
 
 const connectorsByName = {
@@ -60,7 +60,7 @@ function MainContent() {
 
   return (
     <Router>
-      <Layout style={{ height: '100vh' }}>
+      <Layout>
         <StyledDrawer
           title={
             <div className="logo-area">
@@ -78,7 +78,9 @@ function MainContent() {
         </StyledHeader>
         <Layout>
           <StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
-            <SideBar collapsed={collapsed} />
+            <SideWrapper>
+              <SideBar collapsed={collapsed} />
+            </SideWrapper>
           </StyledSider>
           <StyledContent>
             <Switch>

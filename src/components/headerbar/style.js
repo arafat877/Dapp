@@ -19,13 +19,6 @@ export const ThirmLogo = styled.div`
   }
 `;
 
-export const HeaderBarArea = styled(Header)`
-  background-color: #fbfbfb;
-  position: relative;
-  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
-  padding: 0 8px;
-`;
-
 export const SideMenu = styled(Menu)`
   padding-top: 16px;
   background-color: #fbfbfb;
@@ -52,12 +45,12 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ConnectButton = styled(Button)`
-  width: 200px;
-  @media only screen and (max-width: 576px) {
+  width: 250px;
+  @media only screen and (max-width: 768px) {
     width: 40px;
     padding: 4px;
   }
-  margin: 4px;
+  margin: 6px;
   height: 45px;
   border: 1px solid #e3e3e3;
   border-radius: 5px;
@@ -87,7 +80,7 @@ export const DisconnectButton = styled(Button)`
 export const ConnectedAvatar = styled(Avatar)`
   height: 32px;
   width: 32px;
-  @media only screen and (max-width: 576px) {
+  @media only screen and (max-width: 768px) {
     height: 24px;
     width: 24px;
     margin-left: 4px;

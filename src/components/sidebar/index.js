@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SideBarArea, SideMenu } from './style';
+import { SideMenu } from './style';
 
 const SideBar = () => {
   const context = useWeb3React();
@@ -13,7 +13,7 @@ const SideBar = () => {
 
   const addr = window.location.pathname.split('/')[1]
   return (
-    <SideBarArea>
+    <>
       <SideMenu
         mode="vertical"
         defaultSelectedKeys={[addr]}
@@ -34,7 +34,7 @@ const SideBar = () => {
           </Menu.Item>
         }
       </SideMenu>
-    </SideBarArea>
+    </>
   );
 }
 

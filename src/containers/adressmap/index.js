@@ -1,44 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Card, Form, Input, List, Modal, Row } from 'antd';
+import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import { CONTRACT_ADDRESS, ROPSTEN_URL } from '../../utils/config';
 import { TokenCard } from './style';
+import { tTokensList } from './tTokensList';
 
 const { Meta } = Card;
 
-const initialTokensList = [
-  {
-    name: 'tADA',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tADA.png',
-    address: ''
-  },
-  {
-    name: 'tBAT',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBAT.png',
-    address: ''
-  },
-  {
-    name: 'tBNB',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBNB.png',
-    address: ''
-  },
-  {
-    name: 'tBNT',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBNT.png',
-    address: ''
-  },
-  {
-    name: 'tBTC',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBTC.png',
-    address: ''
-  },
-  {
-    name: 'tCEL',
-    image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tCEL.png',
-    address: ''
-  }
-];
 
 const { abi } = require('../../assets/abi/thirmprotocoladdressmap.json');
 
@@ -46,7 +16,7 @@ const AddressMap = () => {
 
   const context = useWeb3React();
 
-  const [tokensList, setTokensList] = useState(initialTokensList);
+  const [tokensList, setTokensList] = useState(tTokensList);
 
   const {
     account
@@ -54,22 +24,26 @@ const AddressMap = () => {
 
   const [form] = Form.useForm();
 
-  const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
 
-  const contractAddress = "0x5Ec92BCa7B80Aa76B42d3A47AF1a5D3538ba113B";
+  const web3Provider = window.web3 ? window.web3.currentProvider : null;
+
+  const web3 = web3Provider
+    ? new Web3(web3Provider)
+    : new Web3(new Web3.providers.HttpProvider(ROPSTEN_URL));
 
   let smartContract = null;
 
   if (account) {
-    smartContract = new web3.eth.Contract(abi, contractAddress, {
-      from: account,
-      gasPrice: '20000000000'
+    smartContract = new web3.eth.Contract(abi, CONTRACT_ADDRESS, {
+      from: account
     });
   }
 
   const setTokenAddress = async (address) => {
     if (smartContract) {
+
       const res = await smartContract.methods.setaddress(selectedToken.name, address).send();
+
       if (res) {
         const tempTokenList = [...tokensList];
         tempTokenList.map((token) => {
@@ -120,12 +94,10 @@ const AddressMap = () => {
     setVisible(false);
   }
 
-  console.log(tokensList);
-
   return (
-    <Row>
+    <>
       <List
-        grid={{ gutter: 8, xs: 1, md: 2, lg: 3, column: 3 }}
+        grid={{ gutter: 8 }}
         dataSource={tokensList}
         renderItem={(item, id) => (
           <List.Item>
@@ -168,7 +140,7 @@ const AddressMap = () => {
         }
 
       </Modal>
-    </Row>
+    </>
   );
 }
 
