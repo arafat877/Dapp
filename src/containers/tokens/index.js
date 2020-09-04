@@ -29,6 +29,11 @@ const columns = [
     key: 'chainId',
   },
   {
+    title: 'Decimals',
+    dataIndex: 'decimals',
+    key: 'decimals',
+  },
+  {
     title: 'Address',
     key: 'address',
     dataIndex: 'address',
