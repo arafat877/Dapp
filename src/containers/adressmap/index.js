@@ -59,6 +59,7 @@ const AddressMap = () => {
   const contractAddress = "0x5Ec92BCa7B80Aa76B42d3A47AF1a5D3538ba113B";
 
   let smartContract = null;
+
   if (account) {
     smartContract = new web3.eth.Contract(abi, contractAddress, {
       from: account,
@@ -66,19 +67,20 @@ const AddressMap = () => {
     });
   }
 
-  const setTokenAddress = (address) => {
+  const setTokenAddress = async (address) => {
     if (smartContract) {
-      smartContract.methods.setaddress(selectedToken, address).call((err, res) => {
+      const res = await smartContract.methods.setaddress(selectedToken.name, address).send();
+      if (res) {
         const tempTokenList = [...tokensList];
         tempTokenList.map((token) => {
-          if (Object.keys(res).length > 0 && token.name === selectedToken) {
+          if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
             token.address = res;
           }
           return token;
         });
-
         setTokensList(tempTokenList);
-      });
+      }
+
     }
   }
 
@@ -86,12 +88,9 @@ const AddressMap = () => {
     const getTokenAddress = () => {
       if (account) {
         const tempTokenList = [...tokensList];
-        tempTokenList.map((token) => {
-          smartContract.methods.getaddress(account, token.name).call((err, res) => {
-            if (res) {
-              token.address = res;
-            }
-          });
+        tempTokenList.map(async (token) => {
+          const res = await smartContract.methods.getaddress(account, token.name).call();
+          token.address = res;
           return token;
         });
         setTokensList(tempTokenList);
@@ -101,11 +100,11 @@ const AddressMap = () => {
   }, [account]);
 
   const [visible, setVisible] = useState(false);
-  const [selectedToken, setSelectedToken] = useState("");
+  const [selectedToken, setSelectedToken] = useState({});
 
-  const showModal = (token) => {
+  const showModal = (id) => {
     setVisible(true);
-    setSelectedToken(token);
+    setSelectedToken(tokensList[id]);
   };
 
   const handleOk = e => {
@@ -121,49 +120,53 @@ const AddressMap = () => {
     setVisible(false);
   }
 
+  console.log(tokensList);
 
   return (
     <Row>
       <List
         grid={{ gutter: 8, xs: 1, md: 2, lg: 3, column: 3 }}
         dataSource={tokensList}
-        renderItem={item => (
+        renderItem={(item, id) => (
           <List.Item>
             <TokenCard
-              onClick={() => showModal(item.name)}>
+              onClick={() => showModal(id)}>
               <Meta
                 avatar={<Avatar src={item.image} />}
                 title={item.name}
-                description={<p>{item.address ? `Address set` : `Address not set`}</p>}
+                description={<p>{item.address !== "" ? `Address set` : `Address not set`}</p>}
               />
             </TokenCard>
           </List.Item>
         )}
       />
       <Modal
-        title={`Set address for ${selectedToken}`}
+        title={selectedToken.address === "" ? `Set address for ${selectedToken.name}` : `${selectedToken.name}`}
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onAddressSubmitted}
-        >
-          <Form.Item name="address" label="Enter the address" required rules={[
-            {
-              required: true,
-              message: 'Address is required',
-            },
-          ]}>
-            <Input placeholder="Address" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">Set Address</Button>
-          </Form.Item>
-        </Form>
+        {
+          selectedToken.address !== "" ? <p>{selectedToken.address}</p> : <Form
+            form={form}
+            layout="vertical"
+            onFinish={onAddressSubmitted}
+          >
+            <Form.Item name="address" label="Enter the address" required rules={[
+              {
+                required: true,
+                message: 'Address is required',
+              },
+            ]}>
+              <Input placeholder="Address" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">Set Address</Button>
+            </Form.Item>
+          </Form>
+        }
+
       </Modal>
     </Row>
   );
