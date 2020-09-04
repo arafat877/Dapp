@@ -29,7 +29,6 @@ export function useEagerConnect() {
         }
       });
     } else if (wallet === 'walletlink') {
-      console.log(walletlink);
       activate(walletlink, undefined, true).catch(() => {
         setTried(true);
       });

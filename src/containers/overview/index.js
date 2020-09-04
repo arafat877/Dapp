@@ -84,7 +84,7 @@ const OverView = (props) => {
 
   return (
     <Row>
-      <Col flex={2} sm={{ span: 24, offset: 0 }} md={{ span: 16, offset: 4 }}>
+      <Col xs={24}>
         <Row justify="space-between" align="middle">
           <Col xs={12}>
             <StyledBalance>
@@ -101,10 +101,8 @@ const OverView = (props) => {
             </Row>
           </Col>
         </Row>
-
         <Row>
-
-          <Col sm={{ span: 24 }} lg={{ span: 18 }}>
+          <Col sm={{ span: 24 }}>
             <AssetWrapper>
               <h3>Assets</h3>
               <Table columns={columns} dataSource={data} size="middle" pagination={false} responsive="xs"

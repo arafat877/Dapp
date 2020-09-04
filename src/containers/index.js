@@ -9,6 +9,7 @@ import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
 import { injected, walletlink } from '../hooks/connectors';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
+import AddressMap from './adressmap';
 import ConnectWallet from './connect-wallet';
 import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview';
@@ -76,13 +77,14 @@ function MainContent() {
           <HeaderBar onDrawerOpen={onDrawerOpen} collapsed={collapsed} setActivatingConnector={setActivatingConnector} activate={activate} connectorsByName={connectorsByName} triedEager={triedEager} activatingConnector={activatingConnector} />
         </StyledHeader>
         <Layout>
-          <StyledSider width={250} breakpoint="sm" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
+          <StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
             <SideBar collapsed={collapsed} />
           </StyledSider>
           <StyledContent>
             <Switch>
               <Route exact path="/" component={() => <ConnectWallet />} />
               <Route exact path="/overview" component={() => <OverView />} />
+              <Route exact path="/addressmap" component={() => <AddressMap />} />
             </Switch>
           </StyledContent>
         </Layout>

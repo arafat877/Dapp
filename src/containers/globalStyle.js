@@ -3,6 +3,26 @@ import styled from 'styled-components';
 
 export const StyledContent = styled(Layout.Content)`
   padding: 36px;
+  max-width: 850px;
+  margin: 36px auto;
+  display: flex;
+  @media (max-width: 1200px) {
+    margin: 24px auto;
+    max-width: 750px;
+  }
+   @media (max-width: 992px) {
+    margin: 24px auto;
+    max-width: 576px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 16px auto;
+    max-width: 95%;
+  }
+  @media (max-width: 576px) {
+    margin: 0 auto;
+    max-width: 100%;
+  }
 `;
 
 export const StyledHeader = styled(Layout.Header)`
