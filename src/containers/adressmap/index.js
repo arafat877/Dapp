@@ -2,15 +2,10 @@
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
-import Web3 from 'web3';
-import { CONTRACT_ADDRESS, ROPSTEN_URL } from '../../utils/config';
 import { TokenCard } from './style';
 import { tTokensList } from './tTokensList';
 
 const { Meta } = Card;
-
-
-const { abi } = require('../../assets/abi/thirmprotocoladdressmap.json');
 
 const AddressMap = () => {
 
@@ -19,36 +14,21 @@ const AddressMap = () => {
   const [tokensList, setTokensList] = useState(tTokensList);
 
   const {
-    account
+    account,
+    library
   } = context;
-
   const [form] = Form.useForm();
 
-
-  const web3Provider = window.web3 ? window.web3.currentProvider : null;
-
-  const web3 = web3Provider
-    ? new Web3(web3Provider)
-    : new Web3(new Web3.providers.HttpProvider(ROPSTEN_URL));
-
-  let smartContract = null;
-
-  if (account) {
-    smartContract = new web3.eth.Contract(abi, CONTRACT_ADDRESS, {
-      from: account
-    });
-  }
-
   const setTokenAddress = async (address) => {
-    if (smartContract) {
+    if (account) {
 
-      const res = await smartContract.methods.setaddress(selectedToken.name, address).send();
+      const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
 
       if (res) {
         const tempTokenList = [...tokensList];
         tempTokenList.map((token) => {
           if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
-            token.address = res;
+            token.address = address;
           }
           return token;
         });
@@ -59,11 +39,12 @@ const AddressMap = () => {
   }
 
   useEffect(() => {
+    let isCancelled = false;
     const getTokenAddress = () => {
-      if (account) {
+      if (account && !isCancelled) {
         const tempTokenList = [...tokensList];
         tempTokenList.map(async (token) => {
-          const res = await smartContract.methods.getaddress(account, token.name).call();
+          const res = await library.contract.methods.getAddress(account, token.name).call();
           token.address = res;
           return token;
         });
@@ -71,6 +52,10 @@ const AddressMap = () => {
       }
     }
     getTokenAddress();
+
+    return () => {
+      isCancelled = true;
+    }
   }, [account]);
 
   const [visible, setVisible] = useState(false);
