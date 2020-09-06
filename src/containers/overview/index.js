@@ -1,6 +1,6 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Row, Table } from 'antd';
+import { Button, Col, Row, Table, Image } from 'antd';
 import React from 'react';
 import { AssetWrapper, StyledBalance } from './style';
 
@@ -77,7 +77,7 @@ const OverView = (props) => {
   let balanceFront = "";
   let balanceEnd = "";
   if (ethBalance !== null && ethBalance !== undefined) {
-    const balanceSplit = parseFloat(formatEther(ethBalance)).toPrecision(3).toString().split('.');
+    const balanceSplit = parseFloat(formatEther(ethBalance)).toPrecision(5).toString().split('.');
     balanceFront = balanceSplit[0];
     balanceEnd = balanceSplit[1];
   }
@@ -95,13 +95,35 @@ const OverView = (props) => {
 
             </StyledBalance>
           </Col>
-          <Col xs={12}>
+
+          <Col xs={6}>
             <Row justify="end">
-              <Button type="primary">Add Funds</Button>
+              <Button type="primary">QR CODE</Button>
+            </Row>
+          </Col>
+
+
+          <Col xs={6}>
+            <Row justify="end">
+              <Button type="primary">View On Explorer</Button>
             </Row>
           </Col>
         </Row>
+
+
         <Row>
+
+
+          <Col sm={{ span: 24 }}>
+       <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
+
+       <center> SOME SORT OF CHART,  BALANCE HISTORY OR ETHEREUM PRICE, Looks nice  </center> 
+
+          </Col>
+        </Row>
+        <Row>
+
+
           <Col sm={{ span: 24 }}>
             <AssetWrapper>
               <h3>Assets</h3>

@@ -75,14 +75,4 @@ export const DisconnectButton = styled(Button)`
   }
 `;
 
-export const ConnectedAvatar = styled(Avatar)`
-  height: 32px;
-  width: 32px;
-  @media only screen and (max-width: 768px) {
-    height: 24px;
-    width: 24px;
-    margin-left: 4px;
-  }
-`;
-
 

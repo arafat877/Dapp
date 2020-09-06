@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { DownOutlined, MenuOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Col, Popover, Row } from 'antd';
+import { Avatar, Col, Popover, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { AvatarIcon, ConnectButton, ConnectedAvatar, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
+import { AvatarIcon, ConnectButton, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -120,15 +120,14 @@ const HeaderBar = (props) => {
         <ThirmLogo>
           {collapsed && <MenuOutlined onClick={onDrawerOpen} style={{ fontSize: 18 }} />}
           <Link to="/">
-            <Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
-            <span className="logo-text">THIRM WALLET</span>
+            <span className="logo-text">THIRM DAPP</span>
           </Link>
         </ThirmLogo>
       </Col>
       <Col span={{ xs: 12 }}>
         <Row>
           <Col span={{ xs: 12 }}>
-            {networkName}
+          <Tag color="magenta">  {networkName}</Tag>
           </Col>
           <Col span={{ xs: 12 }}>
             {
@@ -137,15 +136,12 @@ const HeaderBar = (props) => {
                   type="secondary">
                   {
                     active ? <Row justify="space-between" align="middle">
-                      <Col>
-                        <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
-                      </Col>
-                      <Col>
+                    
                         {!collapsed && account && <span>
                           {`${account}`}
                           <DownOutlined />
                         </span>}
-                      </Col>
+                    
                     </Row> : <Row justify="space-around" align="middle">
                         <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
                   }

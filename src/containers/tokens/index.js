@@ -95,8 +95,7 @@ const Tokens = () => {
   return (
     <TokenTableContainer>
       {tokensList.length > 0 && <Table columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}
-    </TokenTableContainer>
-  );
+    </TokenTableContainer>);
 }
 
 export default Tokens;
