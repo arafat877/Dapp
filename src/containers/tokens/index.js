@@ -90,8 +90,10 @@ const Tokens = () => {
 
   const setTokenValue = async () => {
     if (account) {
+
+      // we don't need this here in ui
       // chanmge value for testing here...
-      await library.contract.methods.setTToken('tBTC', library.web3.utils.toWei('1.001', 'ether')).send({ from: account });
+      await library.contract.methods.setTToken('tLTC', library.web3.utils.toWei('1.1', 'ether')).send({ from: account });
     }
   }
 
@@ -99,7 +101,7 @@ const Tokens = () => {
     <>
       <Row>
         <Col xs={24}>
-          <Button type="primary" onClick={setTokenValue}>Set Balance for tBTC</Button>
+          <Button type="primary" onClick={setTokenValue}>Set Balance for tLTC</Button>
         </Col>
         <Col xs={24}>
           {tokensList.length > 0 && <Table type="fixed" columns={columns} dataSource={tokensList} pagination={false} />}
