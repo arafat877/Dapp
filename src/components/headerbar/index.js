@@ -120,7 +120,6 @@ const HeaderBar = (props) => {
         <ThirmLogo>
           {collapsed && <MenuOutlined onClick={onDrawerOpen} style={{ fontSize: 18 }} />}
           <Link to="/">
-            <Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
             <span className="logo-text">THIRM DAPP</span>
           </Link>
         </ThirmLogo>
