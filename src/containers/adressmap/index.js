@@ -82,7 +82,7 @@ const AddressMap = () => {
   return (
     <>
       <List
-        grid={{ gutter: 8 }}
+        grid={{ gutter: 8, xs: 2 }}
         dataSource={tokensList}
         renderItem={(item, id) => (
           <List.Item>
