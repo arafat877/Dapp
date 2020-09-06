@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Row, Table } from 'antd';
+import { Table } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
+import { TokenTableContainer } from './style';
 
 const columns = [
   {
@@ -42,6 +43,9 @@ const columns = [
     title: 'Value',
     key: 'value',
     dataIndex: 'value',
+    render: (text, tkn) => {
+      return <>{`${text} ${tkn.symbol.split("t")[1]}`}</>
+    }
   }
 ];
 
@@ -88,24 +92,10 @@ const Tokens = () => {
     }
   }, [chainId, account]);
 
-  const setTokenValue = async () => {
-    if (account) {
-      // chanmge value for testing here...
-      await library.contract.methods.setTToken('tBTC', library.web3.utils.toWei('1.001', 'ether')).send({ from: account });
-    }
-  }
-
   return (
-    <>
-      <Row>
-        <Col xs={24}>
-          <Button type="primary" onClick={setTokenValue}>Set Balance for tBTC</Button>
-        </Col>
-        <Col xs={24}>
-          {tokensList.length > 0 && <Table type="fixed" columns={columns} dataSource={tokensList} pagination={false} />}
-        </Col>
-      </Row>
-    </>
+    <TokenTableContainer>
+      {tokensList.length > 0 && <Table columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}
+    </TokenTableContainer>
   );
 }
 

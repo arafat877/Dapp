@@ -2,28 +2,13 @@ import { Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const StyledContent = styled(Layout.Content)`
-  padding: 120px 36px;
-  max-width: 870px;
-  margin: 36px auto;
-  display: flex;
-  @media (max-width: 1200px) {
-    margin: 24px auto;
-    max-width: 760px;
-  }
-   @media (max-width: 992px) {
-    margin: 24px auto;
-    max-width: 576px;
-  }
+  margin: 54px auto;
+  padding: 48px;
 
   @media (max-width: 768px) {
-    margin: 16px auto;
-    max-width: 95%;
+    margin-bottom: 36px;
+    padding: 16px;
   }
-  @media (max-width: 576px) {
-    margin: 0 auto;
-    max-width: 100%;
-  }
-  flex-grow: 1;
 `;
 
 export const StyledHeader = styled(Layout.Header)`
