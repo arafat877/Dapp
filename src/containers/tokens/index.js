@@ -122,7 +122,7 @@ const Tokens = () => {
         tokensListTemp = tokensListTemp.map((tkn) => {
           interestDataTemp.forEach((intr) => {
             if (intr.Address === tkn.address) {
-              tkn.apy = Number.parseFloat(intr.Interest).toFixed();
+              tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
               tkn.platform = intr.Platform;
             }
           });
