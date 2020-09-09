@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu } from 'antd';
+import { Avatar, Button, Menu, Popover } from 'antd';
 import styled from 'styled-components';
 
 export const Intro = styled.div`
@@ -47,20 +47,30 @@ export const ConnectButton = styled(Button)`
   height: 80px;
   border: 0;
   background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:focus, &:hover, &:active &:focus-within {
     background: #f3f3f3;
   }
-  .network-name {
-    margin-top: 8px;
-    margin-left: 36px;
-  }
-  .drop-down {
-    margin-left: 4px;
-  }
+  
 `;
 
 export const PopverWrapper = styled.div`
  width: 360px;
+`;
+
+export const StyledPopover = styled(Popover)`
+ width: 250px;
+ .network-name {
+    margin-left: 24px;
+    margin-right: 24px;
+    width: 75px;
+  }
+  .drop-down {
+    margin-top: 28px;
+    margin-right: 8px;
+  }
 `;
 
 export const DisconnectButton = styled(Button)`
@@ -77,11 +87,12 @@ export const DisconnectButton = styled(Button)`
 `;
 
 export const ConnectedAvatar = styled(Avatar)`
-  height: 32px;
-  width: 32px;
+  height: 48px;
+  width: 48px;
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.10);
   background-color: #fff;
   margin-right: 4px;
+  border: 1px solid #e3e3e3;
 `;
 
 export const ConnectorAvatar = styled(Avatar)`

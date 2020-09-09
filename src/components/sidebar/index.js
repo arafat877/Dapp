@@ -1,11 +1,11 @@
-import { BorderlessTableOutlined, DownOutlined, EyeOutlined, FireOutlined, MoneyCollectOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { BorderlessTableOutlined, EyeOutlined, FireOutlined, MoneyCollectOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Col, Menu, Popover, Row, Tag } from 'antd';
+import { Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, ThirmLogo } from './style';
+import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, StyledPopover, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -87,20 +87,13 @@ const SideBar = (props) => {
               type="secondary">
               {
                 active ?
-                  <Popover trigger="click" placement="right" content={() => <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} />}>
-                    <Row justify="space-between" align="middle">
-                      <Col>
-                        <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
-                        {account && <span>
-                          {`${account.substr(0, 16)}...${account.substr(37)}`}
-                          <DownOutlined className="drop-down" />
-                        </span>}
-                      </Col>
-                      <Col>
-                        {networkName && <Tag className="network-name" color="success">{networkName}</Tag>}
-                      </Col>
-                    </Row> </Popover> : <Row justify="space-around" align="middle">
-                    <Col><Link to="/"><ThunderboltOutlined /> {`Connect`}</Link></Col></Row>
+                  <StyledPopover placement="right" content={() => <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} />}>
+                    <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
+                    {networkName && <Tag className="network-name" color="success">{networkName}</Tag>}
+                    <span>
+                      <RightOutlined className="drop-down" />
+                    </span>
+                  </StyledPopover> : <Link to="/"><ThunderboltOutlined /> {`Connect`}</Link>
               }
             </ConnectButton>
           }
