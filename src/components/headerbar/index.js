@@ -127,7 +127,7 @@ const HeaderBar = (props) => {
       <Col span={{ xs: 12 }}>
         <Row>
           <Col span={{ xs: 12 }}>
-          <Tag color="magenta">  {networkName}</Tag>
+            <Tag color="magenta">{networkName}</Tag>
           </Col>
           <Col span={{ xs: 12 }}>
             {
@@ -136,12 +136,11 @@ const HeaderBar = (props) => {
                   type="secondary">
                   {
                     active ? <Row justify="space-between" align="middle">
-                    
-                        {!collapsed && account && <span>
-                          {`${account}`}
-                          <DownOutlined />
-                        </span>}
-                    
+                      {!collapsed && account && <span>
+                        {`${account}`}
+                        <DownOutlined />
+                      </span>}
+
                     </Row> : <Row justify="space-around" align="middle">
                         <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
                   }

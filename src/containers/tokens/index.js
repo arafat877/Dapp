@@ -11,7 +11,10 @@ const columns = [
     dataIndex: 'logoURI',
     key: 'logoURI',
     render: (text) => {
-      return <Avatar src={text} />
+      if (text) {
+        return <Avatar src={text} />
+      }
+      return null;
     }
   },
   {
@@ -23,6 +26,11 @@ const columns = [
     title: 'Symbol',
     dataIndex: 'symbol',
     key: 'symbol',
+  },
+  {
+    title: 'Platform',
+    dataIndex: 'platform',
+    key: 'platform',
   },
   {
     title: 'Chain ID',
@@ -39,12 +47,23 @@ const columns = [
     key: 'value',
     dataIndex: 'value',
     render: (text, tkn) => {
-      return <>{`${text} ${tkn.symbol.split("t")[1]}`}</>
+      if (text) {
+        return <>{`${text} ${tkn.symbol.split("t")[1]}`}</>;
+      }
+      return null;
+
     }
-  }
+  },
+  {
+    title: 'APY',
+    dataIndex: 'apy',
+    key: 'apy',
+  },
 ];
 
 const TOKEN_LIST_URL = "https://raw.githubusercontent.com/thirmprotocol/Assets/master/data.json";
+
+const TOKEN_INTEREST_URL = "https://raw.githubusercontent.com/thirmprotocol/Assets/master/i.json";
 
 const Tokens = () => {
 
@@ -57,17 +76,21 @@ const Tokens = () => {
     const getTokenInformation = async () => {
       if (!chainId) return;
 
-      const jsonRes = await fetch(TOKEN_LIST_URL)
+      const tokenJson = await fetch(TOKEN_LIST_URL)
+        .then(res => res.json());
+
+      const interestJson = await fetch(TOKEN_INTEREST_URL)
         .then(res => res.json());
 
       if (!isCancelled) {
 
-        let tokensListTemp = jsonRes.tokens;
+        let tokensListTemp = tokenJson.tokens;
         tokensListTemp = tokensListTemp.filter((tkn) => tkn.chainId === chainId).map((tkn) => {
           tkn.key = tkn.name;
           tkn.value = null;
           return tkn;
         });
+
 
         tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
           const res = await library.contract.methods.getTToken(tkn.symbol).call();
@@ -76,6 +99,20 @@ const Tokens = () => {
           }
           return tkn;
         }));
+
+        let interestDataTemp = interestJson.tokens;
+
+        interestDataTemp = interestDataTemp.map((intr) => {
+          intr.apy = intr.Interest;
+          intr.platform = intr.Platform;
+          intr.address = intr.Address;
+
+          return intr;
+        })
+
+        tokensListTemp = [...tokensListTemp, ...interestDataTemp];
+
+        console.log(tokensListTemp);
 
         setTokensList(tokensListTemp);
       }
