@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { AvatarIcon, ConnectButton, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
+import { AvatarIcon, ConnectButton, ConnectedAvatar, ConnectorButton, DisconnectButton, PopverWrapper, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -53,7 +53,7 @@ const ActivePopoverContent = ({ account, active, error, deactivate, connector })
         {connector === injected ? <Avatar src={MetaMaskIcon} /> : connector === walletlink ? <Avatar src={WalletConnectIcon} /> : null}
       </Col>
       <Col>
-        {account && account.substr(0, 15)}...
+        {`${account.substr(0, 8)}...${account.substr(37)}`}
       </Col>
       <Col xs={24}>
         {(active || error) && (
@@ -127,7 +127,7 @@ const HeaderBar = (props) => {
       <Col span={{ xs: 12 }}>
         <Row>
           <Col span={{ xs: 12 }}>
-            <Tag color="magenta">{networkName}</Tag>
+            {networkName && <Tag color="success">{networkName}</Tag>}
           </Col>
           <Col span={{ xs: 12 }}>
             {
@@ -136,11 +136,15 @@ const HeaderBar = (props) => {
                   type="secondary">
                   {
                     active ? <Row justify="space-between" align="middle">
-                      {!collapsed && account && <span>
-                        {`${account}`}
-                        <DownOutlined />
-                      </span>}
-
+                      <Col>
+                        <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
+                      </Col>
+                      <Col>
+                        {!collapsed && account && <span>
+                          {`${account.substr(0, 8)}...${account.substr(37)}`}
+                          <DownOutlined />
+                        </span>}
+                      </Col>
                     </Row> : <Row justify="space-around" align="middle">
                         <Col><ThunderboltOutlined /> {!collapsed && `Connect`}</Col></Row>
                   }

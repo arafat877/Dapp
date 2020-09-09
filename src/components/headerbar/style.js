@@ -7,13 +7,10 @@ export const ThirmLogo = styled.div`
   flex-direction: row;
   justify-content: middle;
   align-items: center;
-  .logo {
-    margin-left: 12px;
-  }
   .logo-text {
     margin-left: 8px;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 700;
   }
 `;
 
@@ -43,7 +40,7 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ConnectButton = styled(Button)`
-  width: 400px;
+  width: 200px;
   @media only screen and (max-width: 768px) {
     width: 40px;
     padding: 4px;
@@ -56,6 +53,7 @@ export const ConnectButton = styled(Button)`
     outline: none;
     border: 1px solid #e3e3e3;
   }
+  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.10);
 `;
 
 export const PopverWrapper = styled.div`
@@ -74,5 +72,16 @@ export const DisconnectButton = styled(Button)`
     border: 1px solid #e3e3e3;
   }
 `;
+
+export const ConnectedAvatar = styled(Avatar)`
+  height: 32px;
+  width: 32px;
+  @media only screen and (max-width: 768px) {
+    height: 24px;
+    width: 24px;
+    margin-left: 4px;
+  }
+`;
+
 
 

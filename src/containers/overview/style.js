@@ -37,3 +37,10 @@ export const PerformanceWrapper = styled.div`
   margin-top: 40px;
   justify-content: center;
 `;
+
+export const RightButtonGroups = styled.div`
+  display: flex;
+  button {
+    margin-left: 8px;
+  }
+`;

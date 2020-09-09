@@ -2,7 +2,7 @@ import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Image, Row, Table } from 'antd';
 import React from 'react';
-import { AssetWrapper, PerformanceWrapper, StyledBalance } from './style';
+import { AssetWrapper, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
 
 const columns = [
   {
@@ -95,17 +95,12 @@ const OverView = (props) => {
 
             </StyledBalance>
           </Col>
-
           <Col xs={6}>
             <Row justify="end">
-              <Button type="primary">QR CODE</Button>
-            </Row>
-          </Col>
-
-
-          <Col xs={6}>
-            <Row justify="end">
-              <Button type="primary">View On Explorer</Button>
+              <RightButtonGroups>
+                <Button type="primary">QR CODE</Button>
+                <Button type="primary">View On Explorer</Button>
+              </RightButtonGroups>
             </Row>
           </Col>
         </Row>

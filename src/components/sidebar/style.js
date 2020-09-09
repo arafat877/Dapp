@@ -7,7 +7,7 @@ export const Intro = styled.div`
 `;
 
 export const SideMenu = styled(Menu)`
-  background-color: transparent;
+  background-color: #fff;
   border: 0;
 `;
 
