@@ -31,3 +31,9 @@ export const AssetWrapper = styled.div`
     border: 0;
   }
 `;
+export const PerformanceWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+  justify-content: center;
+`;

@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Table, Tag } from 'antd';
+import { Button, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
-import { TokenTableContainer } from './style';
+import { Link } from 'react-router-dom';
+import { StyledTable, TokenTableContainer } from './style';
 
 const columns = [
   {
@@ -46,7 +47,16 @@ const columns = [
         return <>{`${text} ${tkn.symbol.split("t")[1]}`}</>;
       }
       return null;
-
+    }
+  },
+  {
+    title: 'Burn',
+    dataIndex: 'burn',
+    key: 'burn',
+    render: () => {
+      return <Link to="/burn"><Button danger type="text">
+        Burn
+      </Button></Link>;
     }
   },
   {
@@ -131,7 +141,7 @@ const Tokens = () => {
 
   return (
     <TokenTableContainer>
-      {tokensList.length > 0 && <Table columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}
+      {tokensList.length > 0 && <StyledTable columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}
     </TokenTableContainer>);
 }
 

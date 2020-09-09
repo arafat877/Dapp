@@ -10,6 +10,7 @@ import SideBar from '../components/sidebar';
 import { injected, walletlink } from '../hooks/connectors';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
+import Burn from './burn/index';
 import ConnectWallet from './connect-wallet';
 import { SideWrapper, StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview';
@@ -89,6 +90,7 @@ function MainContent() {
               <Route exact path="/overview" component={() => <OverView />} />
               <Route exact path="/addressmap" component={() => <AddressMap />} />
               <Route exact path="/tokens" component={() => <Tokens />} />
+              <Route exact path="/burn" component={() => <Burn />} />
             </Switch>
           </StyledContent>
         </Layout>

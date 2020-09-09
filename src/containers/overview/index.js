@@ -1,8 +1,8 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Row, Table, Image } from 'antd';
+import { Button, Col, Image, Row, Table } from 'antd';
 import React from 'react';
-import { AssetWrapper, StyledBalance } from './style';
+import { AssetWrapper, PerformanceWrapper, StyledBalance } from './style';
 
 const columns = [
   {
@@ -109,21 +109,14 @@ const OverView = (props) => {
             </Row>
           </Col>
         </Row>
-
-
         <Row>
-
-
           <Col sm={{ span: 24 }}>
-       <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
-
-       <center> SOME SORT OF CHART,  BALANCE HISTORY OR ETHEREUM PRICE, Looks nice  </center> 
-
+            <PerformanceWrapper>
+              <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
+            </PerformanceWrapper>
           </Col>
         </Row>
         <Row>
-
-
           <Col sm={{ span: 24 }}>
             <AssetWrapper>
               <h3>Assets</h3>
