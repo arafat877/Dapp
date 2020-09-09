@@ -1,53 +1,27 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Image, Row, Table } from 'antd';
+import { Button, Col, Image, Row } from 'antd';
 import React from 'react';
-import { AssetWrapper, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
+import { AvatarIcon, ConnectorButton, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
 
-const columns = [
-  {
-    title: 'All Assets',
-    dataIndex: 'assets',
-  },
-  {
-    title: 'Equity',
-    dataIndex: 'equity',
-    align: "right"
-  }
-];
-
-const data = [
-  {
-    key: '1',
-    assets: 'Ether',
-    equity: 32
-  },
-  {
-    key: '2',
-    assets: 'Thirm',
-    equity: 42,
-  },
-  {
-    key: '3',
-    assets: 'T Bitcoin',
-    equity: 32
-  },
-];
+const MetaMaskIcon = require("../../assets/images/metamask.png");
+const WalletConnectIcon = require("../../assets/images/qr-code.png");
 
 const OverView = (props) => {
 
-  const context = useWeb3React();
   const {
     library,
     chainId,
     account,
-  } = context;
+    active
+  } = useWeb3React();
+
+  const { connectorsByName, activate, setActivatingConnector } = props;
 
   // State to set the ether balance
   const [ethBalance, setEthBalance] = React.useState();
 
   // Get balance when component mounts
-  // TODO: change promise to async await
   React.useEffect(() => {
     if (library && account) {
       let stale = false;
@@ -82,6 +56,56 @@ const OverView = (props) => {
     balanceEnd = balanceSplit[1];
   }
 
+  const activateWallet = (currentConnector, name) => {
+    setActivatingConnector(currentConnector);
+    activate(connectorsByName[name]);
+    window.localStorage.setItem('wallet', name);
+  }
+
+  if (!active) {
+    return (
+      <Row>
+        <Col xs={24}>
+          <LoginInfo>Connect with your wallet</LoginInfo>
+
+        </Col>
+        <Col xs={24}>
+          <Row gutter={4}>
+            {connectorsByName && Object.keys(connectorsByName).map(name => {
+              const currentConnector = connectorsByName[name];
+              return (
+                <Col>
+                  {
+                    name === "Injected" && (<ConnectorButton
+                      key={name}
+                      onClick={() => {
+                        activateWallet(currentConnector, name);
+                      }}>
+                      <AvatarIcon src={MetaMaskIcon} />
+                      <p>Metamask</p>
+                    </ConnectorButton>)
+                  }
+                  {
+                    name === "walletlink" && (<ConnectorButton
+                      type="secondary"
+                      key={name}
+                      onClick={() => {
+                        activateWallet(currentConnector, name);
+                      }}>
+                      <AvatarIcon src={WalletConnectIcon} />
+                      <p>Wallet Link</p>
+                    </ConnectorButton>)
+                  }
+                </Col>
+              );
+            })}
+          </Row>
+        </Col>
+      </Row>
+
+    );
+  }
+
   return (
     <Row>
       <Col xs={24}>
@@ -109,16 +133,6 @@ const OverView = (props) => {
             <PerformanceWrapper>
               <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
             </PerformanceWrapper>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ span: 24 }}>
-            <AssetWrapper>
-              <h3>Assets</h3>
-              <Table columns={columns} dataSource={data} size="middle" pagination={false} responsive="xs"
-                showHeader={false}
-                tableLayout="fixed" />
-            </AssetWrapper>
           </Col>
         </Row>
       </Col>

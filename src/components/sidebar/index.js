@@ -2,15 +2,17 @@ import { BorderlessTableOutlined, EyeOutlined, FireOutlined, MoneyCollectOutline
 import { useWeb3React } from '@web3-react/core';
 import { Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, StyledPopover, ThirmLogo } from './style';
+import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, SideSocial, SideWrapper, SocialAvatar, StyledPopover, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
+const TwitterIcon = require("../../assets/images/twitter.png");
+const DiscordIcon = require("../../assets/images/discord.png");
 
-const ActivePopoverContent = ({ account, active, error, deactivate, connector }) => (
+const ActivePopoverContent = ({ account, active, error, deactivate, connector, history }) => (
   <PopverWrapper>
     <Row justify="space-between" align="middle">
       <Col>
@@ -25,6 +27,7 @@ const ActivePopoverContent = ({ account, active, error, deactivate, connector })
             onClick={() => {
               localStorage.removeItem('wallet');
               deactivate();
+              history.push("/");
             }}
           >
             Disconnect
@@ -69,10 +72,13 @@ const SideBar = (props) => {
     changeNetworkName();
   }, [chainId]);
 
-  const addr = window.location.pathname.split('/')[1];
+  const history = useHistory();
+
+  let addr = window.location.pathname.split('/')[1];
+  if (!addr) addr = 'overview';
 
   return (
-    <>
+    <SideWrapper>
       {!collapsed && <Row>
         <Col xs={24}>
           <ThirmLogo>
@@ -87,7 +93,7 @@ const SideBar = (props) => {
               type="secondary">
               {
                 active ?
-                  <StyledPopover placement="right" content={() => <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} />}>
+                  <StyledPopover placement="right" content={() => <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} history={history} />}>
                     <ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
                     {networkName && <Tag className="network-name" color="success">{networkName}</Tag>}
                     <span>
@@ -105,11 +111,10 @@ const SideBar = (props) => {
         defaultSelectedKeys={[addr]}
       >
         {
-          active &&
-          <Menu.Item icon={<EyeOutlined />}
+          active && <Menu.Item icon={<EyeOutlined />}
             key="overview"
           >
-            <Link to="/overview">Overview</Link>
+            <Link to="/">Overview</Link>
           </Menu.Item>
         }
         {
@@ -134,7 +139,19 @@ const SideBar = (props) => {
           </Menu.Item>
         }
       </SideMenu>
-    </>
+      <SideSocial>
+        <ul>
+          <li>
+            <a href="https://twitter.com"><SocialAvatar src={TwitterIcon} /></a>
+          </li>
+          <li>
+            <a href="https://discord.com">
+              <SocialAvatar src={DiscordIcon} />
+            </a>
+          </li>
+        </ul>
+      </SideSocial>
+    </SideWrapper>
   );
 }
 

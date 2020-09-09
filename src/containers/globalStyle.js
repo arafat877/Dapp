@@ -28,17 +28,6 @@ export const StyledSider = styled(Layout.Sider)`
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  z-index: 98;
-`;
-
-export const SideWrapper = styled.div`
-  position: fixed;
-  top: 0px;
-  width: 250px;
-  min-height: 100vh;
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 
 export const StyledDrawer = styled(Drawer)`

@@ -12,9 +12,8 @@ import RightSideBar from './../components/rightsidebar/index';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
 import Burn from './burn/index';
-import ConnectWallet from './connect-wallet';
-import { SideWrapper, StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
-import OverView from './overview';
+import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
+import OverView from './overview/index';
 import Tokens from './tokens/index';
 
 const connectorsByName = {
@@ -102,20 +101,20 @@ function MainContent() {
         </StyledHeader>}
 
         <Layout>
+
           <StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
-            <SideWrapper>
-              <SideBar collapsed={collapsed} />
-            </SideWrapper>
+            <SideBar collapsed={collapsed} />
           </StyledSider>
+
           <StyledContent>
             <Switch>
-              <Route exact path="/" component={() => <ConnectWallet connectorsByName={connectorsByName} activate={activate} setActivatingConnector={setActivatingConnector} />} />
-              <Route exact path="/overview" component={() => <OverView />} />
+              <Route exact path="/" component={() => <OverView connectorsByName={connectorsByName} activate={activate} setActivatingConnector={setActivatingConnector} />} />
               <Route exact path="/addressmap" component={() => <AddressMap />} />
               <Route exact path="/tokens" component={() => <Tokens />} />
               <Route exact path="/burn" component={() => <Burn />} />
             </Switch>
           </StyledContent>
+
         </Layout>
       </Layout>
     </Router>
