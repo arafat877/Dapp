@@ -1,11 +1,11 @@
 import { BorderlessTableOutlined, DownOutlined, EyeOutlined, FireOutlined, MoneyCollectOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Col, Menu, Popover, Row, Tag } from 'antd';
+import { Col, Menu, Popover, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletlink } from './../../hooks/connectors';
-import { ConnectButton, ConnectedAvatar, DisconnectButton, PopverWrapper, SideMenu, ThirmLogo } from './style';
+import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, ThirmLogo } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
@@ -14,10 +14,10 @@ const ActivePopoverContent = ({ account, active, error, deactivate, connector })
   <PopverWrapper>
     <Row justify="space-between" align="middle">
       <Col>
-        {connector === injected ? <Avatar src={MetaMaskIcon} /> : connector === walletlink ? <Avatar src={WalletConnectIcon} /> : null}
+        {connector === injected ? <ConnectorAvatar src={MetaMaskIcon} /> : connector === walletlink ? <ConnectorAvatar src={WalletConnectIcon} /> : null}
       </Col>
       <Col>
-        {`${account.substr(0, 16)}...${account.substr(37)}`}
+        {account}
       </Col>
       <Col xs={24}>
         {(active || error) && (

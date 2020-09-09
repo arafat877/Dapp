@@ -60,7 +60,7 @@ export const ConnectButton = styled(Button)`
 `;
 
 export const PopverWrapper = styled.div`
- width: 250px;
+ width: 360px;
 `;
 
 export const DisconnectButton = styled(Button)`
@@ -82,4 +82,10 @@ export const ConnectedAvatar = styled(Avatar)`
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.10);
   background-color: #fff;
   margin-right: 4px;
+`;
+
+export const ConnectorAvatar = styled(Avatar)`
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
 `;
