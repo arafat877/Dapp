@@ -28,11 +28,6 @@ const columns = [
     key: 'symbol',
   },
   {
-    title: 'Platform',
-    dataIndex: 'platform',
-    key: 'platform',
-  },
-  {
     title: 'Chain ID',
     dataIndex: 'chainId',
     key: 'chainId',
@@ -53,6 +48,11 @@ const columns = [
       return null;
 
     }
+  },
+  {
+    title: 'Platform',
+    dataIndex: 'platform',
+    key: 'platform',
   },
   {
     title: 'APY',
@@ -102,17 +102,15 @@ const Tokens = () => {
 
         let interestDataTemp = interestJson.tokens;
 
-        interestDataTemp = interestDataTemp.map((intr) => {
-          intr.apy = intr.Interest;
-          intr.platform = intr.Platform;
-          intr.address = intr.Address;
-
-          return intr;
-        })
-
-        tokensListTemp = [...tokensListTemp, ...interestDataTemp];
-
-        console.log(tokensListTemp);
+        tokensListTemp = tokensListTemp.map((tkn) => {
+          interestDataTemp.forEach((intr) => {
+            if (intr.Address === tkn.address) {
+              tkn.apy = intr.Interest;
+              tkn.platform = intr.Platform;
+            }
+          });
+          return tkn;
+        });
 
         setTokensList(tokensListTemp);
       }
