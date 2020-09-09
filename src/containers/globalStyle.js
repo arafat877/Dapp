@@ -2,11 +2,11 @@ import { Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const StyledContent = styled(Layout.Content)`
-  margin: 54px auto;
+  margin: 32px auto;
   padding: 48px;
   background-color: #fefefe;
   @media (max-width: 768px) {
-    margin-bottom: 36px;
+    margin: 60px auto;
     padding: 16px;
   }
 `;
@@ -33,7 +33,7 @@ export const StyledSider = styled(Layout.Sider)`
 
 export const SideWrapper = styled.div`
   position: fixed;
-  top: 100px;
+  top: 0px;
   width: 250px;
   min-height: 100vh;
   @media (max-width: 768px) {

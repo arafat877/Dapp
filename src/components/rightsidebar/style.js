@@ -1,30 +1,5 @@
-import { Avatar, Button, Menu } from 'antd';
+import { Avatar, Button } from 'antd';
 import styled from 'styled-components';
-
-export const Intro = styled.div`
-  text-align: center;
-  padding: 8px 16px;
-`;
-
-export const SideMenu = styled(Menu)`
-  background-color: #fff;
-  border: 0;
-  margin-top: 24px;
-
-  @media only screen and (max-width: 768px) {
-    margin-top: 4px;
-  }
-`;
-
-export const ThirmLogo = styled.div`
-  display: flex;
-  margin: 24px 10px;
-  .logo-text {
-    margin-left: 8px;
-    font-size: 18px;
-    font-weight: 700;
-  }
-`;
 
 export const ConnectorButton = styled(Button)`
   margin: 8px 4px;
@@ -42,8 +17,8 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ConnectButton = styled(Button)`
-  width: 250px;
-  margin: 0;
+  width: 200px;
+  margin: 24px 0;
   height: 80px;
   border: 0;
   background: #fafafa;
@@ -57,10 +32,6 @@ export const ConnectButton = styled(Button)`
   .drop-down {
     margin-left: 4px;
   }
-`;
-
-export const PopverWrapper = styled.div`
- width: 250px;
 `;
 
 export const DisconnectButton = styled(Button)`
@@ -82,4 +53,10 @@ export const ConnectedAvatar = styled(Avatar)`
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.10);
   background-color: #fff;
   margin-right: 4px;
+`;
+
+export const ConnectorAvatar = styled(Avatar)`
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
 `;

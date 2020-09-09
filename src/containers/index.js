@@ -8,6 +8,7 @@ import {
 import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
 import { injected, walletlink } from '../hooks/connectors';
+import RightSideBar from './../components/rightsidebar/index';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
 import Burn from './burn/index';
@@ -45,13 +46,22 @@ function MainContent() {
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector);
 
-  // Drawer Open and Close
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const onDrawerClose = () => {
-    setDrawerVisible(false);
+  // Left Drawer Open and Close
+  const [leftDrawerVisible, setLeftDrawerVisible] = useState(false);
+  const onLeftDrawerClose = () => {
+    setLeftDrawerVisible(false);
   };
-  const onDrawerOpen = () => {
-    setDrawerVisible(true);
+  const onLeftDrawerOpen = () => {
+    setLeftDrawerVisible(true);
+  };
+
+  // Right Drawer Open and Close
+  const [rightDrawerVisible, setRightDrawerVisible] = useState(false);
+  const onRightDrawerClose = () => {
+    setRightDrawerVisible(false);
+  };
+  const onRightDrawerOpen = () => {
+    setRightDrawerVisible(true);
   };
 
   const [collapsed, setCollapsed] = useState(false);
@@ -70,14 +80,27 @@ function MainContent() {
             </div>
           }
           placement="left"
-          onClose={onDrawerClose}
-          visible={drawerVisible}
+          onClose={onLeftDrawerClose}
+          visible={leftDrawerVisible}
         >
-          <SideBar />
+          <SideBar collapsed={collapsed} />
         </StyledDrawer>
-        <StyledHeader>
-          <HeaderBar onDrawerOpen={onDrawerOpen} collapsed={collapsed} setActivatingConnector={setActivatingConnector} activate={activate} connectorsByName={connectorsByName} triedEager={triedEager} activatingConnector={activatingConnector} />
-        </StyledHeader>
+
+        <StyledDrawer
+          title={
+            null
+          }
+          placement="right"
+          onClose={onRightDrawerClose}
+          visible={rightDrawerVisible}
+        >
+          <RightSideBar collapsed={collapsed} />
+        </StyledDrawer>
+
+        {collapsed && <StyledHeader>
+          <HeaderBar visible={leftDrawerVisible} onLeftDrawerOpen={onLeftDrawerOpen} onRightDrawerOpen={onRightDrawerOpen} collapsed={collapsed} />
+        </StyledHeader>}
+
         <Layout>
           <StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
             <SideWrapper>
@@ -86,7 +109,7 @@ function MainContent() {
           </StyledSider>
           <StyledContent>
             <Switch>
-              <Route exact path="/" component={() => <ConnectWallet />} />
+              <Route exact path="/" component={() => <ConnectWallet connectorsByName={connectorsByName} activate={activate} setActivatingConnector={setActivatingConnector} />} />
               <Route exact path="/overview" component={() => <OverView />} />
               <Route exact path="/addressmap" component={() => <AddressMap />} />
               <Route exact path="/tokens" component={() => <Tokens />} />

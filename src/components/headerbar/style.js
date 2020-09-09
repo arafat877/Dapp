@@ -83,5 +83,15 @@ export const ConnectedAvatar = styled(Avatar)`
   }
 `;
 
+export const ActiveButton = styled(Button)`
+  span {
+    color: #00ff00;
+  }
+  border: 2px solid #00ff00;
+  &:focus, &:hover, &:active &:focus-within {
+    border: 2px solid #00ff00;
+  }
+`;
+
 
 
