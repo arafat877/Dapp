@@ -58,6 +58,18 @@ const columns = [
     title: 'APY',
     dataIndex: 'apy',
     key: 'apy',
+    render: (text, tkn) => {
+      if (text) {
+
+        return {
+          props: {
+            style: { background: parseInt(text) === 0 ? "#dc3545" : "#28a745" }
+          },
+          children: <p>{`${text} %`}</p>
+        };
+      }
+      return null;
+    }
   },
 ];
 
