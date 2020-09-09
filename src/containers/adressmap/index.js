@@ -1,17 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
+import { Avatar, Button, Card, Form, Input, List, Modal, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { TokenCard } from './style';
 import { tTokensList } from './tTokensList';
 
 const { Meta } = Card;
 
+const TOKEN_INTEREST_URL = "https://raw.githubusercontent.com/thirmprotocol/Assets/master/i.json";
+
+const columns = [
+  {
+    title: 'Platform',
+    dataIndex: 'Platform',
+    key: 'Platform',
+  },
+  {
+    title: 'Interest',
+    dataIndex: 'Interest',
+    key: 'Interest',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'Address',
+    key: 'Address',
+  },
+];
+
 const AddressMap = () => {
 
   const context = useWeb3React();
-
   const [tokensList, setTokensList] = useState(tTokensList);
+  const [tokenInterestData, setTokenInterestData] = useState([]);
 
   const {
     account,
@@ -51,7 +71,19 @@ const AddressMap = () => {
         setTokensList(tempTokenList);
       }
     }
+
+    const getTokenInterestData = async () => {
+      const jsonRes = await fetch(TOKEN_INTEREST_URL)
+        .then(res => res.json());
+
+      if (!isCancelled) {
+        const tokensListTemp = jsonRes.tokens;
+        setTokenInterestData(tokensListTemp);
+      }
+    }
+
     getTokenAddress();
+    getTokenInterestData();
 
     return () => {
       isCancelled = true;
@@ -81,6 +113,7 @@ const AddressMap = () => {
 
   return (
     <>
+      <Table columns={columns} type="fixed" dataSource={tokenInterestData} pagination={false} scroll={{ x: 250 }} />
       <List
         grid={{ gutter: 8, xs: 2 }}
         dataSource={tokensList}
