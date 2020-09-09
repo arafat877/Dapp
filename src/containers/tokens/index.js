@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { TokenTableContainer } from './style';
@@ -61,12 +61,7 @@ const columns = [
     render: (text, tkn) => {
       if (text) {
 
-        return {
-          props: {
-            style: { background: parseInt(text) === 0 ? "#dc3545" : "#28a745" }
-          },
-          children: <p>{`${text} %`}</p>
-        };
+        return <Tag color={text === 0 ? "warning" : "success"}>{`${text} %`}</Tag>;
       }
       return null;
     }
