@@ -11,6 +11,7 @@ const MetaMaskIcon = require("../../assets/images/metamask.png");
 const WalletConnectIcon = require("../../assets/images/qr-code.png");
 const TwitterIcon = require("../../assets/images/twitter.png");
 const DiscordIcon = require("../../assets/images/discord.png");
+const GithubIcon = require("../../assets/images/github.png");
 
 const ActivePopoverContent = ({ account, active, error, deactivate, connector, history }) => (
   <PopverWrapper>
@@ -140,14 +141,14 @@ const SideBar = (props) => {
         }
       </SideMenu>
       <SideSocial>
-        <ul>
-          <li>
-            <a href="https://twitter.com"><SocialAvatar src={TwitterIcon} /></a>
+        <ul>  <li>
+            <a href="https://github.com/thirmprotocol/app"><SocialAvatar src={GithubIcon} /></a>
           </li>
           <li>
-            <a href="https://discord.com">
-              <SocialAvatar src={DiscordIcon} />
-            </a>
+            <a href="https://twitter.com/thirmprotocol"><SocialAvatar src={TwitterIcon} /></a>
+          </li>
+          <li>
+            <a href="https://discord.com/invite/Fa4vDXj"><SocialAvatar src={DiscordIcon} /></a>
           </li>
         </ul>
       </SideSocial>
