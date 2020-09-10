@@ -5,10 +5,10 @@ import React from 'react';
 import { AvatarIcon, ConnectorButton, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
-const WalletConnectIcon = require("../../assets/images/qr-code.png");
+const WalletLinkIcon = require("../../assets/images/qr-code.png");
+const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
-
   const {
     library,
     chainId,
@@ -92,8 +92,20 @@ const OverView = (props) => {
                       onClick={() => {
                         activateWallet(currentConnector, name);
                       }}>
-                      <AvatarIcon src={WalletConnectIcon} />
+                      <AvatarIcon src={WalletLinkIcon} />
                       <p>Wallet Link</p>
+                    </ConnectorButton>)
+                  }
+
+                  {
+                    name === "walletConnect" && (<ConnectorButton
+                      type="secondary"
+                      key={name}
+                      onClick={() => {
+                        activateWallet(currentConnector, name);
+                      }}>
+                      <AvatarIcon src={WalletConnectIcon} />
+                      <p>Wallet Connect</p>
                     </ConnectorButton>)
                   }
                 </Col>
@@ -102,7 +114,6 @@ const OverView = (props) => {
           </Row>
         </Col>
       </Row>
-
     );
   }
 

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
-import { injected, walletlink } from '../hooks/connectors';
+import { injected, walletconnect, walletlink } from '../hooks/connectors';
 import RightSideBar from './../components/rightsidebar/index';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
@@ -18,7 +18,8 @@ import Tokens from './tokens/index';
 
 const connectorsByName = {
   Injected: injected,
-  walletlink: walletlink
+  walletlink: walletlink,
+  walletConnect: walletconnect,
 };
 
 
