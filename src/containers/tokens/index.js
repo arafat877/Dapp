@@ -4,8 +4,8 @@ import { Button, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { TOKEN_INTEREST_URL, TOKEN_LIST_URL } from '../../utils/config';
 import { StyledTable, TokenTableContainer } from './style';
-import { TOKEN_LIST_URL, TOKEN_INTEREST_URL } from '../../utils/config';
 
 const columns = [
 	{
@@ -88,7 +88,7 @@ const Tokens = () => {
 	const [tokensList, setTokensList] = useState([]);
 
 	useEffect(() => {
-		let isCancelled = false;
+		let stale = false;
 		const getTokenInformation = async () => {
 			if (!chainId) return;
 
@@ -96,7 +96,7 @@ const Tokens = () => {
 
 			const interestJson = await fetch(TOKEN_INTEREST_URL).then((res) => res.json());
 
-			if (!isCancelled) {
+			if (!stale) {
 				let tokensListTemp = tokenJson.tokens;
 				tokensListTemp = tokensListTemp
 					.filter((tkn) => tkn.chainId === chainId)
@@ -134,7 +134,7 @@ const Tokens = () => {
 
 		getTokenInformation();
 		return () => {
-			isCancelled = true;
+			stale = true;
 		};
 	}, [chainId, account]);
 

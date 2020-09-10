@@ -9,18 +9,16 @@ const { Meta } = Card;
 
 const AddressMap = () => {
 
-  const context = useWeb3React();
   const [tokensList, setTokensList] = useState(tTokensList);
-
   const {
     account,
     library
-  } = context;
+  } = useWeb3React();
+
   const [form] = Form.useForm();
 
   const setTokenAddress = async (address) => {
     if (account) {
-
       const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
 
       if (res) {
@@ -33,14 +31,13 @@ const AddressMap = () => {
         });
         setTokensList(tempTokenList);
       }
-
     }
   }
 
   useEffect(() => {
-    let isCancelled = false;
+    let stale = false;
     const getTokenAddress = () => {
-      if (account && !isCancelled) {
+      if (account && !stale) {
         const tempTokenList = [...tokensList];
         tempTokenList.map(async (token) => {
           const res = await library.contract.methods.getAddress(account, token.name).call();
@@ -50,12 +47,9 @@ const AddressMap = () => {
         setTokensList(tempTokenList);
       }
     }
-
-
     getTokenAddress();
-
     return () => {
-      isCancelled = true;
+      stale = true;
     }
   }, [account]);
 

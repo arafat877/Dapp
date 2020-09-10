@@ -9,6 +9,7 @@ const WalletLinkIcon = require("../../assets/images/qr-code.png");
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
+
   const {
     library,
     chainId,
