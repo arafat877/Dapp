@@ -5,6 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { StyledTable, TokenTableContainer } from './style';
+import { TOKEN_LIST_URL, TOKEN_INTEREST_URL } from '../../utils/config';
 
 const columns = [
 	{
@@ -80,9 +81,6 @@ const columns = [
 		},
 	},
 ];
-
-const TOKEN_LIST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/data.json';
-const TOKEN_INTEREST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/i.json';
 
 const Tokens = () => {
 	const { chainId, account, library } = useWeb3React();
