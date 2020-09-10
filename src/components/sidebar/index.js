@@ -4,7 +4,7 @@ import { Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
-import { walletconnect, walletlink } from './../../hooks/connectors';
+import { walletConnect, walletlink } from './../../hooks/connectors';
 import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, SideSocial, SideWrapper, SocialAvatar, StyledPopover, ThirmLogo } from './style';
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -17,7 +17,7 @@ const GithubIcon = require('../../assets/images/github.png');
 const ActivePopoverContent = ({ account, active, error, deactivate, connector, history }) => (
 	<PopverWrapper>
 		<Row justify="space-between" align="middle">
-			<Col>{connector === injected ? <ConnectorAvatar src={MetaMaskIcon} /> : connector === walletlink ? <ConnectorAvatar src={WalletLinkIcon} /> : connector === walletconnect ? <ConnectorAvatar src={WalletConnectIcon} /> : null}</Col>
+			<Col>{connector === injected ? <ConnectorAvatar src={MetaMaskIcon} /> : connector === walletlink ? <ConnectorAvatar src={WalletLinkIcon} /> : connector === walletConnect ? <ConnectorAvatar src={WalletConnectIcon} /> : null}</Col>
 			<Col>{account}</Col>
 			<Col xs={24}>
 				{(active || error) && (

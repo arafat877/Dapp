@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import { injected, walletlink } from "./connectors";
+import { injected, walletConnect, walletlink } from "./connectors";
 
 /*
   ****************************************************************
@@ -30,6 +30,10 @@ export function useEagerConnect() {
       });
     } else if (wallet === 'walletlink') {
       activate(walletlink, undefined, true).catch(() => {
+        setTried(true);
+      });
+    } else if (wallet === 'walletConnect') {
+      activate(walletConnect, undefined, true).catch(() => {
         setTried(true);
       });
     }

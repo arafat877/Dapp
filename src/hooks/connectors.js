@@ -6,8 +6,8 @@
  */
 
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 
 const RPC_URLS = {
 	1: 'https://mainnet.infura.io/v3/84842078b09946638c03157f83405213',
@@ -23,7 +23,7 @@ export const walletlink = new WalletLinkConnector({
 	appName: 'web3-react example',
 });
 
-export const walletconnect = new WalletConnectConnector({
+export const walletConnect = new WalletConnectConnector({
 	rpc: { 1: RPC_URLS[1] },
 	bridge: 'https://bridge.walletconnect.org',
 	qrcode: true,

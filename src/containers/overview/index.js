@@ -56,9 +56,9 @@ const OverView = (props) => {
     balanceEnd = balanceSplit[1];
   }
 
-  const activateWallet = (currentConnector, name) => {
+  const activateWallet = async (currentConnector, name) => {
     setActivatingConnector(currentConnector);
-    activate(connectorsByName[name]);
+    await activate(connectorsByName[name]);
     window.localStorage.setItem('wallet', name);
   }
 
