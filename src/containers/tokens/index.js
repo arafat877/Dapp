@@ -109,17 +109,18 @@ const Tokens = () => {
 						tkn.value = null;
 						return tkn;
 					});
-
-				// Get token valye
-				tokensListTemp = await Promise.all(
-					tokensListTemp.map(async (tkn) => {
-						const res = await library.contract.methods.getTToken(tkn.symbol).call();
-						if (res) {
-							tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
-						}
-						return tkn;
-					})
-				);
+				if (chainId !== 1) {
+					// Get token value
+					tokensListTemp = await Promise.all(
+						tokensListTemp.map(async (tkn) => {
+							const res = await library.contract.methods.getTToken(tkn.symbol).call();
+							if (res) {
+								tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
+							}
+							return tkn;
+						})
+					);
+				}
 
 				// get APY and platform data && merge
 				let interestDataTemp = interestJson.tokens;
@@ -137,6 +138,8 @@ const Tokens = () => {
 
 			}
 		};
+
+		console.log(chainId);
 
 		getTokenInformation();
 		return () => {

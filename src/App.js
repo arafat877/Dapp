@@ -4,7 +4,7 @@ import React from 'react';
 import { RecoilRoot } from 'recoil';
 import Web3 from 'web3';
 import MainContent from './containers';
-import { CONTRACT_ADDRESS, ROPSTEN_URL, abi } from './utils/config';
+import { abi, CONTRACT_ADDRESS, ROPSTEN_URL } from './utils/config';
 
 function getLibrary(provider) {
 	const library = new Web3Provider(provider);
