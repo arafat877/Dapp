@@ -1,3 +1,1 @@
-export const blackListTokenAddress = [
-  // '0x351f4897665fF5EDc14595f97764C0DF697C9fAb',
-];
+export const blackListTokenAddress = ['0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c'];
