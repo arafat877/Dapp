@@ -1,5 +1,7 @@
 export const ROPSTEN_URL = 'https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3';
+
 export const TOKEN_LIST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/tokens.json';
+
 export const TOKEN_INTEREST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/i.json';
 
 // reference contract

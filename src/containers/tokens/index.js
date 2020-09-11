@@ -5,6 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TOKEN_INTEREST_URL, TOKEN_LIST_URL } from '../../utils/config';
+import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
 
 const columns = [
@@ -98,14 +99,18 @@ const Tokens = () => {
 
 			if (!stale) {
 				let tokensListTemp = tokenJson.tokens;
+
+				// Filter by network and blacklisted
 				tokensListTemp = tokensListTemp
 					.filter((tkn) => tkn.chainId === chainId)
+					.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
 					.map((tkn) => {
 						tkn.key = tkn.name;
 						tkn.value = null;
 						return tkn;
 					});
 
+				// Get token valye
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (tkn) => {
 						const res = await library.contract.methods.getTToken(tkn.symbol).call();
@@ -116,8 +121,8 @@ const Tokens = () => {
 					})
 				);
 
+				// get APY and platform data && merge
 				let interestDataTemp = interestJson.tokens;
-
 				tokensListTemp = tokensListTemp.map((tkn) => {
 					interestDataTemp.forEach((intr) => {
 						if (intr.Address === tkn.address) {
@@ -129,6 +134,7 @@ const Tokens = () => {
 				});
 
 				setTokensList(tokensListTemp);
+
 			}
 		};
 

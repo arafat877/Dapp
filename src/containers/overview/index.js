@@ -1,7 +1,8 @@
 import { formatEther } from "@ethersproject/units";
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Image, Row } from 'antd';
-import React from 'react';
+import { Button, Col, Image, Modal, Row } from 'antd';
+import React, { useState } from 'react';
+import QRCode from 'react-qr-code';
 import { AvatarIcon, ConnectorButton, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
 
 const MetaMaskIcon = require("../../assets/images/metamask.png");
@@ -63,6 +64,22 @@ const OverView = (props) => {
     window.localStorage.setItem('wallet', name);
   }
 
+
+  const [qrCodeModalVisible, setQrCodeModalVisible] = useState(false);
+
+  const showQrCodeModal = () => {
+    setQrCodeModalVisible(true)
+  };
+
+  const qrCodeModalHandleOk = e => {
+    setQrCodeModalVisible(false)
+  };
+
+  const qrCodeModalHandleCancel = e => {
+    setQrCodeModalVisible(false)
+  };
+
+
   if (!active) {
     return (
       <Row>
@@ -119,36 +136,51 @@ const OverView = (props) => {
   }
 
   return (
-    <Row>
-      <Col xs={24}>
-        <Row justify="space-between" align="middle">
+    <>
+      <Row>
+        <Col xs={24}>
+          <Row justify="space-between" align="middle">
+            <Col xs={12}>
+              <StyledBalance>
+                {balanceFront && balanceEnd && <><span className="balance-unit">{balanceUnit}</span>
+                  <span className="balance-front">{balanceFront}</span>
+                  <span className="balance-end">{`.${balanceEnd}`}</span>
+                </>}
+              </StyledBalance>
+            </Col>
+            <Col xs={6}>
+              <Row justify="end">
+                <RightButtonGroups>
+                  <Button type="primary" onClick={showQrCodeModal}>QR CODE</Button>
+                  <Button type="primary"><a href={`https://etherscan.io/address/${account}`}>View On Explorer
+                  </a>
+                  </Button>
+                </RightButtonGroups>
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={{ span: 24 }}>
+              <PerformanceWrapper>
+                <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
+              </PerformanceWrapper>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Modal
+        title="QR CODE"
+        visible={qrCodeModalVisible}
+        onOk={qrCodeModalHandleOk}
+        onCancel={qrCodeModalHandleCancel}
+        footer={null}
+      > <Row justify="space-around">
           <Col xs={12}>
-            <StyledBalance>
-              {balanceFront && balanceEnd && <><span className="balance-unit">{balanceUnit}</span>
-                <span className="balance-front">{balanceFront}</span>
-                <span className="balance-end">{`.${balanceEnd}`}</span>
-              </>}
-
-            </StyledBalance>
-          </Col>
-          <Col xs={6}>
-            <Row justify="end">
-              <RightButtonGroups>
-                <Button type="primary">QR CODE</Button>
-                <Button type="primary">View On Explorer</Button>
-              </RightButtonGroups>
-            </Row>
+            <QRCode value={account} size={250} />
           </Col>
         </Row>
-        <Row>
-          <Col sm={{ span: 24 }}>
-            <PerformanceWrapper>
-              <Image src="https://i.ibb.co/ydDtDTp/Capture.png" alt="Capture" border="0" />
-            </PerformanceWrapper>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+      </Modal>
+    </>
   );
 }
 
