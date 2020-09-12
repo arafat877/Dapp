@@ -1,6 +1,6 @@
 import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Col, Menu, Row, Tag } from 'antd';
+import { Col, Menu, Row, Tag } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
