@@ -93,17 +93,16 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-										<Link to="/">
-											<ThunderboltOutlined /> {`Connect`}
-										</Link>
-									)}
+									<Link to="/">
+										<ThunderboltOutlined /> {`Connect`}
+									</Link>
+								)}
 							</ConnectButton>
 						}
 					</Col>
 				</Row>
 			)}
 			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']}>
-
 				{active && (
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
@@ -111,10 +110,13 @@ const SideBar = (props) => {
 				)}
 
 				{active && (
-					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Tokens">
-						<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
-							<Link to="/tokens">All Tokens</Link>
-						</Menu.Item>
+					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
+						<Link to="/tokens">T-Tokens</Link>
+					</Menu.Item>
+				)}
+
+				{active && (
+					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Actions">
 						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
 							<Link to="/mint">Mint</Link>
 						</Menu.Item>
@@ -126,9 +128,11 @@ const SideBar = (props) => {
 				)}
 
 				{active && (
-					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
-						<Link to="/addressmap">Address</Link>
-					</Menu.Item>
+					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Config">
+						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
+							<Link to="/addressmap">Address</Link>
+						</Menu.Item>
+					</SubMenu>
 				)}
 
 				{active && (
