@@ -1,4 +1,4 @@
-import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -91,10 +91,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-									<Link to="/">
-										<ThunderboltOutlined /> {`Connect`}
-									</Link>
-								)}
+										<Link to="/">
+											<ThunderboltOutlined /> {`Connect`}
+										</Link>
+									)}
 							</ConnectButton>
 						}
 					</Col>
@@ -124,6 +124,11 @@ const SideBar = (props) => {
 				{active && (
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platform</Link>
+					</Menu.Item>
+				)}
+				{active && (
+					<Menu.Item icon={<NodeIndexOutlined />} key="mint">
+						<Link to="/mint">Mint</Link>
 					</Menu.Item>
 				)}
 			</SideMenu>

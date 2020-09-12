@@ -13,6 +13,7 @@ import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
 import Burn from './burn/index';
 import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
+import Mint from './mint/index';
 import OverView from './overview/index';
 import Platform from './platform/index';
 import Tokens from './tokens/index';
@@ -115,6 +116,7 @@ function MainContent() {
               <Route exact path="/tokens" component={() => <Tokens />} />
               <Route exact path="/burn" component={() => <Burn />} />
               <Route exact path="/platform" component={() => <Platform />} />
+              <Route exact path="/mint" component={() => <Mint />} />
             </Switch>
           </StyledContent>
 
