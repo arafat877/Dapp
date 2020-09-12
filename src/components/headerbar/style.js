@@ -7,6 +7,9 @@ export const ThirmLogo = styled.div`
   flex-direction: row;
   justify-content: middle;
   align-items: center;
+  .logo{
+    margin-left: 16px;
+  }
   .logo-text {
     margin-left: 8px;
     font-size: 17px;
