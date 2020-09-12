@@ -1,6 +1,6 @@
 import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Col, Menu, Row, Tag } from 'antd';
+import { Avatar, Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
@@ -71,6 +71,7 @@ const SideBar = (props) => {
 					<Col xs={24}>
 						<ThirmLogo>
 							<Link to="/">
+								<Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
 								<span className="logo-text">THIRM DAPP</span>
 							</Link>
 						</ThirmLogo>
