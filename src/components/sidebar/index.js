@@ -92,10 +92,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-										<Link to="/">
-											<ThunderboltOutlined /> {`Connect`}
-										</Link>
-									)}
+									<Link to="/">
+										<ThunderboltOutlined /> {`Connect`}
+									</Link>
+								)}
 							</ConnectButton>
 						}
 					</Col>
@@ -117,7 +117,11 @@ const SideBar = (props) => {
 						<Link to="/addressmap">Address</Link>
 					</Menu.Item>
 				)}
-
+				{active && (
+					<Menu.Item icon={<NodeIndexOutlined />} key="mint">
+						<Link to="/mint">Mint</Link>
+					</Menu.Item>
+				)}
 				{active && (
 					<Menu.Item icon={<FireOutlined />} key="burn">
 						<Link to="/burn">Burn</Link>
@@ -126,11 +130,6 @@ const SideBar = (props) => {
 				{active && (
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platforms</Link>
-					</Menu.Item>
-				)}
-				{active && (
-					<Menu.Item icon={<NodeIndexOutlined />} key="mint">
-						<Link to="/mint">Mint</Link>
 					</Menu.Item>
 				)}
 			</SideMenu>
