@@ -102,7 +102,7 @@ const SideBar = (props) => {
 					</Col>
 				</Row>
 			)}
-			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']}>
+			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
 
 				{active && (
 					<Menu.Item icon={<EyeOutlined />} key="overview">
