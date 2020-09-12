@@ -1,6 +1,6 @@
 import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Col, Menu, Row, Tag } from 'antd';
+import { Col, Menu, Row, Tag } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
@@ -72,7 +72,6 @@ const SideBar = (props) => {
 					<Col xs={24}>
 						<ThirmLogo>
 							<Link to="/">
-								<Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
 								<span className="logo-text">THIRM DAPP</span>
 							</Link>
 						</ThirmLogo>
@@ -103,7 +102,6 @@ const SideBar = (props) => {
 				</Row>
 			)}
 			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
-
 				{active && (
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
@@ -111,10 +109,13 @@ const SideBar = (props) => {
 				)}
 
 				{active && (
-					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Tokens">
-						<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
-							<Link to="/tokens">All Tokens</Link>
-						</Menu.Item>
+					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
+						<Link to="/tokens">T-Tokens</Link>
+					</Menu.Item>
+				)}
+
+				{active && (
+					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Actions">
 						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
 							<Link to="/mint">Mint</Link>
 						</Menu.Item>
@@ -126,9 +127,11 @@ const SideBar = (props) => {
 				)}
 
 				{active && (
-					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
-						<Link to="/addressmap">Address</Link>
-					</Menu.Item>
+					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Config">
+						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
+							<Link to="/addressmap">Address</Link>
+						</Menu.Item>
+					</SubMenu>
 				)}
 
 				{active && (
