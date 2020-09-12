@@ -72,7 +72,6 @@ const SideBar = (props) => {
 					<Col xs={24}>
 						<ThirmLogo>
 							<Link to="/">
-								<Avatar className="logo" src="https://raw.githubusercontent.com/thirmprotocol/Assets/master/logo.png" />
 								<span className="logo-text">THIRM DAPP</span>
 							</Link>
 						</ThirmLogo>
