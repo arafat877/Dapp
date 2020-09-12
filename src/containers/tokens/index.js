@@ -104,6 +104,7 @@ const Tokens = () => {
 						tkn.value = null;
 						return tkn;
 					});
+
 				if (chainId !== 1) {
 					// Get token value
 					tokensListTemp = await Promise.all(
@@ -133,8 +134,6 @@ const Tokens = () => {
 
 			}
 		};
-
-		console.log(chainId);
 
 		getTokenInformation();
 		return () => {
