@@ -10,7 +10,7 @@ const Burn = () => {
       <Col xs={24}>
         <QRCode value="0x0000000000000000000000000000000000000000" size={200} />
         <BurnInfo>
-          <p>Burn your token to address: </p>
+          <p>Burn your T-Tokens By Sending Them To This Address & Receive Back Locked Crypto: </p>
           <p>0x0000000000000000000000000000000000000000</p>
         </BurnInfo>
       </Col>

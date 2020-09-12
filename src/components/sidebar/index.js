@@ -80,7 +80,7 @@ const SideBar = (props) => {
 							<ConnectButton type="secondary">
 								{active ? (
 									<StyledPopover placement="right" content={() => <ActivePopoverContent account={account} active={active} error={error} deactivate={deactivate} connector={connector} history={history} />}>
-										<ConnectedAvatar src={`https://robohash.org/${account}?set=set3`} />
+										<ConnectedAvatar src={`https://robohash.org/${account}?set=set5`} />
 										{networkName && (
 											<Tag className="network-name" color="success">
 												{networkName}
@@ -91,10 +91,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-										<Link to="/">
-											<ThunderboltOutlined /> {`Connect`}
-										</Link>
-									)}
+									<Link to="/">
+										<ThunderboltOutlined /> {`Connect`}
+									</Link>
+								)}
 							</ConnectButton>
 						}
 					</Col>
