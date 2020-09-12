@@ -107,15 +107,16 @@ const SideBar = (props) => {
 					</Menu.Item>
 				)}
 				{active && (
-					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
-						<Link to="/addressmap">Address</Link>
-					</Menu.Item>
-				)}
-				{active && (
 					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
 						<Link to="/tokens">Tokens</Link>
 					</Menu.Item>
 				)}
+				{active && (
+					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
+						<Link to="/addressmap">Address</Link>
+					</Menu.Item>
+				)}
+
 				{active && (
 					<Menu.Item icon={<FireOutlined />} key="burn">
 						<Link to="/burn">Burn</Link>
@@ -123,7 +124,7 @@ const SideBar = (props) => {
 				)}
 				{active && (
 					<Menu.Item icon={<FundOutlined />} key="platform">
-						<Link to="/platform">Platform</Link>
+						<Link to="/platform">Platforms</Link>
 					</Menu.Item>
 				)}
 				{active && (
