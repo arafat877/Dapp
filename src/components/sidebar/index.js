@@ -1,4 +1,4 @@
-import { BorderlessTableOutlined, EyeOutlined, FireOutlined, MoneyCollectOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Menu, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -119,6 +119,11 @@ const SideBar = (props) => {
 				{active && (
 					<Menu.Item icon={<FireOutlined />} key="burn">
 						<Link to="/burn">Burn</Link>
+					</Menu.Item>
+				)}
+				{active && (
+					<Menu.Item icon={<FundOutlined />} key="platform">
+						<Link to="/platform">Platform</Link>
 					</Menu.Item>
 				)}
 			</SideMenu>

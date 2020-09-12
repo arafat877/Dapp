@@ -14,6 +14,7 @@ import AddressMap from './adressmap';
 import Burn from './burn/index';
 import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview/index';
+import Platform from './platform/index';
 import Tokens from './tokens/index';
 
 const connectorsByName = {
@@ -113,6 +114,7 @@ function MainContent() {
               <Route exact path="/addressmap" component={() => <AddressMap />} />
               <Route exact path="/tokens" component={() => <Tokens />} />
               <Route exact path="/burn" component={() => <Burn />} />
+              <Route exact path="/platform" component={() => <Platform />} />
             </Switch>
           </StyledContent>
 

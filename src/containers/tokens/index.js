@@ -31,11 +31,6 @@ const columns = [
 		key: 'symbol',
 	},
 	{
-		title: 'Chain ID',
-		dataIndex: 'chainId',
-		key: 'chainId',
-	},
-	{
 		title: 'Address',
 		key: 'address',
 		dataIndex: 'address',
