@@ -1,6 +1,7 @@
 import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined, RightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Col, Menu, Row, Tag } from 'antd';
+import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
@@ -92,41 +93,44 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-									<Link to="/">
-										<ThunderboltOutlined /> {`Connect`}
-									</Link>
-								)}
+										<Link to="/">
+											<ThunderboltOutlined /> {`Connect`}
+										</Link>
+									)}
 							</ConnectButton>
 						}
 					</Col>
 				</Row>
 			)}
-			<SideMenu mode="vertical" defaultSelectedKeys={[addr]}>
+			<SideMenu mode="inline" defaultSelectedKeys={[addr]} >
+
 				{active && (
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
 				)}
+
 				{active && (
-					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
-						<Link to="/tokens">Tokens</Link>
-					</Menu.Item>
+					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Tokens">
+						<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
+							<Link to="/tokens">All Tokens</Link>
+						</Menu.Item>
+						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
+							<Link to="/mint">Mint</Link>
+						</Menu.Item>
+
+						<Menu.Item icon={<FireOutlined />} key="burn">
+							<Link to="/burn">Burn</Link>
+						</Menu.Item>
+					</SubMenu>
 				)}
+
 				{active && (
 					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
 						<Link to="/addressmap">Address</Link>
 					</Menu.Item>
 				)}
-				{active && (
-					<Menu.Item icon={<NodeIndexOutlined />} key="mint">
-						<Link to="/mint">Mint</Link>
-					</Menu.Item>
-				)}
-				{active && (
-					<Menu.Item icon={<FireOutlined />} key="burn">
-						<Link to="/burn">Burn</Link>
-					</Menu.Item>
-				)}
+
 				{active && (
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platforms</Link>
