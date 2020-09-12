@@ -10,14 +10,12 @@ const Burn = () => {
 		const hongKongTime = moment().tz('Asia/Hong_Kong');
 		const endOfDay = moment().tz('Asia/Hong_Kong').endOf('day');
 		let diff = endOfDay.diff(hongKongTime, 'seconds');
-		console.log(diff);
 		if (diff > 0) {
 			setInterval(() => {
-				diff = diff - 1;
-				setCountDownTime(diff);
-			}, 1000);
+				setCountDownTime(countDownTime - 60);
+			}, 60 * 1000);
 		}
-	}, []);
+	}, [countDownTime]);
 
 	return (
 		<Row>
@@ -30,7 +28,7 @@ const Burn = () => {
 					</div>
 					<div className="burn-countdown">
 						<p>Next Payout In</p>
-						<h1>{moment().seconds(countDownTime).format('HH:mm:ss')}</h1>
+						<h1>{moment().seconds(countDownTime).format('HH:mm')}</h1>
 					</div>
 				</BurnInfo>
 			</Col>
