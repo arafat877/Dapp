@@ -101,7 +101,7 @@ const SideBar = (props) => {
 					</Col>
 				</Row>
 			)}
-			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
+			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
 				{active && (
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
@@ -127,7 +127,7 @@ const SideBar = (props) => {
 				)}
 
 				{active && (
-					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Config">
+					<SubMenu key="config" icon={<MoneyCollectOutlined />} title="Config">
 						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
 							<Link to="/addressmap">Address</Link>
 						</Menu.Item>
