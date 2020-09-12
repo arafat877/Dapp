@@ -3,7 +3,9 @@ import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Modal, Row } from 'antd';
 import React, { useState } from 'react';
 import QRCode from 'react-qr-code';
+import ScriptTag from 'react-script-tag';
 import { AvatarIcon, ConnectorButton, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
+
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
@@ -160,8 +162,10 @@ const OverView = (props) => {
 						</Col>
 					</Row>
 					<Row>
-						<Col sm={{ span: 24 }}>
-							<PerformanceWrapper></PerformanceWrapper>
+						<Col xs={24}>
+							<PerformanceWrapper>
+								<div class="nomics-ticker-widget" data-name="Ethereum" data-base="ETH" data-quote="USD"></div><ScriptTag src="https://widget.nomics.com/embed.js"></ScriptTag>
+							</PerformanceWrapper>
 						</Col>
 					</Row>
 				</Col>

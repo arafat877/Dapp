@@ -19,10 +19,13 @@ export const StyledBalance = styled.div`
 `;
 
 export const PerformanceWrapper = styled.div`
+  margin-top: 80px;
   display: flex;
-  flex-direction: row;
-  margin-top: 40px;
+  align-items: center;
   justify-content: center;
+  .nomics-ticker-widget-embedded {
+    width: 100%;
+  }
 `;
 
 export const RightButtonGroups = styled.div`
