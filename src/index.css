@@ -33,3 +33,7 @@ button:hover {
 button:focus {
   outline: none;
 }
+
+p {
+  font-weight: normal;
+}
