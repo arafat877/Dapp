@@ -4,11 +4,8 @@ export const TOKEN_LIST_URL = 'https://raw.githubusercontent.com/thirmprotocol/A
 
 export const TOKEN_INTEREST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/i.json';
 
-// reference contract
-// https://raw.githubusercontent.com/thirmprotocol/contracts/master/thirmprotocol.sol
+export const CONTRACT_ADDRESS = '0x9fd0a63D582cfF5b05AFEaa003E218BAA485ede4';
+//export const MAINNET CONTRACT_ADDRESS = '0x17136874edBB6Ab273d7cb51FbFaaf4eac812B88';
 
-export const CONTRACT_ADDRESS = '0x17136874edBB6Ab273d7cb51FbFaaf4eac812B88';
-export const abi = require(`./${CONTRACT_ADDRESS}.json`);
+export const abi = require(`./abi.json`);
 
-// abi hotlink
-// https://api-ropsten.etherscan.io/api?module=contract&action=getabi&address=${CONTRACT_ADDRESS}&format=raw
