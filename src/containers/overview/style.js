@@ -21,10 +21,8 @@ export const StyledBalance = styled.div`
 export const PerformanceWrapper = styled.div`
   margin-top: 80px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   .nomics-ticker-widget-embedded {
-    width: 100%;
+    width: 000px;
   }
 `;
 
