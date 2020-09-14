@@ -13,7 +13,7 @@
 		"@web3-react/injected-connector": "^6.0.7",
 		"@web3-react/walletconnect-connector": "^6.1.6",
 		"@web3-react/walletlink-connector": "^6.1.6",
-		"antd": "^4.6.3",
+		"antd": "^4.6.4",
 		"craco-less": "^1.17.0",
 		"moment-timezone": "^0.5.31",
 		"react": "^16.13.1",
