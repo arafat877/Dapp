@@ -12,7 +12,7 @@ import RightSideBar from './../components/rightsidebar/index';
 import { useEagerConnect, useInactiveListener } from './../hooks/index';
 import AddressMap from './adressmap';
 import Burn from './burn/index';
-import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
+import { BetaInfo, StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import Mint from './mint/index';
 import OverView from './overview/index';
 import Platform from './platform/index';
@@ -110,6 +110,7 @@ function MainContent() {
           </StyledSider>
 
           <StyledContent>
+            <BetaInfo>App is currently in beta and will undergo heavy UI changes.</BetaInfo>
             <Switch>
               <Route exact path="/" component={() => <OverView connectorsByName={connectorsByName} activate={activate} setActivatingConnector={setActivatingConnector} />} />
               <Route exact path="/addressmap" component={() => <AddressMap />} />

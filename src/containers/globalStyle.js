@@ -34,4 +34,9 @@ export const StyledDrawer = styled(Drawer)`
   background-color: #fafafa;
 `;
 
+export const BetaInfo = styled.p`
+  color: #999;
+  margin: 36px 0;
+`;
+
 
