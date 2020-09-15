@@ -19,12 +19,10 @@ const tPlatformList = {
 		{
 			Platform: 'Compound',
 			Defination: 'Compound is an algorithmic, autonomous interest rate protocol built for developers, to unlock a universe of open financial applications.',
-			
 		},
 		{
 			Platform: 'B2B',
-			Defination: 'Business-to-business is a situation where one business makes a commercial transaction with another.There are many platforms which supports B2B.',
-			
+			Defination: 'Business-to-business is a situation where one business makes a commercial transaction with another.',
 		},
 	],
 };
