@@ -1,6 +1,6 @@
 {
-	"name": "thirm-appz",
-	"version": "0.1.0",
+	"name": "Thirm",
+	"version": "0.1.1",
 	"private": true,
 	"dependencies": {
 		"@ant-design/icons": "^4.2.2",
