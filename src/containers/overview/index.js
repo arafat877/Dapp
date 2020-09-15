@@ -4,7 +4,8 @@ import { Button, Col, Modal, Row } from 'antd';
 import React, { useState } from 'react';
 import QRCode from 'react-qr-code';
 import ScriptTag from 'react-script-tag';
-import { AvatarIcon, ConnectorButton, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
+import { getErrorMessage } from './../../hooks/index';
+import { AvatarIcon, ConnectorButton, ErrorAlert, LoginInfo, PerformanceWrapper, RightButtonGroups, StyledBalance } from './style';
 
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -12,7 +13,7 @@ const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
-	const { library, chainId, account, active } = useWeb3React();
+	const { library, chainId, account, active, error } = useWeb3React();
 
 	const { connectorsByName, activate, setActivatingConnector } = props;
 
@@ -127,6 +128,15 @@ const OverView = (props) => {
 								);
 							})}
 					</Row>
+				</Col>
+				<Col xs={12}>
+					{!!error && (<ErrorAlert
+						message="Error"
+						description={getErrorMessage(error)}
+						type="error"
+						showIcon
+					/>)}
+
 				</Col>
 			</Row>
 		);

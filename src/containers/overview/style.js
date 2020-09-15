@@ -1,4 +1,4 @@
-import { Avatar, Button } from 'antd';
+import { Alert, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 
 export const StyledBalance = styled.div`
@@ -61,4 +61,8 @@ export const ConnectorButton = styled(Button)`
 export const AvatarIcon = styled(Avatar)`
   padding: 6px;
   margin: 4px;
+`;
+
+export const ErrorAlert = styled(Alert)`
+margin-top: 36px;
 `;
