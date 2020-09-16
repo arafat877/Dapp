@@ -23,5 +23,5 @@ jobs:
       - run: sudo apt install git-all -y
       - run: sudo npm install -g yarn
       - run: yarn
-      - run: yarn test
+      - run: yarn test --passWithNoTests
       - run: yarn build
