@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Route, Switch
 } from "react-router-dom";
-import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
 import { injected, walletConnect, walletlink } from '../hooks/connectors';
 import RightSideBar from './../components/rightsidebar/index';
@@ -100,7 +99,6 @@ function MainContent() {
         </StyledDrawer>
 
         {collapsed && <StyledHeader>
-          <HeaderBar visible={leftDrawerVisible} onLeftDrawerOpen={onLeftDrawerOpen} onRightDrawerOpen={onRightDrawerOpen} collapsed={collapsed} />
         </StyledHeader>}
 
         <Layout>
