@@ -1,37 +1,29 @@
-import { Alert, Avatar, Button } from 'antd';
+import { Alert, Avatar, Button, Card } from 'antd';
 import styled from 'styled-components';
 
 export const StyledBalance = styled.div`
  font-size: 32px;
- font-weight: 600;
  color: #191919;
+ margin: 8px;
  .balance-unit {
-   font-size: 16px;
-   margin-right: 8px;
-   font-weight: 500;
+   font-weight: 600;
  }
  .balance-front {
    color: #000;
+   font-weight: 700;
  }
  .balance-end {
    color: #bdbdbd;
+   font-weight: 600;
   }
 `;
 
 export const PerformanceWrapper = styled.div`
-  margin-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   .nomics-ticker-widget-embedded {
     width: 100%;
-  }
-`;
-
-export const RightButtonGroups = styled.div`
-  display: flex;
-  button {
-    margin-left: 8px;
   }
 `;
 
@@ -65,4 +57,25 @@ export const AvatarIcon = styled(Avatar)`
 
 export const ErrorAlert = styled(Alert)`
 margin-top: 36px;
+`;
+
+export const LeftSideCard = styled(Card)`
+  margin: 8px 0;
+  width: 100%;
+  display: inline-flex;
+  .card-text {
+    font-size: 16px;
+    color: #727272;
+    margin-bottom: -4px;
+    margin-top: -4px
+  }
+  .card-number {
+    font-size: 36px;
+  }
+`;
+
+export const RightSideCard = styled(Card)`
+  text-align: center;
+  margin: 8px 0;
+  width: 100%;
 `;

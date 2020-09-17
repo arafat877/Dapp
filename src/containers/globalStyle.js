@@ -2,9 +2,9 @@ import { Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const StyledContent = styled(Layout.Content)`
-	margin: 32px auto;
-	padding: 48px;
-	background-color: #fefefe;
+	margin: 0 auto;
+	padding: 54px;
+	background-color: #fafafa;
 	@media (max-width: 768px) {
 		margin: 60px auto;
 		padding: 16px;
