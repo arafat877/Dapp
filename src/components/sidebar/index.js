@@ -72,7 +72,9 @@ const SideBar = (props) => {
 					<Col xs={24}>
 						<ThirmLogo>
 							<Link to="/">
-								<span className="logo-text">THIRM DAPP</span>
+								<span className="logo-text">
+									THIRM DAPP <Tag color="volcano">BETA</Tag>
+								</span>
 							</Link>
 						</ThirmLogo>
 					</Col>
@@ -92,10 +94,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-										<Link to="/">
-											<ThunderboltOutlined /> {`Connect`}
-										</Link>
-									)}
+									<Link to="/">
+										<ThunderboltOutlined /> {`Connect`}
+									</Link>
+								)}
 							</ConnectButton>
 						}
 					</Col>
