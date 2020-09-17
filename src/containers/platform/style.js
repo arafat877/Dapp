@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const TokenCard = styled(Card)`
 	cursor: pointer;
-	width: 400px;
+	width: 300px;
 	height: 200px;
 	&:hover {
 		background-color: #fafafa;
