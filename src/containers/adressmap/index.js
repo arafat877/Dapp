@@ -2,8 +2,8 @@
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { tTokensList } from './../../utils/tTokensList';
 import { TokenCard } from './style';
-import { tTokensList } from './tTokensList';
 
 const { Meta } = Card;
 

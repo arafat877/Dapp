@@ -4,6 +4,7 @@ import QRCode from 'react-qr-code';
 import { BurnInfo } from './style';
 
 const Burn = () => {
+
 	return (
 		<Row>
 			<Col xs={24}>
