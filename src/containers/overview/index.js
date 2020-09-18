@@ -1,3 +1,4 @@
+import Box from '3box';
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
@@ -36,7 +37,7 @@ const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
 	const { library, chainId, account, active, error } = useWeb3React();
-
+	const context = useWeb3React();
 	const { connectorsByName, activate, setActivatingConnector } = props;
 
 	// State to set the ether balance
@@ -44,13 +45,12 @@ const OverView = (props) => {
 
 	const [thrmBalance, setThrmBalance] = useState(0.0);
 
-	const [totalSupply, setTotalSupply] = useState(0);
-
 	const [tokenOwned, setTokenOwned] = useState(0);
 
 	// Get balance when component mounts
 	React.useEffect(() => {
 		let stale = false;
+
 		const getBalances = async () => {
 			if (library && account) {
 				library
@@ -67,7 +67,6 @@ const OverView = (props) => {
 					});
 
 				const thrmBalance = await library.thirm.methods.balanceOf(account).call();
-
 				if (thrmBalance) {
 					setThrmBalance(thrmBalance);
 				}
@@ -78,13 +77,30 @@ const OverView = (props) => {
 		const getTotalSupply = async () => {
 			if (library) {
 				const totalSupply = await library.thirm.methods.totalSupply().call();
-				setTotalSupply(parseInt(totalSupply));
-
 				const tokenOwned = parseFloat((thrmBalance / totalSupply) * 100).toFixed(8);
 				setTokenOwned(tokenOwned);
 			}
 		}
 
+		const auth3Box = async () => {
+			if (library && account) {
+
+				const box = await Box.openBox(account, library.provider);
+				const myProfile = await Box.getProfile(account);
+				await box.syncDone;
+
+				console.log(myProfile);
+				const space = box.openSpace('distributed-app-store');
+
+				const res = await space.public.set(`${account}-0`, thrmBalance);
+				console.log(res);
+
+				const spaceData = await space.public.all()
+				console.log(spaceData);
+			}
+		}
+
+		auth3Box();
 		getBalances();
 		getTotalSupply();
 
@@ -93,7 +109,7 @@ const OverView = (props) => {
 			setEthBalance(undefined);
 		};
 
-	}, [library, account, chainId, thrmBalance]);
+	}, [library, account, chainId, thrmBalance, context]);
 
 	const ethBalanceUnit = 'ETH';
 	let ethbalanceFront = '';
@@ -205,14 +221,10 @@ const OverView = (props) => {
 					</StyledBalance>
 				</LeftSideCard>
 				<LeftSideCard style={{ height: 150 }}>
-					<p className="card-text">Thirm Token Owned</p>
+					<p className="card-text">Thirm Protocol Ownership</p>
 					<p className="card-number">{`${tokenOwned} %`}</p>
 				</LeftSideCard>
-				<LeftSideCard style={{ height: 150 }}>
-					<p className="card-text">Interest Earned</p>
-					<h2 className="card-number">0.00005%</h2>
-					<p className="card-text">hold more thirm to earn more</p>
-				</LeftSideCard>
+
 			</Col>
 			<Col xs={24} xl={16}>
 				<LeftSideCard>
