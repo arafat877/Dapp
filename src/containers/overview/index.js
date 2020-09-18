@@ -2,10 +2,9 @@ import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
-import QRCode from 'react-qr-code';
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { getErrorMessage } from './../../hooks/index';
-import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, RightSideCard, StyledBalance } from './style';
+import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, StyledBalance } from './style';
 
 const chartData = [
 	{
@@ -43,8 +42,11 @@ const OverView = (props) => {
 	// State to set the ether balance
 	const [ethBalance, setEthBalance] = useState(0.0);
 
-	// State to set the ether balance
-	const [thrmBalance, setThrmBalance] = useState(0.00);
+	const [thrmBalance, setThrmBalance] = useState(0.0);
+
+	const [totalSupply, setTotalSupply] = useState(0);
+
+	const [tokenOwned, setTokenOwned] = useState(0);
 
 	// Get balance when component mounts
 	React.useEffect(() => {
@@ -73,14 +75,25 @@ const OverView = (props) => {
 
 		};
 
+		const getTotalSupply = async () => {
+			if (library) {
+				const totalSupply = await library.thirm.methods.totalSupply().call();
+				setTotalSupply(totalSupply);
+
+				const tokenOwned = (thrmBalance / totalSupply) * 100;
+				setTokenOwned(tokenOwned);
+			}
+		}
+
 		getBalances();
+		getTotalSupply();
 
 		return () => {
 			stale = true;
 			setEthBalance(undefined);
 		};
 
-	}, [library, account, chainId]);
+	}, [library, account, chainId, thrmBalance]);
 
 
 
@@ -88,7 +101,7 @@ const OverView = (props) => {
 	let ethbalanceFront = '';
 	let ethBalanceEnd = '';
 	if (ethBalance !== null && ethBalance !== undefined) {
-		const balanceSplit = parseFloat(formatEther(ethBalance)).toPrecision(5).toString().split('.');
+		const balanceSplit = parseFloat(formatEther(ethBalance)).toFixed(8).toString().split('.');
 		ethbalanceFront = balanceSplit[0];
 		ethBalanceEnd = balanceSplit[1];
 	}
@@ -97,14 +110,9 @@ const OverView = (props) => {
 	let thrmbalanceFront = '';
 	let thrmBalanceEnd = '';
 	if (thrmBalance !== null && thrmBalance !== undefined) {
-		const balanceSplit = parseFloat(formatEther(thrmBalance)).toPrecision(5).toString().split('.');
+		const balanceSplit = parseFloat(formatEther(thrmBalance)).toFixed(8).toString().split('.');
 		thrmbalanceFront = balanceSplit[0];
-		if (balanceSplit[1] !== undefined) {
-			thrmBalanceEnd = balanceSplit[1];
-		} else {
-			thrmBalanceEnd = '00000';
-		}
-
+		thrmBalanceEnd = balanceSplit[1];
 	}
 
 	const activateWallet = async (currentConnector, name) => {
@@ -181,7 +189,7 @@ const OverView = (props) => {
 	}
 	return (
 		<Row gutter={16}>
-			<Col xs={24} xl={6}>
+			<Col xs={24} xl={8}>
 				<LeftSideCard>
 					<StyledBalance>
 						<p className="card-text balance-unit">{ethBalanceUnit}</p>
@@ -203,12 +211,13 @@ const OverView = (props) => {
 					<h2 className="card-number">0.00005%</h2>
 					<p className="card-text">hold more thirm to earn more</p>
 				</LeftSideCard>
+
 				<LeftSideCard style={{ height: 150 }}>
-					<p className="card-text">Total Supply</p>
-					<h2 className="card-number">0</h2>
+					<p className="card-text">Thirm Token Owned</p>
+					<p className="card-number">{`${tokenOwned} %`}</p>
 				</LeftSideCard>
 			</Col>
-			<Col xs={24} xl={18}>
+			<Col xs={24} xl={16}>
 				<LeftSideCard>
 					<LineChart
 						width={450}
@@ -228,11 +237,11 @@ const OverView = (props) => {
 					</LineChart>
 				</LeftSideCard>
 				<Row gutter={16}>
-					<Col xs={24} xl={12}>
-						<RightSideCard>
-							<p>Scan your token address</p>
-							<QRCode value={account} size={150} />
-						</RightSideCard>
+					<Col xs={24}>
+						<LeftSideCard style={{ height: 150 }}>
+							<p className="card-text">Total Supply</p>
+							<p className="card-number">{totalSupply}</p>
+						</LeftSideCard>
 					</Col>
 				</Row>
 			</Col>

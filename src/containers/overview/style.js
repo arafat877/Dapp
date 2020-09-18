@@ -71,6 +71,7 @@ export const LeftSideCard = styled(Card)`
   }
   .card-number {
     font-size: 36px;
+    font-weight: 600;
   }
 `;
 
