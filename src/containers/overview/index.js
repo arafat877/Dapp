@@ -1,8 +1,7 @@
-import Box from '3box';
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { getErrorMessage } from './../../hooks/index';
 import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, StyledBalance } from './style';
@@ -91,25 +90,6 @@ const OverView = (props) => {
 		};
 
 	}, [library, account, chainId, thrmBalance, context]);
-
-
-	useEffect(() => {
-		const auth3Box = async () => {
-			if (library && account) {
-				const box = await Box.openBox(account, library.provider);
-				await box.syncDone;
-				const space = box.openSpace('distributed-app-store');
-
-				const res = await space.public.set(`${account}-0`, thrmBalance);
-				console.log(res);
-
-				const spaceData = await space.public.all()
-				console.log(spaceData);
-			}
-		}
-
-		// auth3Box();
-	}, [account, library, thrmBalance]);
 
 	const ethBalanceUnit = 'ETH';
 	let ethbalanceFront = '';
