@@ -35,7 +35,6 @@ export const tTokensList = [
 		address: '',
 		depositaddress: 'nano_3sumsrd8ckhokkb7379p49c1ndzpi7f94bzkxqozrfs8fk38qc1awn9k1kyb',
 	},
-
 	{
 		name: 'TRX',
 		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tTRX.png',

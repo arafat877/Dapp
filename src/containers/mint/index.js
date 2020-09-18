@@ -32,7 +32,7 @@ const Mint = () => {
 										<Col xs={24}>
 											<p>Select Token</p>
 											<p>
-												<Select style={{ width: 200 }} allowClear onChange={onChangeToken} placeholder="Select a token">
+												<Select style={{ width: 200 }} allowClear onChange={onChangeToken} placeholder="Select Coin">
 													{tokensList.map((tkn) => (
 														<Option value={tkn.depositaddress}>{tkn.name}</Option>
 													))}
