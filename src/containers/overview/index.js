@@ -178,24 +178,21 @@ const OverView = (props) => {
 		<Row gutter={16}>
 			<Col xs={24} xl={6}>
 				<LeftSideCard>
-					{ethbalanceFront && ethBalanceEnd && (
-						<StyledBalance>
-							<p className="card-text balance-unit">{ethBalanceUnit}</p>
-							<p className="card-number">
-								<span className="balance-front">{ethbalanceFront}</span>
-								<span className="balance-end">{`.${ethBalanceEnd}`}</span>
-							</p>
-						</StyledBalance>
-					)}
-					{thrmbalanceFront && thrmBalanceEnd && (
-						<StyledBalance>
-							<p className="card-text balance-unit">{thrmBalanceUnit}</p>
-							<p className="card-number">
-								<span className="balance-front">{thrmbalanceFront}</span>
-								<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
-							</p>
-						</StyledBalance>
-					)}
+					<StyledBalance>
+						<p className="card-text balance-unit">{ethBalanceUnit}</p>
+						<p className="card-number">
+							<span className="balance-front">{ethbalanceFront}</span>
+							<span className="balance-end">{`.${ethBalanceEnd}`}</span>
+						</p>
+					</StyledBalance>
+					<StyledBalance>
+						<p className="card-text balance-unit">{thrmBalanceUnit}</p>
+						<p className="card-number">
+							<span className="balance-front">{thrmbalanceFront}</span>
+							<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
+						</p>
+					</StyledBalance>
+
 				</LeftSideCard>
 				<LeftSideCard style={{ height: 150 }}>
 					<p className="card-text">Interest Earned</p>
