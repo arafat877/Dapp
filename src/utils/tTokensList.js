@@ -1,11 +1,5 @@
 export const tTokensList = [
 	{
-		name: 'ADA',
-		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tADA.png',
-		address: '',
-		depositaddress: '0x0000000000000000000000000000000000000001',
-	},
-	{
 		name: 'BNB',
 		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBNB.png',
 		address: '',
@@ -30,12 +24,6 @@ export const tTokensList = [
 		depositaddress: 'DsdjuwZzF4uGs9DvLdUo25x1WfC83FqoLsx',
 	},
 	{
-		name: 'EOS',
-		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tEOS.png',
-		address: '',
-		depositaddress: '0x0000000000000000000000000000000000000006',
-	},
-	{
 		name: 'LTC',
 		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tLTC.png',
 		address: '',
@@ -47,12 +35,7 @@ export const tTokensList = [
 		address: '',
 		depositaddress: 'nano_3sumsrd8ckhokkb7379p49c1ndzpi7f94bzkxqozrfs8fk38qc1awn9k1kyb',
 	},
-	{
-		name: 'NEO',
-		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tNEO.png',
-		address: '',
-		depositaddress: '0x0000000000000000000000000000000000000009',
-	},
+
 	{
 		name: 'TRX',
 		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tTRX.png',
@@ -70,11 +53,5 @@ export const tTokensList = [
 		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tXLM.png',
 		address: '',
 		depositaddress: 'GAZCRSKPVQ4XWDAEBCVOZUXHUZ3UT3J5HKGI3XXPS2FG4SZPY7VH34R3',
-	},
-	{
-		name: 'XMR',
-		image: 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tXMR.png',
-		address: '',
-		depositaddress: '0x0000000000000000000000000000000000000013',
 	},
 ];
