@@ -78,9 +78,9 @@ const OverView = (props) => {
 		const getTotalSupply = async () => {
 			if (library) {
 				const totalSupply = await library.thirm.methods.totalSupply().call();
-				setTotalSupply(totalSupply);
+				setTotalSupply(parseInt(totalSupply));
 
-				const tokenOwned = ((thrmBalance / totalSupply) * 100).toFixed(8);
+				const tokenOwned = parseFloat((thrmBalance / totalSupply) * 100).toFixed(8);
 				setTokenOwned(tokenOwned);
 			}
 		}
@@ -94,8 +94,6 @@ const OverView = (props) => {
 		};
 
 	}, [library, account, chainId, thrmBalance]);
-
-
 
 	const ethBalanceUnit = 'ETH';
 	let ethbalanceFront = '';
@@ -207,25 +205,16 @@ const OverView = (props) => {
 					</StyledBalance>
 				</LeftSideCard>
 				<LeftSideCard style={{ height: 150 }}>
+					<p className="card-text">Thirm Token Owned</p>
+					<p className="card-number">{`${tokenOwned} %`}</p>
+				</LeftSideCard>
+				<LeftSideCard style={{ height: 150 }}>
 					<p className="card-text">Interest Earned</p>
 					<h2 className="card-number">0.00005%</h2>
 					<p className="card-text">hold more thirm to earn more</p>
 				</LeftSideCard>
-
-				<LeftSideCard style={{ height: 150 }}>
-					<p className="card-text">Thirm Token Owned</p>
-					<p className="card-number">{`${tokenOwned} %`}</p>
-				</LeftSideCard>
 			</Col>
 			<Col xs={24} xl={16}>
-				<Row gutter={16}>
-					<Col xs={24}>
-						<LeftSideCard style={{ height: 150 }}>
-							<p className="card-text">Total Supply</p>
-							<p className="card-number">{totalSupply}</p>
-						</LeftSideCard>
-					</Col>
-				</Row>
 				<LeftSideCard>
 					<LineChart
 						width={450}
