@@ -80,7 +80,7 @@ const OverView = (props) => {
 				const totalSupply = await library.thirm.methods.totalSupply().call();
 				setTotalSupply(totalSupply);
 
-				const tokenOwned = (thrmBalance / totalSupply) * 100;
+				const tokenOwned = ((thrmBalance / totalSupply) * 100).toFixed(8);
 				setTokenOwned(tokenOwned);
 			}
 		}
