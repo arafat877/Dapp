@@ -99,7 +99,12 @@ const OverView = (props) => {
 	if (thrmBalance !== null && thrmBalance !== undefined) {
 		const balanceSplit = parseFloat(formatEther(thrmBalance)).toPrecision(5).toString().split('.');
 		thrmbalanceFront = balanceSplit[0];
-		thrmBalanceEnd = balanceSplit[1];
+		if (balanceSplit[1] !== undefined) {
+			thrmBalanceEnd = balanceSplit[1];
+		} else {
+			thrmBalanceEnd = '00000';
+		}
+
 	}
 
 	const activateWallet = async (currentConnector, name) => {
@@ -192,7 +197,6 @@ const OverView = (props) => {
 							<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
 						</p>
 					</StyledBalance>
-
 				</LeftSideCard>
 				<LeftSideCard style={{ height: 150 }}>
 					<p className="card-text">Interest Earned</p>
