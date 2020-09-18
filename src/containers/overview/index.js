@@ -218,6 +218,14 @@ const OverView = (props) => {
 				</LeftSideCard>
 			</Col>
 			<Col xs={24} xl={16}>
+				<Row gutter={16}>
+					<Col xs={24}>
+						<LeftSideCard style={{ height: 150 }}>
+							<p className="card-text">Total Supply</p>
+							<p className="card-number">{totalSupply}</p>
+						</LeftSideCard>
+					</Col>
+				</Row>
 				<LeftSideCard>
 					<LineChart
 						width={450}
@@ -236,14 +244,7 @@ const OverView = (props) => {
 						<Line type="monotone" dataKey="uv" stroke="#82ca9d" />
 					</LineChart>
 				</LeftSideCard>
-				<Row gutter={16}>
-					<Col xs={24}>
-						<LeftSideCard style={{ height: 150 }}>
-							<p className="card-text">Total Supply</p>
-							<p className="card-number">{totalSupply}</p>
-						</LeftSideCard>
-					</Col>
-				</Row>
+
 			</Col>
 		</Row>
 	);
