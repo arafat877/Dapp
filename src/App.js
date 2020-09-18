@@ -5,7 +5,6 @@ import { RecoilRoot } from 'recoil';
 import Web3 from 'web3';
 import MainContent from './containers';
 import { abi, CONTRACT_ADDRESS_MAINNET, CONTRACT_ADDRESS_ROPSTEN, ROPSTEN_URL, thirmAbi, THIRM_CONTRACT_ADDRESS } from './utils/config';
-
 const getLibrary = (provider) => {
 	const library = new Web3Provider(provider);
 
