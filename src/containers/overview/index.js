@@ -8,7 +8,10 @@ import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { LeftSideCard, RightSideCard, StyledReactApexChart } from './style';
 
-const OverView = (props) => {
+const UniSwapLogo = require('../../assets/images/uniswap.png');
+const EtherScanLogo = require('../../assets/images/etherscan.png');
+
+const OverView = () => {
 
 	const { library, account } = useWeb3React();
 
@@ -124,9 +127,9 @@ const OverView = (props) => {
 				</LeftSideCard>
 				<LeftSideCard>
 					<p className="card-text">Buy or Sell Thirm on</p>
-					<a className="card-logo" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"><img src="https://miro.medium.com/max/724/1*q-SGzJzaNmEG4Lgyjj5QSg.png" alt="uniswap" /></a>
+					<a className="card-logo" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"><img src={UniSwapLogo} alt="uniswap" /></a>
 					<a className="card-logo" href="https://etherscan.io/token/0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
-						<img src="https://etherscan.io/images/logo-ether.png?v=0.0.2" alt="etherscan" />
+						<img src={EtherScanLogo} alt="etherscan" />
 					</a>
 				</LeftSideCard>
 			</Col>

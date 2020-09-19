@@ -40,9 +40,15 @@ export const LeftSideCard = styled(StyledCard)`
 `;
 
 export const RightSideCard = styled(StyledCard)`
-  text-align: center;
   margin: 8px 0;
   width: 100%;
+  .card-text {
+    font-size: 16px;
+    color: ${ThirmTheme.textColorDark};
+    margin-bottom: -4px;
+    margin-top: -4px;
+    font-weight: 700;
+  }
 `;
 
 export const StyledReactApexChart = styled(ReactApexChart)`
