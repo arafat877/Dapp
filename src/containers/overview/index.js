@@ -1,42 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import ReactApexChart from 'react-apexcharts';
+import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { getErrorMessage } from './../../hooks/index';
+import { chartOptions, ethereumChartOptions } from './chartOptions';
 import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, StyledBalance } from './style';
-
-const chartData = [
-	{
-		name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-	},
-	{
-		name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-	},
-	{
-		name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-	},
-	{
-		name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-	},
-	{
-		name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-	},
-	{
-		name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-	},
-	{
-		name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-	},
-];
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
-	const { library, chainId, account, active, error } = useWeb3React();
-	const context = useWeb3React();
+	const { library, account, active, error } = useWeb3React();
 	const { connectorsByName, activate, setActivatingConnector } = props;
 
 	// State to set the ether balance
@@ -45,6 +23,11 @@ const OverView = (props) => {
 	const [thrmBalance, setThrmBalance] = useState(0.0);
 
 	const [tokenOwned, setTokenOwned] = useState(0);
+
+	const [chartSeriesData, setChartSeriesData] = useState([2.3, 3.4, 9.0, 9.1, 8.3, 8.7, 5.6]);
+
+	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
+
 
 	// Get balance when component mounts
 	React.useEffect(() => {
@@ -81,15 +64,73 @@ const OverView = (props) => {
 			}
 		}
 
+		const getEthBalances = async () => {
+			if (library && account) {
+				const lastBlock = await library.web3.eth.getBlockNumber();
+
+				const chartBalances = [];
+				for (let i = lastBlock - 2; i < lastBlock; i++) {
+					let bal = await library.web3.eth.getBalance(account, i);
+					bal = parseFloat(library.web3.utils.fromWei(bal, 'ether')).toFixed(8);
+					chartBalances.push(bal);
+				}
+				if (!stale) {
+					setChartSeriesData(chartBalances);
+				}
+			}
+		}
 		getBalances();
 		getTotalSupply();
+		// getEthBalances();
 
 		return () => {
 			stale = true;
 			setEthBalance(undefined);
 		};
 
-	}, [library, account, chainId, thrmBalance, context]);
+	}, [account, library]);
+
+
+
+
+	React.useEffect(() => {
+
+
+		let stale = false;
+
+		const getRealTimeEthBalance = async () => {
+			const ethJson = await fetch(LIVE_ETH_PRICE_URL).then((res) => res.json());
+			const ethBalance = ethJson.ethereum.usd;
+			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
+			ethereumChartSeriesDataTemp.push(ethBalance);
+
+			if (ethereumChartSeriesDataTemp.length > 10) {
+				ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(1);
+			}
+
+
+			if (!stale) {
+				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
+			}
+		}
+
+		if (ethereumChartSeriesData.length === 0) {
+			for (let i = 0; i < 10; i++) {
+				getRealTimeEthBalance();
+			}
+		}
+		const checkEthBalance = setInterval(() => {
+			getRealTimeEthBalance();
+		}, 3000);
+
+
+		return () => {
+			clearInterval(checkEthBalance);
+			stale = true
+			setEthBalance(undefined);
+		};
+	}, [ethereumChartSeriesData.length]);
+
 
 	const ethBalanceUnit = 'ETH';
 	let ethbalanceFront = '';
@@ -181,6 +222,7 @@ const OverView = (props) => {
 			</Row>
 		);
 	}
+
 	return (
 		<Row gutter={16}>
 			<Col xs={24} xl={8}>
@@ -208,24 +250,18 @@ const OverView = (props) => {
 			</Col>
 			<Col xs={24} xl={16}>
 				<LeftSideCard>
-					<LineChart
-						width={450}
-						height={300}
-						data={chartData}
-						margin={{
-							top: 5, right: 30, left: 20, bottom: 5,
-						}}
-					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="name" />
-						<YAxis />
-						<Tooltip />
-						<Legend />
-						<Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-						<Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-					</LineChart>
+					<ReactApexChart options={chartOptions} series={[{
+						name: 'Eth Balance',
+						data: chartSeriesData
+					}]} type="area" height={350} width={500} />
 				</LeftSideCard>
 
+				<LeftSideCard>
+					<ReactApexChart options={ethereumChartOptions} series={[{
+						name: 'Eth Balance',
+						data: ethereumChartSeriesData
+					}]} type="line" height={350} width={500} />
+				</LeftSideCard>
 			</Col>
 		</Row>
 	);
