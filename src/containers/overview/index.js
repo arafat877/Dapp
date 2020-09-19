@@ -26,7 +26,6 @@ const OverView = (props) => {
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
-
 	// Get balance when component mounts
 	React.useEffect(() => {
 		let stale = false;
@@ -40,28 +39,22 @@ const OverView = (props) => {
 					setEthBalance(balance);
 				}
 
-				const thrmBalance = await library.thirm.methods.balanceOf(account).call();
-				if (thrmBalance) {
-					setThrmBalance(thrmBalance);
+				const thrmBal = await library.thirm.methods.balanceOf(account).call();
+				if (thrmBal) {
+					setThrmBalance(thrmBal);
 				}
-			}
 
-		};
-
-		const getTotalSupply = async () => {
-			if (library) {
 				const totalSupply = await library.thirm.methods.totalSupply().call();
-				const tokenOwned = parseFloat((thrmBalance / totalSupply) * 100).toFixed(8);
+				let tokenOwned = parseFloat((thrmBal / totalSupply) * 100).toFixed(8);
+				if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0).toFixed(8);
 				setTokenOwned(tokenOwned);
 			}
-		}
+		};
 		getBalances();
-		getTotalSupply();
 
 		return () => {
 			stale = true;
 		};
-
 	}, [account, library]);
 
 	React.useEffect(() => {
@@ -69,7 +62,7 @@ const OverView = (props) => {
 
 		const getRealTimeEthBalance = async () => {
 			const ethJson = await fetch(LIVE_ETH_PRICE_URL).then((res) => res.json());
-			const ethBalance = ethJson.ethereum.usd;
+			const ethBalance = ethJson.price;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
 			if (ethereumChartSeriesData.length === 0) {
@@ -80,11 +73,10 @@ const OverView = (props) => {
 			if (!stale) {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
 			}
-		}
+		};
 		const checkEthBalance = setInterval(() => {
 			getRealTimeEthBalance();
 		}, 3000);
-
 
 		return () => {
 			clearInterval(checkEthBalance);
@@ -156,15 +148,7 @@ const OverView = (props) => {
 							})}
 					</Row>
 				</Col>
-				<Col xs={12}>
-					{!!error && (<ErrorAlert
-						message="Error"
-						description={getErrorMessage(error)}
-						type="error"
-						showIcon
-					/>)}
-
-				</Col>
+				<Col xs={12}>{!!error && <ErrorAlert message="Error" description={getErrorMessage(error)} type="error" showIcon />}</Col>
 			</Row>
 		);
 	}
@@ -192,7 +176,6 @@ const OverView = (props) => {
 					<p className="card-text">Thirm Protocol Ownership</p>
 					<p className="card-number">{`${tokenOwned} %`}</p>
 				</LeftSideCard>
-
 			</Col>
 			<Col xs={24} xl={16}>
 				<LeftSideCard>
