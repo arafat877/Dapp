@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { formatFrontBackBalance } from './../../utils/helpers';
-import { ethereumChartOptions } from './chartOptions';
+import { ethereumChartInitialOptions } from './chartOptions';
 import { LeftSideCard, RightSideCard, StyledReactApexChart } from './style';
 
 const OverView = (props) => {
@@ -19,20 +20,22 @@ const OverView = (props) => {
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
+	const [ethereumChartOptions, setEthereumChartOptions] = useState(ethereumChartInitialOptions);
+
 	useEffect(() => {
 
 		let stale = false;
 
 		const getTokenBalances = async () => {
 
-			const balance = await library
-				.getBalance(account);
+			const balance = formatEther(await library
+				.getBalance(account));
 
 			if (!stale) {
 				setEthBalance(balance);
 			}
 
-			const thrmBal = await library.thirm.methods.balanceOf(account).call();
+			const thrmBal = formatEther(await library.thirm.methods.balanceOf(account).call());
 			if (thrmBal) {
 				setThrmBalance(thrmBal);
 			}
@@ -65,6 +68,10 @@ const OverView = (props) => {
 
 			if (ethereumChartSeriesData.length === 0) {
 				ethereumChartSeriesDataTemp = Array(50).fill(ethBalance);
+				let ethereumChartOptionstemp = ethereumChartOptions;
+				ethereumChartOptionstemp.yaxis.max = ethBalance + 20;
+				ethereumChartOptionstemp.yaxis.min = ethBalance - 20;
+				setEthereumChartOptions(ethereumChartOptionstemp);
 			}
 			ethereumChartSeriesDataTemp.reverse().unshift(ethBalance);
 			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 50).reverse();

@@ -1,9 +1,8 @@
-export const ethereumChartOptions = {
+export const ethereumChartInitialOptions = {
   chart: {
     id: 'realtime',
     height: 350,
     type: 'line',
-    stacked: false,
     animations: {
       enabled: true,
       easing: 'linear',
@@ -16,7 +15,7 @@ export const ethereumChartOptions = {
     },
     zoom: {
       enabled: false,
-      autoScaleYaxis: true
+      autoScaleYaxis: false
     }
   },
   dataLabels: {
