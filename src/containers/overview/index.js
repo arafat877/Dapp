@@ -66,10 +66,11 @@ const OverView = (props) => {
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
 			if (ethereumChartSeriesData.length === 0) {
-				ethereumChartSeriesDataTemp = Array(100).fill(ethBalance);
+				ethereumChartSeriesDataTemp = Array(50).fill(ethBalance);
 			}
-			ethereumChartSeriesDataTemp.unshift(ethBalance);
-			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 100);
+			ethereumChartSeriesDataTemp.reverse().unshift(ethBalance);
+			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 50).reverse();
+
 			if (!stale) {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
 			}

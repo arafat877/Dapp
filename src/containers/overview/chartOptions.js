@@ -3,6 +3,7 @@ export const ethereumChartOptions = {
     id: 'realtime',
     height: 350,
     type: 'line',
+    stacked: false,
     animations: {
       enabled: true,
       easing: 'linear',
@@ -31,8 +32,20 @@ export const ethereumChartOptions = {
   markers: {
     size: 0
   },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      shade: 'dark',
+      gradientToColors: ['#FDD835'],
+      shadeIntensity: 1,
+      type: 'horizontal',
+      opacityFrom: 1,
+      opacityTo: 1,
+      stops: [0, 100, 100, 100]
+    },
+  },
   xaxis: {
-    max: 100,
+    max: 50,
     labels: {
       formatter: function (val) {
         return "";
@@ -40,8 +53,6 @@ export const ethereumChartOptions = {
     },
   },
   yaxis: {
-    min: 350,
-    max: 400,
     labels: {
       formatter: function (val) {
         if (val === Infinity) {
