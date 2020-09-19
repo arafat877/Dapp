@@ -14,6 +14,6 @@ export const CONTRACT_ADDRESS_ROPSTEN = '0x9fd0a63D582cfF5b05AFEaa003E218BAA485e
 
 export const THIRM_CONTRACT_ADDRESS = '0xa93f2a6b50D92BD64848f5ea15164F558B75ce9C';
 
-export const abi = require(`./contract.json`);
-export const thirmAbi = require(`./thirm.json`);
-export const ttokensAbi = require(`./ttokens.json`);
+export const abi = require(`./abis/contract.json`);
+export const thirmAbi = require(`./abis/thirm.json`);
+export const ttokensAbi = require(`./abis/ttokens.json`);
