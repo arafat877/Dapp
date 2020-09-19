@@ -41,7 +41,7 @@ const OverView = (props) => {
 			}
 
 			const totalSupply = await library.thirm.methods.totalSupply().call();
-			let tokenOwned = parseFloat((thrmBal / totalSupply) * 100);
+			let tokenOwned = parseFloat((parseFloat(thrmBal).toFixed(8) / totalSupply) * 100);
 			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
 
 			if (!stale) {
