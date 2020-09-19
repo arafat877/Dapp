@@ -112,7 +112,8 @@ export const SideWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	@media (max-width: 768px) {
-		display: none;
+		margin-top: 60px;
+		width: 200px;
 	}
 `;
 

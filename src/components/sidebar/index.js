@@ -84,18 +84,17 @@ const SideBar = (props) => {
 					</Col>
 				</Row>
 			)}
-			<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
-				{active && (
+			{
+				active && (<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
+
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
-				)}
-				{active && (
+
 					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
 						<Link to="/tokens">T-Tokens</Link>
 					</Menu.Item>
-				)}
-				{active && (
+
 					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Actions">
 						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
 							<Link to="/mint">Mint</Link>
@@ -105,20 +104,20 @@ const SideBar = (props) => {
 							<Link to="/burn">Burn</Link>
 						</Menu.Item>
 					</SubMenu>
-				)}
-				{active && (
+
 					<SubMenu key="config" icon={<MoneyCollectOutlined />} title="Config">
 						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
 							<Link to="/addressmap">Address</Link>
 						</Menu.Item>
 					</SubMenu>
-				)}
-				{active && (
+
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platforms</Link>
 					</Menu.Item>
-				)}
-			</SideMenu>
+
+				</SideMenu>)
+			}
+
 			<SideSocial>
 				<ul>
 					{' '}

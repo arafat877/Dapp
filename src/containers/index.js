@@ -60,8 +60,8 @@ function MainContent() {
 				)}
 
 				<Layout>
-					<StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} collapsedWidth={0} trigger={null}>
-						<SideBar collapsed={collapsed} />
+					<StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} trigger={null} collapsedWidth={0}>
+						{!collapsed && <SideBar collapsed={collapsed} />}
 					</StyledSider>
 					<StyledContent>
 						<Web3Wrapper>
