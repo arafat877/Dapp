@@ -24,7 +24,7 @@ const OverView = (props) => {
 
 	const [tokenOwned, setTokenOwned] = useState(0);
 
-	const [chartSeriesData, setChartSeriesData] = useState([2.3, 3.4, 9.0, 9.1, 8.3, 8.7, 5.6]);
+	const [chartSeriesData] = useState([2.3, 3.4, 9.0, 9.1, 8.3, 8.7, 5.6]);
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
