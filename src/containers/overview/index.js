@@ -64,6 +64,7 @@ const OverView = (props) => {
 			}
 		}
 
+		/*
 		const getEthBalances = async () => {
 			if (library && account) {
 				const lastBlock = await library.web3.eth.getBlockNumber();
@@ -79,9 +80,12 @@ const OverView = (props) => {
 				}
 			}
 		}
+		getEthBalances();
+		*/
+
 		getBalances();
 		getTotalSupply();
-		// getEthBalances();
+
 
 		return () => {
 			stale = true;
@@ -90,33 +94,21 @@ const OverView = (props) => {
 
 	}, [account, library]);
 
-
-
-
 	React.useEffect(() => {
-
-
 		let stale = false;
 
 		const getRealTimeEthBalance = async () => {
 			const ethJson = await fetch(LIVE_ETH_PRICE_URL).then((res) => res.json());
 			const ethBalance = ethJson.ethereum.usd;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
-			ethereumChartSeriesDataTemp.push(ethBalance);
 
-			if (ethereumChartSeriesDataTemp.length > 10) {
-				ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(1);
+			if (ethereumChartSeriesData.length === 0) {
+				ethereumChartSeriesDataTemp = Array(100).fill(ethBalance);
 			}
-
-
+			ethereumChartSeriesDataTemp.unshift(ethBalance);
+			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 100);
 			if (!stale) {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
-			}
-		}
-
-		if (ethereumChartSeriesData.length === 0) {
-			for (let i = 0; i < 10; i++) {
-				getRealTimeEthBalance();
 			}
 		}
 		const checkEthBalance = setInterval(() => {

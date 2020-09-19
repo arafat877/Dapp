@@ -71,7 +71,8 @@ export const ethereumChartOptions = {
       show: false
     },
     zoom: {
-      enabled: false
+      enabled: false,
+      autoScaleYaxis: true
     }
   },
   dataLabels: {
@@ -88,11 +89,16 @@ export const ethereumChartOptions = {
     size: 0
   },
   xaxis: {
-    max: 10
+    max: 100,
+    labels: {
+      formatter: function (val) {
+        return "";
+      },
+    },
   },
   yaxis: {
+    min: 350,
     max: 400,
-    min: 200,
     labels: {
       formatter: function (val) {
         if (val === Infinity) {
