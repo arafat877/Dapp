@@ -6,6 +6,7 @@ export const TokenTableContainer = styled.div`
 `;
 
 export const StyledTable = styled(Table)`
-  border: 1px solid #e3e3e3;
+  border: 1px solid #f9f9f9;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
   border-radius: 8px;
 `;

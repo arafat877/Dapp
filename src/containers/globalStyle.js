@@ -1,5 +1,14 @@
-import { Drawer, Layout } from 'antd';
+import { Card, Drawer, Layout } from 'antd';
 import styled from 'styled-components';
+
+export const ThirmTheme = {
+	primaryColor: "#2962ef",
+	primaryDarkColor: "#001f6b",
+	primaryLightColor: "#a7bbef",
+	textColorBlack: "#191919",
+	textColorDark: "#858585",
+	textColorGrey: "#bdbdbd",
+};
 
 export const StyledContent = styled(Layout.Content)`
 	margin: 0 auto;
@@ -32,4 +41,9 @@ export const StyledSider = styled(Layout.Sider)`
 
 export const StyledDrawer = styled(Drawer)`
 	background-color: #fafafa;
+`;
+
+export const StyledCard = styled(Card)`
+	border: 0;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
 `;

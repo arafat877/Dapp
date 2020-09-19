@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Card, Col, Row, Select, Tabs } from 'antd';
+import { Col, Row, Select, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
+import { StyledCard } from '../globalStyle';
 import { ADDRESSMAP_URL } from './../../utils/config';
 import { MintWrapper } from './style';
 
@@ -52,7 +53,7 @@ const Mint = () => {
 		<>
 			<Row>
 				<Col xs={24}>
-					<Card>
+					<StyledCard>
 						<MintWrapper>
 							<Tabs defaultActiveKey="1" centered>
 								<TabPane tab="ERC20" key="1">
@@ -80,7 +81,7 @@ const Mint = () => {
 								</TabPane>
 							</Tabs>
 						</MintWrapper>
-					</Card>
+					</StyledCard>
 				</Col>
 			</Row>
 		</>

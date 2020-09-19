@@ -25,10 +25,6 @@ export const ethereumChartOptions = {
   stroke: {
     curve: 'smooth'
   },
-  title: {
-    text: 'Ethereum chart',
-    align: 'left'
-  },
   markers: {
     size: 0
   },
@@ -58,11 +54,8 @@ export const ethereumChartOptions = {
         if (val === Infinity) {
           val = 0;
         }
-        return (val).toFixed(4)
+        return (val).toFixed(2)
       },
-    },
-    title: {
-      text: 'Price'
     },
   },
   legend: {

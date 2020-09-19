@@ -2,12 +2,11 @@
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
 import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { getErrorMessage } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartOptions } from './chartOptions';
-import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, StyledBalance } from './style';
+import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, RightSideCard, StyledReactApexChart } from './style';
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
@@ -23,7 +22,7 @@ const OverView = (props) => {
 
 	const [thrmBalance, setThrmBalance] = useState(0.0);
 
-	const [tokenOwned, setTokenOwned] = useState(0);
+	const [tokenOwned, setTokenOwned] = useState(0.0);
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
@@ -46,8 +45,8 @@ const OverView = (props) => {
 			}
 
 			const totalSupply = await library.thirm.methods.totalSupply().call();
-			let tokenOwned = parseFloat((thrmBal / totalSupply) * 100).toFixed(8);
-			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0).toFixed(8);
+			let tokenOwned = parseFloat((thrmBal / totalSupply) * 100);
+			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
 
 			if (!stale) {
 				setTokenOwned(tokenOwned);
@@ -93,9 +92,11 @@ const OverView = (props) => {
 
 	}, [ethereumChartSeriesData.length]);
 
-	const [thrmbalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
+	const [thrmBalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
 
-	const [ethbalanceFront, ethBalanceEnd] = formatFrontBackBalance(ethBalance);
+	const [ethBalanceFront, ethBalanceEnd] = formatFrontBackBalance(ethBalance);
+
+	const [tokenOwnedFront, tokenOwnedEnd] = formatFrontBackBalance(tokenOwned);
 
 	const activateWallet = async (currentConnector, name) => {
 		setActivatingConnector(currentConnector);
@@ -163,36 +164,38 @@ const OverView = (props) => {
 	}
 
 	return (
-		<Row gutter={16}>
+		<Row gutter={24}>
 			<Col xs={24} xl={8}>
 				<LeftSideCard>
-					<StyledBalance>
-						<p className="card-text balance-unit">ETH</p>
-						<p className="card-number">
-							<span className="balance-front">{ethbalanceFront}</span>
-							<span className="balance-end">{`.${ethBalanceEnd}`}</span>
-						</p>
-					</StyledBalance>
-					<StyledBalance>
-						<p className="card-text balance-unit">THRM</p>
-						<p className="card-number">
-							<span className="balance-front">{thrmbalanceFront}</span>
-							<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
-						</p>
-					</StyledBalance>
+					<p className="card-text balance-unit">ETH</p>
+					<p className="card-number">
+						<span className="balance-front">{ethBalanceFront}</span>
+						<span className="balance-end">{`.${ethBalanceEnd}`}</span>
+					</p>
+
+					<p className="card-text balance-unit">THRM</p>
+					<p className="card-number">
+						<span className="balance-front">{thrmBalanceFront}</span>
+						<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
+					</p>
+
 				</LeftSideCard>
 				<LeftSideCard style={{ height: 150 }}>
 					<p className="card-text">Thirm Protocol Ownership</p>
-					<p className="card-number">{`${tokenOwned} %`}</p>
+					<p className="card-number">
+						<span className="balance-front">{tokenOwnedFront}</span>
+						<span className="balance-end">{`.${tokenOwnedEnd} %`}</span>
+					</p>
 				</LeftSideCard>
 			</Col>
 			<Col xs={24} xl={16}>
-				<LeftSideCard>
-					<ReactApexChart options={ethereumChartOptions} series={[{
+				<RightSideCard>
+					<h3 className="card-text">Ethereum Chart</h3>
+					<StyledReactApexChart options={ethereumChartOptions} series={[{
 						name: 'Eth Balance',
 						data: ethereumChartSeriesData
-					}]} type="line" height={350} width={500} />
-				</LeftSideCard>
+					}]} type="line" height={305} />
+				</RightSideCard>
 			</Col>
 		</Row>
 	);

@@ -1,22 +1,8 @@
-import { Alert, Avatar, Button, Card } from 'antd';
+import { Alert, Avatar, Button } from 'antd';
+import ReactApexChart from 'react-apexcharts';
 import styled from 'styled-components';
+import { StyledCard, ThirmTheme } from './../globalStyle';
 
-export const StyledBalance = styled.div`
- font-size: 32px;
- color: #191919;
- margin: 8px;
- .balance-unit {
-   font-weight: 600;
- }
- .balance-front {
-   color: #000;
-   font-weight: 700;
- }
- .balance-end {
-   color: #bdbdbd;
-   font-weight: 600;
-  }
-`;
 
 export const PerformanceWrapper = styled.div`
   display: flex;
@@ -59,24 +45,43 @@ export const ErrorAlert = styled(Alert)`
 margin-top: 36px;
 `;
 
-export const LeftSideCard = styled(Card)`
-  margin: 8px 0;
+export const LeftSideCard = styled(StyledCard)`
+  margin: 8px 4px;
   width: 100%;
   display: inline-flex;
   .card-text {
     font-size: 16px;
-    color: #727272;
+    color: ${ThirmTheme.textColorDark};
     margin-bottom: -4px;
-    margin-top: -4px
+    margin-top: -4px;
+    font-weight: 700;
   }
   .card-number {
     font-size: 36px;
     font-weight: 600;
   }
+
+  .balance-unit {
+   letter-spacing: 0.1rem;
+   color: ${ThirmTheme.primaryColor};
+ }
+ .balance-front {
+   color: ${ThirmTheme.textColorBlack};
+   font-weight: 700;
+ }
+ .balance-end {
+   color: ${ThirmTheme.textColorGrey};
+   font-weight: 600;
+  }
 `;
 
-export const RightSideCard = styled(Card)`
+export const RightSideCard = styled(StyledCard)`
   text-align: center;
   margin: 8px 0;
   width: 100%;
+`;
+
+export const StyledReactApexChart = styled(ReactApexChart)`
+  width: 100%;
+  padding: 24px;  
 `;
