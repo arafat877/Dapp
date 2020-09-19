@@ -1,15 +1,44 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useWeb3React } from '@web3-react/core';
 import { Card, Col, Row, Select, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
-import { tTokensList } from './../../utils/tTokensList';
+import { ADDRESSMAP_URL } from './../../utils/config';
 import { MintWrapper } from './style';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
 
 const Mint = () => {
-	const [tokensList] = useState(tTokensList);
+
+	const { account, library } = useWeb3React();
+
+	const [tokensList, setTokensList] = useState([]);
+
 	const [selectedToken, setSelectedToken] = useState('');
+
+	useEffect(() => {
+		let stale = false;
+		const getTokenAddress = async () => {
+			if (account) {
+				let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
+
+				tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
+					const addr = await library.contract.methods.getAddress(account, token.name).call();
+					token.address = addr;
+					return token;
+				}));
+				if (!stale) {
+					setTokensList(tempTokenList);
+				}
+			}
+		}
+		getTokenAddress();
+		return () => {
+			stale = true;
+		}
+	}, [account]);
+
 	function onChangeToken(value) {
 		setSelectedToken(value);
 	}

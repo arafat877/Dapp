@@ -4,7 +4,8 @@ import { Button, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TOKEN_INTEREST_URL, TOKEN_LIST_URL } from '../../utils/config';
+import { TOKEN_INTEREST_URL } from '../../utils/config';
+import { TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
 
@@ -88,59 +89,58 @@ const Tokens = () => {
 		const getTokenInformation = async () => {
 			if (!chainId) return;
 
-			const tokenJson = await fetch(TOKEN_LIST_URL).then((res) => res.json());
+			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
 
-			const interestJson = await fetch(TOKEN_INTEREST_URL).then((res) => res.json());
+			const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
 
-			if (!stale) {
-				let tokensListTemp = tokenJson.tokens;
-
-				// Filter by network and blacklisted
-				tokensListTemp = tokensListTemp
-					.filter((tkn) => tkn.chainId === chainId)
-					.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
-					.map((tkn) => {
-						tkn.key = tkn.name;
-						tkn.value = 1;
-						return tkn;
-					});
-
-
-				// Get token value
-				tokensListTemp = await Promise.all(
-					tokensListTemp.map(async (tkn) => {
-						const res = await library.contract.methods.getTToken(tkn.symbol).call();
-						if (res) {
-							tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
-						} else {
-							tkn.value = 1;
-						}
-						return tkn;
-					})
-				);
-
-
-				// get APY and platform data && merge
-				let interestDataTemp = interestJson.tokens;
-				tokensListTemp = tokensListTemp.map((tkn) => {
-					interestDataTemp.forEach((intr) => {
-						if (intr.Address === tkn.address) {
-							tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
-							tkn.platform = intr.Platform;
-						}
-					});
+			// Filter by network and blacklisted
+			tokensListTemp = tokensListTemp
+				.filter((tkn) => tkn.chainId === chainId)
+				.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
+				.map((tkn) => {
+					tkn.key = tkn.name;
+					tkn.value = 1;
 					return tkn;
 				});
 
-				setTokensList(tokensListTemp);
+			// Get token value
+			tokensListTemp = await Promise.all(
+				tokensListTemp.map(async (tkn) => {
+					const res = await library.contract.methods.getTToken(tkn.symbol).call();
+					if (res) {
+						tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
+					} else {
+						tkn.value = 1;
+					}
+					return tkn;
+				})
+			);
 
+
+			// get APY and platform data && merge
+			tokensListTemp = tokensListTemp.map((tkn) => {
+				interestDataTemp.forEach((intr) => {
+					if (intr.Address === tkn.address) {
+						tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
+						tkn.platform = intr.Platform;
+					}
+				});
+				return tkn;
+			});
+
+			if (!stale) {
+				setTokensList(tokensListTemp);
 			}
+
 		};
 
+
 		getTokenInformation();
+
 		return () => {
 			stale = true;
 		};
+
 	}, [chainId, account]);
 
 	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;

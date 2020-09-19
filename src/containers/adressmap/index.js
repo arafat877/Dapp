@@ -2,14 +2,14 @@
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { tTokensList } from './../../utils/tTokensList';
+import { ADDRESSMAP_URL } from './../../utils/config';
 import { TokenCard } from './style';
 
 const { Meta } = Card;
 
 const AddressMap = () => {
 
-  const [tokensList, setTokensList] = useState(tTokensList);
+  const [tokensList, setTokensList] = useState([]);
   const {
     account,
     library
@@ -22,8 +22,8 @@ const AddressMap = () => {
       const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
 
       if (res) {
-        const tempTokenList = [...tokensList];
-        tempTokenList.map((token) => {
+        let tempTokenList = [...tokensList];
+        tempTokenList = tempTokenList.map((token) => {
           if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
             token.address = address;
           }
@@ -36,15 +36,18 @@ const AddressMap = () => {
 
   useEffect(() => {
     let stale = false;
-    const getTokenAddress = () => {
-      if (account && !stale) {
-        const tempTokenList = [...tokensList];
-        tempTokenList.map(async (token) => {
-          const res = await library.contract.methods.getAddress(account, token.name).call();
-          token.address = res;
+    const getTokenAddress = async () => {
+      if (account) {
+        let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
+
+        tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
+          const addr = await library.contract.methods.getAddress(account, token.name).call();
+          token.address = addr;
           return token;
-        });
-        setTokensList(tempTokenList);
+        }));
+        if (!stale) {
+          setTokensList(tempTokenList);
+        }
       }
     }
     getTokenAddress();
@@ -73,7 +76,6 @@ const AddressMap = () => {
     setTokenAddress(values.address);
     setVisible(false);
   }
-
   return (
     <>
       <List
@@ -122,7 +124,6 @@ const AddressMap = () => {
             </Form.Item>
           </Form>
         }
-
       </Modal>
     </>
   );

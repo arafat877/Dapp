@@ -1,19 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card, List } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { PLATFORM_LIST_URL } from '../../utils/config';
 import { TokenCard } from './style';
-import tPlatformList from './tPlatformList';
 
 const { Meta } = Card;
 
 const Platform = () => {
-	const [platformsList] = useState(tPlatformList);
+	const [platformsList, setPlatformsList] = useState([]);
+
+	useEffect(() => {
+		let stale = false
+		const getPlatformsList = async () => {
+			const platformsJson = await fetch(PLATFORM_LIST_URL).then((res) => res.json());
+
+			if (!stale) {
+				setPlatformsList(platformsJson);
+			}
+		}
+
+		getPlatformsList();
+
+		return () => {
+			stale = true;
+		};
+	});
 
 	return (
 		<>
 			<List
 				grid={{ gutter: 20, xs: 1 }}
-				dataSource={platformsList.platforms}
+				dataSource={platformsList}
 				renderItem={(item, id) => (
 					<List.Item>
 						<TokenCard>
