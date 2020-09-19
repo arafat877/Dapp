@@ -7,10 +7,13 @@ import { TokenCard } from './style';
 const { Meta } = Card;
 
 const Platform = () => {
+
 	const [platformsList, setPlatformsList] = useState([]);
 
 	useEffect(() => {
+
 		let stale = false
+
 		const getPlatformsList = async () => {
 			const platformsJson = await fetch(PLATFORM_LIST_URL).then((res) => res.json());
 
@@ -24,22 +27,21 @@ const Platform = () => {
 		return () => {
 			stale = true;
 		};
+
 	});
 
 	return (
-		<>
-			<List
-				grid={{ gutter: 20, xs: 1 }}
-				dataSource={platformsList}
-				renderItem={(item, id) => (
-					<List.Item>
-						<TokenCard>
-							<Meta title={item.Platform} description={<p>{item.Defination}</p>} />
-						</TokenCard>
-					</List.Item>
-				)}
-			/>
-		</>
+		<List
+			grid={{ gutter: 20, xs: 1 }}
+			dataSource={platformsList}
+			renderItem={(item, id) => (
+				<List.Item>
+					<TokenCard>
+						<Meta title={item.Platform} description={<p>{item.Defination}</p>} />
+					</TokenCard>
+				</List.Item>
+			)}
+		/>
 	);
 };
 

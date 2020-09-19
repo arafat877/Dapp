@@ -9,7 +9,75 @@ import { TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
 
-const columns = [
+const Tokens = () => {
+	const { chainId, account, library } = useWeb3React();
+
+	const [tokensList, setTokensList] = useState([]);
+
+	useEffect(() => {
+
+		let stale = false;
+
+		const getTokenInformation = async () => {
+
+			if (!account && !library) return;
+
+			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
+
+			const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
+
+			// Filter by network and blacklisted
+			tokensListTemp = tokensListTemp
+				.filter((tkn) => tkn.chainId === chainId)
+				.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
+				.map((tkn) => {
+					tkn.key = tkn.name;
+					tkn.value = 1;
+					return tkn;
+				});
+
+			// Get token value
+			tokensListTemp = await Promise.all(
+				tokensListTemp.map(async (tkn) => {
+					const res = await library.contract.methods.getTToken(tkn.symbol).call();
+					if (res) {
+						tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
+					} else {
+						tkn.value = 1;
+					}
+					return tkn;
+				})
+			);
+
+			// get APY and platform data && merge
+			tokensListTemp = tokensListTemp.map((tkn) => {
+				interestDataTemp.forEach((intr) => {
+					if (intr.Address === tkn.address) {
+						tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
+						tkn.platform = intr.Platform;
+					}
+				});
+				return tkn;
+			});
+
+			if (!stale) {
+				setTokensList(tokensListTemp);
+			}
+
+		};
+
+		getTokenInformation();
+
+		return () => {
+			stale = true;
+		};
+
+	}, [chainId, account]);
+
+	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={addressMapTableColumns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
+};
+
+const addressMapTableColumns = [
 	{
 		title: 'Token',
 		dataIndex: 'logoURI',
@@ -78,72 +146,5 @@ const columns = [
 		},
 	},
 ];
-
-const Tokens = () => {
-	const { chainId, account, library } = useWeb3React();
-
-	const [tokensList, setTokensList] = useState([]);
-
-	useEffect(() => {
-		let stale = false;
-		const getTokenInformation = async () => {
-			if (!chainId) return;
-
-			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
-
-			const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
-
-			// Filter by network and blacklisted
-			tokensListTemp = tokensListTemp
-				.filter((tkn) => tkn.chainId === chainId)
-				.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
-				.map((tkn) => {
-					tkn.key = tkn.name;
-					tkn.value = 1;
-					return tkn;
-				});
-
-			// Get token value
-			tokensListTemp = await Promise.all(
-				tokensListTemp.map(async (tkn) => {
-					const res = await library.contract.methods.getTToken(tkn.symbol).call();
-					if (res) {
-						tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
-					} else {
-						tkn.value = 1;
-					}
-					return tkn;
-				})
-			);
-
-
-			// get APY and platform data && merge
-			tokensListTemp = tokensListTemp.map((tkn) => {
-				interestDataTemp.forEach((intr) => {
-					if (intr.Address === tkn.address) {
-						tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
-						tkn.platform = intr.Platform;
-					}
-				});
-				return tkn;
-			});
-
-			if (!stale) {
-				setTokensList(tokensListTemp);
-			}
-
-		};
-
-
-		getTokenInformation();
-
-		return () => {
-			stale = true;
-		};
-
-	}, [chainId, account]);
-
-	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={columns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
-};
 
 export default Tokens;

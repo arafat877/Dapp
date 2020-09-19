@@ -15,32 +15,9 @@ const TwitterIcon = require('../../assets/images/twitter.png');
 const DiscordIcon = require('../../assets/images/discord.png');
 const GithubIcon = require('../../assets/images/github.png');
 
-const ActivePopoverContent = ({ account, active, error, deactivate, connector, history }) => (
-	<PopverWrapper>
-		<Row justify="space-between" align="middle">
-			<Col>{connector === injected ? <ConnectorAvatar src={MetaMaskIcon} /> : connector === walletlink ? <ConnectorAvatar src={WalletLinkIcon} /> : connector === walletConnect ? <ConnectorAvatar src={WalletConnectIcon} /> : null}</Col>
-			<Col>{account}</Col>
-			<Col xs={24}>
-				{(active || error) && (
-					<DisconnectButton
-						onClick={() => {
-							localStorage.removeItem('wallet');
-							deactivate();
-							history.push('/');
-						}}
-					>
-						Disconnect
-					</DisconnectButton>
-				)}
-				{!!error && <p>{error}</p>}
-			</Col>
-		</Row>
-	</PopverWrapper>
-);
-
 const SideBar = (props) => {
-	const context = useWeb3React();
-	const { deactivate, active, error, account, connector, chainId } = context;
+
+	const { deactivate, active, error, account, connector, chainId } = useWeb3React();
 
 	const [networkName, setNetworkName] = useState('');
 
@@ -48,6 +25,9 @@ const SideBar = (props) => {
 
 	useEffect(() => {
 		const changeNetworkName = () => {
+
+			if (!account && !chainId) return;
+
 			if (chainId && chainId === 1) {
 				setNetworkName('MainNet');
 			} else if (chainId && chainId === 3) {
@@ -58,11 +38,12 @@ const SideBar = (props) => {
 		};
 
 		changeNetworkName();
-	}, [chainId]);
+	}, [account, chainId]);
 
 	const history = useHistory();
 
 	let addr = window.location.pathname.split('/')[1];
+
 	if (!addr) addr = 'overview';
 
 	return (
@@ -94,10 +75,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-									<Link to="/">
-										<ThunderboltOutlined /> {`Connect`}
-									</Link>
-								)}
+										<Link to="/">
+											<ThunderboltOutlined /> {`Connect`}
+										</Link>
+									)}
 							</ConnectButton>
 						}
 					</Col>
@@ -109,13 +90,11 @@ const SideBar = (props) => {
 						<Link to="/">Overview</Link>
 					</Menu.Item>
 				)}
-
 				{active && (
 					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
 						<Link to="/tokens">T-Tokens</Link>
 					</Menu.Item>
 				)}
-
 				{active && (
 					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Actions">
 						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
@@ -127,7 +106,6 @@ const SideBar = (props) => {
 						</Menu.Item>
 					</SubMenu>
 				)}
-
 				{active && (
 					<SubMenu key="config" icon={<MoneyCollectOutlined />} title="Config">
 						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
@@ -135,7 +113,6 @@ const SideBar = (props) => {
 						</Menu.Item>
 					</SubMenu>
 				)}
-
 				{active && (
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platforms</Link>
@@ -165,5 +142,28 @@ const SideBar = (props) => {
 		</SideWrapper>
 	);
 };
+
+const ActivePopoverContent = ({ account, active, error, deactivate, connector, history }) => (
+	<PopverWrapper>
+		<Row justify="space-between" align="middle">
+			<Col>{connector === injected ? <ConnectorAvatar src={MetaMaskIcon} /> : connector === walletlink ? <ConnectorAvatar src={WalletLinkIcon} /> : connector === walletConnect ? <ConnectorAvatar src={WalletConnectIcon} /> : null}</Col>
+			<Col>{account}</Col>
+			<Col xs={24}>
+				{(active || error) && (
+					<DisconnectButton
+						onClick={() => {
+							localStorage.removeItem('wallet');
+							deactivate();
+							history.push('/');
+						}}
+					>
+						Disconnect
+					</DisconnectButton>
+				)}
+				{!!error && <p>{error}</p>}
+			</Col>
+		</Row>
+	</PopverWrapper>
+);
 
 export default SideBar;

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { getErrorMessage } from './../../hooks/index';
@@ -14,10 +14,11 @@ const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const OverView = (props) => {
+
 	const { library, account, active, error } = useWeb3React();
+
 	const { connectorsByName, activate, setActivatingConnector } = props;
 
-	// State to set the ether balance
 	const [ethBalance, setEthBalance] = useState(0.0);
 
 	const [thrmBalance, setThrmBalance] = useState(0.0);
@@ -26,38 +27,43 @@ const OverView = (props) => {
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
-	// Get balance when component mounts
-	React.useEffect(() => {
+	useEffect(() => {
+
 		let stale = false;
 
-		const getBalances = async () => {
-			if (library && account) {
-				const balance = await library
-					.getBalance(account);
+		const getTokenBalances = async () => {
+			if (!account && !library) return;
+			const balance = await library
+				.getBalance(account);
 
-				if (!stale) {
-					setEthBalance(balance);
-				}
+			if (!stale) {
+				setEthBalance(balance);
+			}
 
-				const thrmBal = await library.thirm.methods.balanceOf(account).call();
-				if (thrmBal) {
-					setThrmBalance(thrmBal);
-				}
+			const thrmBal = await library.thirm.methods.balanceOf(account).call();
+			if (thrmBal) {
+				setThrmBalance(thrmBal);
+			}
 
-				const totalSupply = await library.thirm.methods.totalSupply().call();
-				let tokenOwned = parseFloat((thrmBal / totalSupply) * 100).toFixed(8);
-				if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0).toFixed(8);
+			const totalSupply = await library.thirm.methods.totalSupply().call();
+			let tokenOwned = parseFloat((thrmBal / totalSupply) * 100).toFixed(8);
+			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0).toFixed(8);
+
+			if (!stale) {
 				setTokenOwned(tokenOwned);
 			}
 		};
-		getBalances();
+
+		getTokenBalances();
 
 		return () => {
 			stale = true;
 		};
+
 	}, [account, library]);
 
-	React.useEffect(() => {
+	useEffect(() => {
+
 		let stale = false;
 
 		const getRealTimeEthBalance = async () => {
@@ -75,6 +81,7 @@ const OverView = (props) => {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
 			}
 		};
+
 		const checkEthBalance = setInterval(() => {
 			getRealTimeEthBalance();
 		}, 3000);
@@ -83,6 +90,7 @@ const OverView = (props) => {
 			clearInterval(checkEthBalance);
 			stale = true
 		};
+
 	}, [ethereumChartSeriesData.length]);
 
 	const [thrmbalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);

@@ -10,6 +10,7 @@ const { Meta } = Card;
 const AddressMap = () => {
 
   const [tokensList, setTokensList] = useState([]);
+
   const {
     account,
     library
@@ -18,64 +19,70 @@ const AddressMap = () => {
   const [form] = Form.useForm();
 
   const setTokenAddress = async (address) => {
-    if (account) {
-      const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
 
-      if (res) {
-        let tempTokenList = [...tokensList];
-        tempTokenList = tempTokenList.map((token) => {
-          if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
-            token.address = address;
-          }
-          return token;
-        });
-        setTokensList(tempTokenList);
-      }
+    if (!account && !library) return;
+
+    const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
+
+    if (res) {
+      let tempTokenList = [...tokensList];
+      tempTokenList = tempTokenList.map((token) => {
+        if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
+          token.address = address;
+        }
+        return token;
+      });
+      setTokensList(tempTokenList);
     }
   }
 
   useEffect(() => {
-    let stale = false;
-    const getTokenAddress = async () => {
-      if (account) {
-        let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
 
-        tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
-          const addr = await library.contract.methods.getAddress(account, token.name).call();
-          token.address = addr;
-          return token;
-        }));
-        if (!stale) {
-          setTokensList(tempTokenList);
-        }
+    let stale = false;
+
+    const getTokenAddress = async () => {
+      if (!account && !library) return;
+
+      let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
+
+      tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
+        const addr = await library.contract.methods.getAddress(account, token.name).call();
+        token.address = addr;
+        return token;
+      }));
+      if (!stale) {
+        setTokensList(tempTokenList);
       }
     }
+
     getTokenAddress();
+
     return () => {
       stale = true;
     }
   }, [account]);
 
-  const [visible, setVisible] = useState(false);
+  const [tokenModalVisible, setTokenModalVisible] = useState(false);
   const [selectedToken, setSelectedToken] = useState({});
 
-  const showModal = (id) => {
-    setVisible(true);
+  const showTokenModal = (id) => {
+    setTokenModalVisible(true);
     setSelectedToken(tokensList[id]);
   };
 
-  const handleOk = e => {
-    setVisible(false);
+  const handleTokenModalOk = e => {
+    setTokenModalVisible(false);
   };
 
-  const handleCancel = e => {
-    setVisible(false);
+  const handleTokenModalCancel = e => {
+    setTokenModalVisible(false);
   };
 
   const onAddressSubmitted = (values) => {
     setTokenAddress(values.address);
-    setVisible(false);
+    setTokenModalVisible(false);
   }
+
   return (
     <>
       <List
@@ -86,7 +93,7 @@ const AddressMap = () => {
             <TokenCard
               onClick={() => {
                 if (item.address === "") {
-                  showModal(id);
+                  showTokenModal(id);
                 }
               }}>
               <Meta
@@ -100,9 +107,9 @@ const AddressMap = () => {
       />
       <Modal
         title={`Set address for ${selectedToken.name}`}
-        visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        tokenModalVisible={tokenModalVisible}
+        onOk={handleTokenModalOk}
+        onCancel={handleTokenModalCancel}
         footer={null}
       >
         {

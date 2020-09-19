@@ -18,22 +18,27 @@ const Mint = () => {
 	const [selectedToken, setSelectedToken] = useState('');
 
 	useEffect(() => {
-		let stale = false;
-		const getTokenAddress = async () => {
-			if (account) {
-				let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
 
-				tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
-					const addr = await library.contract.methods.getAddress(account, token.name).call();
-					token.address = addr;
-					return token;
-				}));
-				if (!stale) {
-					setTokensList(tempTokenList);
-				}
+		let stale = false;
+
+		const getTokenAddress = async () => {
+			if (!account && !library) return;
+
+			let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
+
+			tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
+				const addr = await library.contract.methods.getAddress(account, token.name).call();
+				token.address = addr;
+				return token;
+			}));
+
+			if (!stale) {
+				setTokensList(tempTokenList);
 			}
 		}
+
 		getTokenAddress();
+
 		return () => {
 			stale = true;
 		}
