@@ -35,9 +35,9 @@ const OverView = (props) => {
 				setEthBalance(balance);
 			}
 
-			const thrmBal = formatEther(await library.thirm.methods.balanceOf(account).call());
+			const thrmBal = await library.thirm.methods.balanceOf(account).call();
 			if (thrmBal) {
-				setThrmBalance(thrmBal);
+				setThrmBalance(formatEther(thrmBal));
 			}
 
 			const totalSupply = await library.thirm.methods.totalSupply().call();
@@ -45,7 +45,7 @@ const OverView = (props) => {
 			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
 
 			if (!stale) {
-				setTokenOwned(tokenOwned);
+				setTokenOwned(tokenOwned.toFixed(8));
 			}
 		};
 
