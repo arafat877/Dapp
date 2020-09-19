@@ -1,60 +1,3 @@
-export const chartOptions = {
-  chart: {
-    type: 'area',
-    stacked: false,
-    height: 350,
-    zoom: {
-      type: 'x',
-      enabled: true,
-      autoScaleYaxis: true
-    },
-    toolbar: {
-      autoSelected: 'zoom'
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  markers: {
-    size: 0,
-  },
-  title: {
-    text: 'Thirm Balance',
-    align: 'left'
-  },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      inverseColors: false,
-      opacityFrom: 0.5,
-      opacityTo: 0,
-      stops: [0, 90, 100]
-    },
-  },
-  yaxis: {
-    labels: {
-      formatter: function (val) {
-        return (val).toFixed(2);
-      },
-    },
-    title: {
-      text: 'Price'
-    },
-  },
-  xaxis: {
-    categories: [],
-  },
-  tooltip: {
-    shared: false,
-    y: {
-      formatter: function (val) {
-        return (val).toFixed(8)
-      }
-    }
-  }
-};
-
 export const ethereumChartOptions = {
   chart: {
     id: 'realtime',
@@ -82,7 +25,7 @@ export const ethereumChartOptions = {
     curve: 'smooth'
   },
   title: {
-    text: 'Dynamic Updating Chart',
+    text: 'Ethereum chart',
     align: 'left'
   },
   markers: {

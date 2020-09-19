@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { getErrorMessage } from './../../hooks/index';
-import { chartOptions, ethereumChartOptions } from './chartOptions';
+import { formatFrontBackBalance } from './../../utils/helpers';
+import { ethereumChartOptions } from './chartOptions';
 import { AvatarIcon, ConnectorButton, ErrorAlert, LeftSideCard, LoginInfo, StyledBalance } from './style';
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -24,8 +24,6 @@ const OverView = (props) => {
 
 	const [tokenOwned, setTokenOwned] = useState(0);
 
-	const [chartSeriesData] = useState([2.3, 3.4, 9.0, 9.1, 8.3, 8.7, 5.6]);
-
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
 
@@ -35,18 +33,12 @@ const OverView = (props) => {
 
 		const getBalances = async () => {
 			if (library && account) {
-				library
-					.getBalance(account)
-					.then((balance) => {
-						if (!stale) {
-							setEthBalance(balance);
-						}
-					})
-					.catch(() => {
-						if (!stale) {
-							setEthBalance(null);
-						}
-					});
+				const balance = await library
+					.getBalance(account);
+
+				if (!stale) {
+					setEthBalance(balance);
+				}
 
 				const thrmBalance = await library.thirm.methods.balanceOf(account).call();
 				if (thrmBalance) {
@@ -63,33 +55,11 @@ const OverView = (props) => {
 				setTokenOwned(tokenOwned);
 			}
 		}
-
-		/*
-		const getEthBalances = async () => {
-			if (library && account) {
-				const lastBlock = await library.web3.eth.getBlockNumber();
-
-				const chartBalances = [];
-				for (let i = lastBlock - 2; i < lastBlock; i++) {
-					let bal = await library.web3.eth.getBalance(account, i);
-					bal = parseFloat(library.web3.utils.fromWei(bal, 'ether')).toFixed(8);
-					chartBalances.push(bal);
-				}
-				if (!stale) {
-					setChartSeriesData(chartBalances);
-				}
-			}
-		}
-		getEthBalances();
-		*/
-
 		getBalances();
 		getTotalSupply();
 
-
 		return () => {
 			stale = true;
-			setEthBalance(undefined);
 		};
 
 	}, [account, library]);
@@ -119,28 +89,12 @@ const OverView = (props) => {
 		return () => {
 			clearInterval(checkEthBalance);
 			stale = true
-			setEthBalance(undefined);
 		};
 	}, [ethereumChartSeriesData.length]);
 
+	const [thrmbalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
 
-	const ethBalanceUnit = 'ETH';
-	let ethbalanceFront = '';
-	let ethBalanceEnd = '';
-	if (ethBalance !== null && ethBalance !== undefined) {
-		const balanceSplit = parseFloat(formatEther(ethBalance)).toFixed(8).toString().split('.');
-		ethbalanceFront = balanceSplit[0];
-		ethBalanceEnd = balanceSplit[1];
-	}
-
-	const thrmBalanceUnit = 'THRM';
-	let thrmbalanceFront = '';
-	let thrmBalanceEnd = '';
-	if (thrmBalance !== null && thrmBalance !== undefined) {
-		const balanceSplit = parseFloat(formatEther(thrmBalance)).toFixed(8).toString().split('.');
-		thrmbalanceFront = balanceSplit[0];
-		thrmBalanceEnd = balanceSplit[1];
-	}
+	const [ethbalanceFront, ethBalanceEnd] = formatFrontBackBalance(ethBalance);
 
 	const activateWallet = async (currentConnector, name) => {
 		setActivatingConnector(currentConnector);
@@ -220,14 +174,14 @@ const OverView = (props) => {
 			<Col xs={24} xl={8}>
 				<LeftSideCard>
 					<StyledBalance>
-						<p className="card-text balance-unit">{ethBalanceUnit}</p>
+						<p className="card-text balance-unit">ETH</p>
 						<p className="card-number">
 							<span className="balance-front">{ethbalanceFront}</span>
 							<span className="balance-end">{`.${ethBalanceEnd}`}</span>
 						</p>
 					</StyledBalance>
 					<StyledBalance>
-						<p className="card-text balance-unit">{thrmBalanceUnit}</p>
+						<p className="card-text balance-unit">THRM</p>
 						<p className="card-number">
 							<span className="balance-front">{thrmbalanceFront}</span>
 							<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
@@ -241,13 +195,6 @@ const OverView = (props) => {
 
 			</Col>
 			<Col xs={24} xl={16}>
-				<LeftSideCard>
-					<ReactApexChart options={chartOptions} series={[{
-						name: 'Eth Balance',
-						data: chartSeriesData
-					}]} type="area" height={350} width={500} />
-				</LeftSideCard>
-
 				<LeftSideCard>
 					<ReactApexChart options={ethereumChartOptions} series={[{
 						name: 'Eth Balance',
