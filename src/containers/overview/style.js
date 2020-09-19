@@ -30,6 +30,13 @@ export const LeftSideCard = styled(StyledCard)`
    color: ${ThirmTheme.textColorGrey};
    font-weight: 600;
   }
+
+  .card-logo img {
+    width: 150px;
+    margin: 24px 0;
+    margin-right: 24px;
+  }
+  min-height: 150px;
 `;
 
 export const RightSideCard = styled(StyledCard)`
