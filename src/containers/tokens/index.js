@@ -88,9 +88,8 @@ const Tokens = () => {
 		const getTokenInformation = async () => {
 			if (!chainId) return;
 
-			const tokenJson = await fetch(TOKEN_LIST_URL).then((res) => res.json());
-
-			const interestJson = await fetch(TOKEN_INTEREST_URL).then((res) => res.json());
+			const tokenJson = await fetch('https://cdn.thirm.com/tokens.json').then((res) => res.json());
+			const interestJson = await fetch('https://ipfs.eternum.io/ipns/i.thirm.com').then((res) => res.json());
 
 			if (!stale) {
 				let tokensListTemp = tokenJson.tokens;
@@ -105,7 +104,6 @@ const Tokens = () => {
 						return tkn;
 					});
 
-
 				// Get token value
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (tkn) => {
@@ -118,7 +116,6 @@ const Tokens = () => {
 						return tkn;
 					})
 				);
-
 
 				// get APY and platform data && merge
 				let interestDataTemp = interestJson.tokens;
@@ -133,7 +130,6 @@ const Tokens = () => {
 				});
 
 				setTokensList(tokensListTemp);
-
 			}
 		};
 
