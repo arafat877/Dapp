@@ -92,7 +92,7 @@ export const ethereumChartOptions = {
   },
   yaxis: {
     max: 400,
-
+    min: 200,
     labels: {
       formatter: function (val) {
         if (val === Infinity) {
