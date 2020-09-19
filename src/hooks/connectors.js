@@ -9,8 +9,9 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 
-const RPC_URLS = {
+export const RPC_URLS = {
 	1: 'https://mainnet.infura.io/v3/84842078b09946638c03157f83405213',
+	3: 'https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3',
 	4: 'https://rinkeby.infura.io/v3/84842078b09946638c03157f83405213',
 };
 
