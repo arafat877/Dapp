@@ -4,7 +4,6 @@ import { Button, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TOKEN_INTEREST_URL, TOKEN_LIST_URL } from '../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
 
