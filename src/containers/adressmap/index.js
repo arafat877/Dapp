@@ -2,6 +2,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
+import LoadingIndicator from './../../components/loadingIndicator/index';
 import { ADDRESSMAP_URL } from './../../utils/config';
 import { TokenCard } from './style';
 
@@ -13,14 +14,13 @@ const AddressMap = () => {
 
   const {
     account,
-    library
+    library,
   } = useWeb3React();
 
   const [form] = Form.useForm();
 
-  const setTokenAddress = async (address) => {
 
-    if (!account && !library) return;
+  const setTokenAddress = async (address) => {
 
     const res = await library.contract.methods.setAddress(selectedToken.name, address).send({ from: account });
 
@@ -41,8 +41,6 @@ const AddressMap = () => {
     let stale = false;
 
     const getTokenAddress = async () => {
-      if (!account && !library) return;
-
       let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
 
       tempTokenList = await Promise.all(tempTokenList.map(async (token) => {
@@ -82,6 +80,8 @@ const AddressMap = () => {
     setTokenAddress(values.address);
     setTokenModalVisible(false);
   }
+
+  if (tokensList.length === 0) return <LoadingIndicator />;
 
   return (
     <>

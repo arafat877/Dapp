@@ -2,6 +2,7 @@
 import { Card, List } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { PLATFORM_LIST_URL } from '../../utils/config';
+import LoadingIndicator from './../../components/loadingIndicator/index';
 import { TokenCard } from './style';
 
 const { Meta } = Card;
@@ -29,6 +30,8 @@ const Platform = () => {
 		};
 
 	});
+
+	if (platformsList.length === 0) return <LoadingIndicator />;
 
 	return (
 		<List

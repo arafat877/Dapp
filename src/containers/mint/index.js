@@ -23,7 +23,6 @@ const Mint = () => {
 		let stale = false;
 
 		const getTokenAddress = async () => {
-			if (!account && !library) return;
 
 			let tempTokenList = await fetch(ADDRESSMAP_URL).then((res) => res.json());
 

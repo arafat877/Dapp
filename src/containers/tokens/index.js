@@ -5,6 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TOKEN_INTEREST_URL } from '../../utils/config';
+import LoadingIndicator from './../../components/loadingIndicator/index';
 import { TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
@@ -19,8 +20,6 @@ const Tokens = () => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-
-			if (!account && !library) return;
 
 			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
 
@@ -73,6 +72,8 @@ const Tokens = () => {
 		};
 
 	}, [chainId, account]);
+
+	if (tokensList.length === 0) return <LoadingIndicator />;
 
 	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={addressMapTableColumns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
 };
