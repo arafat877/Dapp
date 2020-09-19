@@ -1,4 +1,4 @@
-export const TOKEN_LIST_URL = 'https://raw.githubusercontent.com/thirmprotocol/Assets/master/tokens.json';
+export const TOKEN_LIST_URL = 'https://cdn.thirm.com/tokens.json';
 
 export const TOKEN_INTEREST_URL = 'https://ipfs.eternum.io/ipns/i.thirm.com';
 
