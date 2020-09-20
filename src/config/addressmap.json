@@ -1,13 +1,13 @@
 [
 	{
 		"name": "BTC",
-		"image": "https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tBTC.png",
+		"image": "https://thirm.com/icons/tBTC.png",
 		"address": "",
 		"depositaddress": "bc1qsrmj42myjqlthuu0g7d3c4r5pd8tplxzuv06x7"
 	},
 	{
 		"name": "NANO",
-		"image": "https://raw.githubusercontent.com/thirmprotocol/Assets/master/icons/tNANO.png",
+		"image": "https://thirm.com/icons/tNANO.png",
 		"address": "",
 		"depositaddress": "nano_3sumsrd8ckhokkb7379p49c1ndzpi7f94bzkxqozrfs8fk38qc1awn9k1kyb"
 	}
