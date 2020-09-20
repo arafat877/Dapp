@@ -39,7 +39,7 @@ const Tokens = () => {
 			tokensListTemp = await Promise.all(
 				tokensListTemp.map(async (tkn) => {
 					const res = await library.contract.methods.getTToken(tkn.symbol).call();
-					if (res) {
+					if (res && res > 1) {
 						tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
 					} else {
 						tkn.value = 1;
