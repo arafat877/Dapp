@@ -12,7 +12,6 @@ const UniSwapLogo = require('../../assets/images/uniswap.png');
 const EtherScanLogo = require('../../assets/images/etherscan.png');
 
 const OverView = () => {
-
 	const { library, account } = useWeb3React();
 
 	const [ethBalance, setEthBalance] = useState(0.0);
@@ -26,13 +25,10 @@ const OverView = () => {
 	const [ethereumChartOptions, setEthereumChartOptions] = useState(ethereumChartInitialOptions);
 
 	useEffect(() => {
-
 		let stale = false;
 
 		const getTokenBalances = async () => {
-
-			const balance = formatEther(await library
-				.getBalance(account));
+			const balance = formatEther(await library.getBalance(account));
 
 			if (!stale) {
 				setEthBalance(balance);
@@ -57,11 +53,9 @@ const OverView = () => {
 		return () => {
 			stale = true;
 		};
-
 	}, [account, library]);
 
 	useEffect(() => {
-
 		let stale = false;
 
 		const getRealTimeEthBalance = async () => {
@@ -90,9 +84,8 @@ const OverView = () => {
 
 		return () => {
 			clearInterval(checkEthBalance);
-			stale = true
+			stale = true;
 		};
-
 	}, [ethereumChartSeriesData.length]);
 
 	const [thrmBalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
@@ -116,7 +109,6 @@ const OverView = () => {
 						<span className="balance-front">{thrmBalanceFront}</span>
 						<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
 					</p>
-
 				</LeftSideCard>
 				<LeftSideCard>
 					<p className="card-text">Thirm Protocol Ownership</p>
@@ -127,7 +119,9 @@ const OverView = () => {
 				</LeftSideCard>
 				<LeftSideCard>
 					<p className="card-text">Buy or Sell Thirm on</p>
-					<a className="card-logo" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"><img src={UniSwapLogo} alt="uniswap" /></a>
+					<a className="card-logo" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
+						<img src={UniSwapLogo} alt="uniswap" />
+					</a>
 					<a className="card-logo" href="https://etherscan.io/token/0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
 						<img src={EtherScanLogo} alt="etherscan" />
 					</a>
@@ -135,11 +129,22 @@ const OverView = () => {
 			</Col>
 			<Col xs={24} xl={16}>
 				<RightSideCard>
-					<h3 className="card-text">Ethereum Chart</h3>
-					<StyledReactApexChart options={ethereumChartOptions} series={[{
-						name: 'Eth Balance',
-						data: ethereumChartSeriesData
-					}]} type="line" height={305} />
+					<h3 className="card-text">Ethereum Price</h3>
+					<StyledReactApexChart
+						options={ethereumChartOptions}
+						series={[
+							{
+								name: 'USDT',
+								data: ethereumChartSeriesData,
+							},
+						]}
+						type="line"
+						height={305}
+					/>
+				</RightSideCard>
+
+				<RightSideCard>
+					<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 				</RightSideCard>
 			</Col>
 		</Row>

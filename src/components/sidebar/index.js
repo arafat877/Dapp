@@ -16,7 +16,6 @@ const DiscordIcon = require('../../assets/images/discord.png');
 const GithubIcon = require('../../assets/images/github.png');
 
 const SideBar = (props) => {
-
 	const { deactivate, active, error, account, connector, chainId } = useWeb3React();
 
 	const [networkName, setNetworkName] = useState('');
@@ -25,7 +24,6 @@ const SideBar = (props) => {
 
 	useEffect(() => {
 		const changeNetworkName = () => {
-
 			if (!account && !chainId) return;
 
 			if (chainId && chainId === 1) {
@@ -75,18 +73,17 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-										<Link to="/">
-											<ThunderboltOutlined /> {`Connect`}
-										</Link>
-									)}
+									<Link to="/">
+										<ThunderboltOutlined /> {`Connect`}
+									</Link>
+								)}
 							</ConnectButton>
 						}
 					</Col>
 				</Row>
 			)}
-			{
-				active && (<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
-
+			{active && (
+				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
 					<Menu.Item icon={<EyeOutlined />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
@@ -114,9 +111,8 @@ const SideBar = (props) => {
 					<Menu.Item icon={<FundOutlined />} key="platform">
 						<Link to="/platform">Platforms</Link>
 					</Menu.Item>
-
-				</SideMenu>)
-			}
+				</SideMenu>
+			)}
 
 			<SideSocial>
 				<ul>
@@ -132,7 +128,7 @@ const SideBar = (props) => {
 						</a>
 					</li>
 					<li>
-						<a href="https://discord.com/invite/Fa4vDXj">
+						<a href="https://discord.com/widget?id=712795894982115380&theme=dark">
 							<SocialAvatar src={DiscordIcon} />
 						</a>
 					</li>
