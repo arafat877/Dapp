@@ -10,10 +10,10 @@ const Burn = () => {
 			<Col xs={24}>
 				<StyledCard>
 					<BurnInfo>
-						<QRCode value="0x0000000000000000000000000000000000000000" size={200} />
+						<QRCode value="0xA34eF48B73870FA2ACa1558239576cCBC60Ad542" size={200} />
 						<div className="burn-information">
 							<p>Burn your T-Tokens By Sending Them To This Address & Receive Back Locked Crypto</p>
-							<p>0x0000000000000000000000000000000000000000</p>
+							<p>0xA34eF48B73870FA2ACa1558239576cCBC60Ad542</p>
 						</div>
 					</BurnInfo>
 				</StyledCard>
