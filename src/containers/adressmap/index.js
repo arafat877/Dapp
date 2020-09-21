@@ -3,8 +3,8 @@ import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Form, Input, List, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-
 import { TokenCard } from './style';
+
 let tempTokenList = require('../../config/addressmap.json');
 
 const { Meta } = Card;
@@ -21,6 +21,7 @@ const AddressMap = () => {
 
 		if (res) {
 			let tempTokenList = [...tokensList];
+
 			tempTokenList = tempTokenList.map((token) => {
 				if (Object.keys(res).length > 0 && token.name === selectedToken.name) {
 					token.address = address;
@@ -46,7 +47,6 @@ const AddressMap = () => {
 				setTokensList(tempTokenList);
 			}
 		};
-
 		getTokenAddress();
 
 		return () => {
@@ -86,7 +86,9 @@ const AddressMap = () => {
 					<List.Item>
 						<TokenCard
 							onClick={() => {
+
 								if (item.address === '') {
+
 									showTokenModal(id);
 								}
 							}}
@@ -96,7 +98,7 @@ const AddressMap = () => {
 					</List.Item>
 				)}
 			/>
-			<Modal title={`Set address for ${selectedToken.name}`} tokenModalVisible={tokenModalVisible} onOk={handleTokenModalOk} onCancel={handleTokenModalCancel} footer={null}>
+			<Modal title={`Set address for ${selectedToken.name}`} visible={tokenModalVisible} onOk={handleTokenModalOk} onCancel={handleTokenModalCancel} footer={null}>
 				{
 					<Form form={form} layout="vertical" onFinish={onAddressSubmitted}>
 						<Form.Item
