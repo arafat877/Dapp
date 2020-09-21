@@ -1,6 +1,6 @@
 export const TOKEN_LIST_URL = 'https://thirm.com/tokens.json';
 
-export const TOKEN_INTEREST_URL = 'https://ipfs.eternum.io/ipns/i.thirm.com';
+export const TOKEN_INTEREST_URL = 'https://thirmcache.netlify.app/i.json';
 
 export const LIVE_ETH_PRICE_URL = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT';
 
