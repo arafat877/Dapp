@@ -89,7 +89,7 @@ const Burn = () => {
 								/>
 							</Form.Item>
 
-							{selectedToken != null && <p className="deposite-info">Deposit Fees <p>
+							{selectedToken != null && <p className="deposite-info">Withdrawal Fees <p>
 								<Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag>
 							</p>
 							</p>}
