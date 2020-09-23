@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { TokenCard } from './style';
 
-let tempTokenList = require('../../config/addressmap.json');
+const ttokenList = require('../../config/addressmap.json');
 
 const { Meta } = Card;
 
@@ -36,6 +36,7 @@ const AddressMap = () => {
 		let stale = false;
 
 		const getTokenAddress = async () => {
+			let tempTokenList = ttokenList.filter((tkn) => tkn.isERC === 0);
 			tempTokenList = await Promise.all(
 				tempTokenList.map(async (token) => {
 					const addr = await library.contract.methods.getAddress(account, token.name).call();

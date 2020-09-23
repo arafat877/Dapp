@@ -1,13 +1,21 @@
 [
 	{
+		"id": 0,
+		"isERC": 0,
 		"name": "BTC",
+		"tname": "tBTC",
+		"tfullname": "Thirm Bitcoin",
 		"image": "https://thirm.com/icons/tBTC.png",
 		"address": "0x36910c9695C1286c9377CEbc61D37bDEFcFdeAC6",
 		"fees": "0.0001",
 		"depositaddress": "bc1qsrmj42myjqlthuu0g7d3c4r5pd8tplxzuv06x7"
 	},
 	{
+		"id": 1,
+		"isERC": 1,
 		"name": "USDT",
+		"tname": "tUSDT",
+		"tfullname": "Thirm Tether",
 		"image": "https://thirm.com/icons/tUSDT.png",
 		"address": "0xB962776Fa4FaD32F46609A813488C4b62227325f",
 		"fees": "4",

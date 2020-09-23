@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { DownOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Badge, Button, Col, Row, Tag } from 'antd';
+import { Badge, Col, Row, Tag } from 'antd';
 import Countdown from 'antd/lib/statistic/Countdown';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
@@ -91,12 +91,11 @@ const HeaderBar = (props) => {
       <Col xs={12}>
         <HeaderMeta>
           {!collapsed && <CountdownWrapper>
-            <p>Time reset in</p>
+            <p>Next Batch in</p>
             <Countdown title={null} value={deadline} />
           </CountdownWrapper>}
-
           {
-            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} walletIcon={walletIcon} networkName={networkName} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
+            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={networkName} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
               <div className="left-content">
                 {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
                 <div className="connection-info">
@@ -116,7 +115,7 @@ const HeaderBar = (props) => {
                 }
               </div>
 
-            </StyledPopover> : <StyledPopover placement="bottomRight" title={null} content={() => <InActivePopoverContent history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible} >
+            </StyledPopover> : <StyledPopover placement="bottomRight" title={null} content={null} trigger="click" onVisibleChange={onPopoverVisible} visible={false} onClick={() => history.push('/')}>
                 <div className="left-content">
                   <Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
                     <ConnectedAvatar src={LoginKeyIcon} />
@@ -126,9 +125,7 @@ const HeaderBar = (props) => {
                     <span className="connection-info-down">Connect Wallet</span>
                   </div>
                 </div>
-                {
-                  popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
-                }
+                <DownOutlined className="dropdown-icon" />
               </StyledPopover>
           }
         </HeaderMeta>
@@ -138,7 +135,7 @@ const HeaderBar = (props) => {
 }
 
 
-const ActivePopoverContent = ({ account, active, deactivate, walletName, walletIcon, networkName, history, setPopoverVisible }) => (
+const ActivePopoverContent = ({ account, active, deactivate, walletName, networkName, history, setPopoverVisible }) => (
   <PopverWrapper>
     <Row justify="center" align="center">
       <ConnectedAvatar src={`https://robohash.org/${account}?set=set5`} size={60} />
@@ -185,20 +182,6 @@ const ActivePopoverContent = ({ account, active, deactivate, walletName, walletI
         >
           Disconnect
           </DisconnectButton>
-      </Col>
-    </Row>
-  </PopverWrapper>
-);
-
-const InActivePopoverContent = ({ history, setPopoverVisible }) => (
-  <PopverWrapper>
-    <Row justify="space-between" align="middle">
-      <Col xs={24}>
-        <p>Connect to Wallet</p>
-        <Button type="primary" onClick={() => {
-          setPopoverVisible(false);
-          history.push("/");
-        }}>Connect</Button>
       </Col>
     </Row>
   </PopverWrapper>

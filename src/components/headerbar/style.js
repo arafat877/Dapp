@@ -151,8 +151,10 @@ export const CountdownWrapper = styled.div`
   p {
     line-height: 1;
     margin: 0;
-    color: ${ThirmTheme.textColorDark}
+    color: ${ThirmTheme.textColorDark};
+    text-align: center;
   }
+  font-weight: 600;
 `;
 
 export const HeaderMeta = styled.div`

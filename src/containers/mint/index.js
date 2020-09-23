@@ -14,7 +14,7 @@ const Mint = () => {
 
 	const [tokensList, setTokensList] = useState([]);
 
-	const [selectedToken, setSelectedToken] = useState('');
+	const [selectedToken, setSelectedToken] = useState();
 
 	useEffect(() => {
 		let stale = false;
@@ -53,16 +53,14 @@ const Mint = () => {
 							<Row>
 								<Col xs={24}>
 									<p>
-										<Select style={{ width: 200 }} allowClear onChange={onChangeToken} placeholder="Select Coin">
+										<Select style={{ width: 300 }} allowClear onChange={onChangeToken} placeholder="Select Coin">
 											{tokensList.map((tkn) => (
-												<Option value={tkn.depositaddress}>{tkn.name}</Option>
+												<Option value={tkn.id}>{tkn.name}</Option>
 											))}
 										</Select>
 									</p>
-
-									<div className="qr-code">{selectedToken && <QRCode value={selectedToken} size={200} />}</div>
-									{selectedToken && <p className="deposite-info">Deposit Address : {selectedToken}</p>}
-									{selectedToken && <p className="deposite-info">Deposit Fees : 5 USDT</p>}
+									<div className="qr-code">{selectedToken != null && <QRCode value={tokensList[selectedToken].depositaddress} size={200} />}</div>
+									{selectedToken != null && <p className="deposite-info">Deposit Fees : {tokensList[selectedToken].fees} {selectedToken.name}</p>}
 								</Col>
 							</Row>
 						</MintWrapper>
