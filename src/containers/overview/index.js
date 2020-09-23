@@ -22,7 +22,7 @@ const OverView = () => {
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
-	const [ethereumChartOptions, setEthereumChartOptions] = useState(ethereumChartInitialOptions);
+	const [ethereumChartOptions, setEthereumChartOptions] = useState();
 
 	useEffect(() => {
 		let stale = false;
@@ -58,17 +58,16 @@ const OverView = () => {
 	useEffect(() => {
 		let stale = false;
 
+		setEthereumChartOptions(ethereumChartInitialOptions);
+
 		const getRealTimeEthBalance = async () => {
+
 			const ethJson = await fetch(LIVE_ETH_PRICE_URL).then((res) => res.json());
 			const ethBalance = ethJson.price;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
 			if (ethereumChartSeriesData.length === 0) {
 				ethereumChartSeriesDataTemp = Array(50).fill(ethBalance);
-				let ethereumChartOptionstemp = ethereumChartOptions;
-				ethereumChartOptionstemp.yaxis.max = ethBalance + 20;
-				ethereumChartOptionstemp.yaxis.min = ethBalance - 20;
-				setEthereumChartOptions(ethereumChartOptionstemp);
 			}
 			ethereumChartSeriesDataTemp.reverse().unshift(ethBalance);
 			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 50).reverse();
@@ -77,7 +76,6 @@ const OverView = () => {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
 			}
 		};
-
 		const checkEthBalance = setInterval(() => {
 			getRealTimeEthBalance();
 		}, 3000);
@@ -130,17 +128,21 @@ const OverView = () => {
 			<Col xs={24} xl={16}>
 				<RightSideCard>
 					<h3 className="card-text">Ethereum Price</h3>
-					<StyledReactApexChart
-						options={ethereumChartOptions}
-						series={[
-							{
-								name: 'USDT',
-								data: ethereumChartSeriesData,
-							},
-						]}
-						type="line"
-						height={305}
-					/>
+					{
+						ethereumChartOptions && <StyledReactApexChart
+							options={ethereumChartOptions}
+							series={[
+								{
+									name: 'USDT',
+									data: ethereumChartSeriesData,
+								},
+							]}
+							type="line"
+							height={305}
+						/>
+					}
+
+
 				</RightSideCard>
 
 				<RightSideCard>
