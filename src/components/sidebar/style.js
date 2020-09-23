@@ -15,16 +15,6 @@ export const SideMenu = styled(Menu)`
 	}
 `;
 
-export const ThirmLogo = styled.div`
-	display: flex;
-	margin: 24px 10px;
-	.logo-text {
-		margin-left: 8px;
-		font-size: 18px;
-		font-weight: 700;
-	}
-`;
-
 export const ConnectorButton = styled(Button)`
 	margin: 8px 4px;
 	padding: 10px;
@@ -111,6 +101,7 @@ export const SideWrapper = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	margin-top: 60px;
 	@media (max-width: 768px) {
 		margin-top: 60px;
 		width: 200px;

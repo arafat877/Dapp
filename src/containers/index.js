@@ -53,11 +53,10 @@ function MainContent() {
 					<RightSideBar collapsed={collapsed} />
 				</StyledDrawer>
 
-				{collapsed && (
-					<StyledHeader>
-						<HeaderBar visible={leftDrawerVisible} onLeftDrawerOpen={onLeftDrawerOpen} onRightDrawerOpen={onRightDrawerOpen} collapsed={collapsed} />
-					</StyledHeader>
-				)}
+
+				<StyledHeader>
+					<HeaderBar collapsed={collapsed} />
+				</StyledHeader>
 
 				<Layout>
 					<StyledSider width={250} breakpoint="md" onCollapse={onCollapse} collapsed={collapsed} trigger={null} collapsedWidth={0}>

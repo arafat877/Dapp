@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { injected } from '../../hooks/connectors';
 import { walletConnect, walletlink } from './../../hooks/connectors';
-import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, SideSocial, SideWrapper, SocialAvatar, StyledPopover, ThirmLogo } from './style';
+import { ConnectButton, ConnectedAvatar, ConnectorAvatar, DisconnectButton, PopverWrapper, SideMenu, SideSocial, SideWrapper, SocialAvatar, StyledPopover } from './style';
 
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
@@ -48,15 +48,6 @@ const SideBar = (props) => {
 		<SideWrapper>
 			{!collapsed && (
 				<Row>
-					<Col xs={24}>
-						<ThirmLogo>
-							<Link to="/">
-								<span className="logo-text">
-									THIRM DAPP <Tag color="volcano">BETA</Tag>
-								</span>
-							</Link>
-						</ThirmLogo>
-					</Col>
 					<Col span={{ xs: 24 }}>
 						{
 							<ConnectButton type="secondary">
@@ -73,10 +64,10 @@ const SideBar = (props) => {
 										</span>
 									</StyledPopover>
 								) : (
-									<Link to="/">
-										<ThunderboltOutlined /> {`Connect`}
-									</Link>
-								)}
+										<Link to="/">
+											<ThunderboltOutlined /> {`Connect`}
+										</Link>
+									)}
 							</ConnectButton>
 						}
 					</Col>
