@@ -62,6 +62,7 @@ const Mint = () => {
 
 									<div className="qr-code">{selectedToken && <QRCode value={selectedToken} size={200} />}</div>
 									{selectedToken && <p className="deposite-info">Deposit Address : {selectedToken}</p>}
+									{selectedToken && <p className="deposite-info">Deposit Fees : 5 USDT</p>}
 								</Col>
 							</Row>
 						</MintWrapper>

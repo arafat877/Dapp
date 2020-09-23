@@ -3,12 +3,14 @@
 		"name": "BTC",
 		"image": "https://thirm.com/icons/tBTC.png",
 		"address": "",
+		"fees": "0.0001",
 		"depositaddress": "bc1qsrmj42myjqlthuu0g7d3c4r5pd8tplxzuv06x7"
 	},
 	{
 		"name": "USDT",
 		"image": "https://thirm.com/icons/tUSDT.png",
 		"address": "",
+		"fees": "4",
 		"depositaddress": "0xA34eF48B73870FA2ACa1558239576cCBC60Ad542"
 	}
 ]
