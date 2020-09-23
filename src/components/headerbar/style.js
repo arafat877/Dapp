@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu, Popover } from 'antd';
+import { Avatar, Button, Popover } from 'antd';
 import styled from 'styled-components';
 import { ThirmTheme } from './../../containers/globalStyle';
 
@@ -11,14 +11,6 @@ export const ThirmLogo = styled.div`
 	}
 `;
 
-export const SideMenu = styled(Menu)`
-  padding-top: 16px;
-  background-color: #fbfbfb;
-  border: 0;
-  width: 100%;
-  border-top: 1px solid #e3e3e3;
-`;
-
 export const ConnectorButton = styled(Button)`
   width: 100%;
   height: 80px;
@@ -29,11 +21,6 @@ export const ConnectorButton = styled(Button)`
     border: 1px solid #f9f9f9;
     background-color: #f9f9f9;
   }
-`;
-
-export const AvatarIcon = styled(Avatar)`
-  padding: 6px;
-  margin: 4px;
 `;
 
 export const ConnectButton = styled(Button)`
@@ -79,33 +66,26 @@ export const DisconnectButton = styled(Button)`
 	height: 45px;
 	padding: 10px 16px;
 	border: 1px solid #e3e3e3;
-	border-radius: 5px;
+  border-radius: 5px;
+  background: #e74c3c;
+  color: #fff;
 	width: 100%;
 	&:focus,
 	&:hover,
 	&:active &:focus-within {
 		outline: none;
-		border: 1px solid #e3e3e3;
+    border: 1px solid #e3e3e3;
+    background: #c0392b;
+    color: #fff;
 	}
-`;
-
-export const ActiveButton = styled(Button)`
-  span {
-    color: #00ff00;
-  }
-  border: 2px solid #00ff00;
-  &:focus, &:hover, &:active &:focus-within {
-    border: 2px solid #00ff00;
-  }
 `;
 
 export const ConnectedAvatar = styled(Avatar)`
 	height: 48px;
 	width: 48px;
 	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
-	background-color: #fff;
 	margin-right: 4px;
-	border: 1px solid #e3e3e3;
+  padding: 10px;
 `;
 
 export const StyledPopover = styled(Popover)`
@@ -117,6 +97,7 @@ export const StyledPopover = styled(Popover)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   border-left: 1px solid #e3e3e3;
   border-right: 1px solid #e3e3e3;
   cursor: pointer;
@@ -189,11 +170,5 @@ display: flex;
     margin-right: 8px;
     font-size: 20px;
   }
-`;
-
-export const ConnectorAvatar = styled(Avatar)`
-	height: 32px;
-	width: 32px;
-	margin-right: 8px;
 `;
 
