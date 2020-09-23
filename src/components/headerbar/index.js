@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { DownOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Badge, Button, Col, Row, Tag } from 'antd';
+import Countdown from 'antd/lib/statistic/Countdown';
+import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
-import { ConnectedAvatar, DisconnectButton, PopverWrapper, StyledPopover, ThirmLogo } from './style';
+import { ConnectedAvatar, CountdownWrapper, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
-
 const HeaderBar = (props) => {
 
-  const { collapsed } = props;
+  const { collapsed, onLeftDrawerOpen } = props;
 
   const { deactivate, active, account, connector, chainId } = useWeb3React();
 
@@ -67,53 +68,70 @@ const HeaderBar = (props) => {
 
   const history = useHistory();
 
+  const indiaTime = moment().tz("Asia/Kolkata");
+  const indiaTimeEndOfDay = moment().tz("Asia/Kolkata").endOf('date').subtract(6, 'hours');
+  const secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
+  const deadline = moment.duration(indiaTime).asMilliseconds() + secDiff;
+
   return (
     <Row justify="space-between" align="middle">
       <Col xs={12}>
-        <ThirmLogo>
-          <Link to="/">
-            <span className="logo-text">
-              THIRM DAPP <Tag color="volcano">BETA</Tag>
-            </span>
-          </Link>
-        </ThirmLogo>
+        <LogoMeta>
+          {collapsed && <MenuOutlined className="menu-icon" onClick={onLeftDrawerOpen} />}
+          <ThirmLogo>
+            <Link to="/">
+              <span className="logo-text">
+                THIRM DAPP <Tag color="volcano">BETA</Tag>
+              </span>
+            </Link>
+          </ThirmLogo>
+        </LogoMeta>
       </Col>
-      <Col xs={12}>{
-        active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} walletIcon={walletIcon} networkName={networkName} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
-          <div className="left-content">
-            {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
-            <div className="connection-info">
-              <span className="connection-info-up">{walletName}</span>
-              <span className="connection-info-down">{account && account.substr(0, 5)}...{account && account.substr(39)}</span>
-            </div>
-          </div>
 
-          <div className="right-content">
-            {networkName && (
-              <Tag className="network-name" color="success">
-                {networkName}
-              </Tag>
-            )}
-            {
-              popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
-            }
-          </div>
+      <Col xs={12}>
+        <HeaderMeta>
+          {!collapsed && <CountdownWrapper>
+            <p>Time reset in</p>
+            <Countdown title={null} value={deadline} />
+          </CountdownWrapper>}
 
-        </StyledPopover> : <StyledPopover placement="bottomRight" title={null} content={() => <InActivePopoverContent history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible} >
-            <div className="left-content">
-              <Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
-                <ConnectedAvatar src={LoginKeyIcon} />
-              </Badge>
-              <div className="connection-info">
-                <span className="connection-info-up">Not Connected</span>
-                <span className="connection-info-down">Connect Wallet</span>
+          {
+            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} walletIcon={walletIcon} networkName={networkName} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
+              <div className="left-content">
+                {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
+                <div className="connection-info">
+                  <span className="connection-info-up">{walletName}</span>
+                  <span className="connection-info-down">{account && account.substr(0, 5)}...{account && account.substr(39)}</span>
+                </div>
               </div>
-            </div>
-            {
-              popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
-            }
-          </StyledPopover>
-      }
+
+              <div className="right-content">
+                {networkName && (
+                  <Tag className="network-name" color="success">
+                    {networkName}
+                  </Tag>
+                )}
+                {
+                  popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
+                }
+              </div>
+
+            </StyledPopover> : <StyledPopover placement="bottomRight" title={null} content={() => <InActivePopoverContent history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible} >
+                <div className="left-content">
+                  <Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
+                    <ConnectedAvatar src={LoginKeyIcon} />
+                  </Badge>
+                  <div className="connection-info">
+                    <span className="connection-info-up">Not Connected</span>
+                    <span className="connection-info-down">Connect Wallet</span>
+                  </div>
+                </div>
+                {
+                  popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
+                }
+              </StyledPopover>
+          }
+        </HeaderMeta>
       </Col>
     </Row>
   );

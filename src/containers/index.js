@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
-import RightSideBar from './../components/rightsidebar/index';
 import Web3Wrapper from './../components/web3Wrapper/index';
 import AddressMap from './adressmap';
 import Burn from './burn/index';
@@ -27,15 +26,6 @@ function MainContent() {
 		setLeftDrawerVisible(true);
 	};
 
-	// Right Drawer Open and Close
-	const [rightDrawerVisible, setRightDrawerVisible] = useState(false);
-	const onRightDrawerClose = () => {
-		setRightDrawerVisible(false);
-	};
-	const onRightDrawerOpen = () => {
-		setRightDrawerVisible(true);
-	};
-
 	const [collapsed, setCollapsed] = useState(false);
 
 	const onCollapse = (collapsed) => {
@@ -49,13 +39,8 @@ function MainContent() {
 					<SideBar collapsed={collapsed} />
 				</StyledDrawer>
 
-				<StyledDrawer title={null} placement="right" onClose={onRightDrawerClose} visible={rightDrawerVisible}>
-					<RightSideBar collapsed={collapsed} />
-				</StyledDrawer>
-
-
 				<StyledHeader>
-					<HeaderBar collapsed={collapsed} />
+					<HeaderBar collapsed={collapsed} onLeftDrawerOpen={onLeftDrawerOpen} />
 				</StyledHeader>
 
 				<Layout>

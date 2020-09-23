@@ -1,5 +1,6 @@
 import { Avatar, Button, Menu, Popover } from 'antd';
 import styled from 'styled-components';
+import { ThirmTheme } from './../../containers/globalStyle';
 
 export const ThirmLogo = styled.div`
 	display: flex;
@@ -113,7 +114,6 @@ export const StyledPopover = styled(Popover)`
 		width: 220px;
 	}
 	padding: 4px 8px;
-  float: right;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -160,6 +160,34 @@ export const StyledPopover = styled(Popover)`
     border-radius: 50%;
     background-color: green;
     border: 2px solid #fff;
+  }
+`;
+
+export const CountdownWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px;
+  p {
+    line-height: 1;
+    margin: 0;
+    color: ${ThirmTheme.textColorDark}
+  }
+`;
+
+export const HeaderMeta = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+export const LogoMeta = styled.div`
+display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  .menu-icon {
+    margin-right: 8px;
+    font-size: 20px;
   }
 `;
 
