@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Col, Row, Select } from 'antd';
+import { Col, Input, Row, Select, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { StyledCard } from '../globalStyle';
@@ -60,7 +60,10 @@ const Mint = () => {
 										</Select>
 									</p>
 									<div className="qr-code">{selectedToken != null && <QRCode value={tokensList[selectedToken].depositaddress} size={200} />}</div>
-									{selectedToken != null && <p className="deposite-info">Deposit Fees : {tokensList[selectedToken].fees} {selectedToken.name}</p>}
+
+									{selectedToken != null && <p className="deposite-info">Deposit Address <Input value={tokensList[selectedToken].depositaddress} /></p>}
+
+									{selectedToken != null && <p className="deposite-info">Deposit Fees <p><Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag></p></p>}
 								</Col>
 							</Row>
 						</MintWrapper>

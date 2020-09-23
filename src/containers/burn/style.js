@@ -13,4 +13,7 @@ export const BurnInfo = styled.h1`
 		width: 100%;
 		height: 45px;
 	}
+	.deposite-info {
+		text-align: center;
+	}
 `;

@@ -1,6 +1,6 @@
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Form, Input, Row, Select } from 'antd';
+import { Button, Col, Form, Input, Row, Select, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { StyledCard } from '../globalStyle';
 import AddressMapJson from './../../config/addressmap.json';
@@ -11,6 +11,12 @@ const Burn = () => {
 	const { account, library } = useWeb3React();
 
 	const [tokensList, setTokensList] = useState([]);
+
+	const [selectedToken, setSelectedToken] = useState();
+
+	function onChangeToken(value) {
+		setSelectedToken(value);
+	}
 
 	const [form] = Form.useForm();
 
@@ -33,9 +39,8 @@ const Burn = () => {
 	}, [account]);
 
 	const onTokenMax = async () => {
-		if (!form.getFieldValue().token) return;
-		console.log(form.getFieldValue().token);
-		const contract = new library.web3.eth.Contract(thirmAbi, form.getFieldValue().token);
+		if (selectedToken == null) return;
+		const contract = new library.web3.eth.Contract(thirmAbi, tokensList[selectedToken].address);
 		const bal = await contract.methods.balanceOf(account).call();
 		if (bal) {
 			const ethBal = parseFloat(formatEther(bal)).toFixed(8);
@@ -46,7 +51,7 @@ const Burn = () => {
 	}
 
 	const onFinish = async (values) => {
-		const contract = new library.web3.eth.Contract(thirmAbi, values.token);
+		const contract = new library.web3.eth.Contract(thirmAbi, tokensList[values.token].address);
 		const tokenAmountWei = library.web3.utils.toWei(values.amount, 'ether');
 		await contract.methods.burn(tokenAmountWei).send({ from: account });
 	};
@@ -65,14 +70,12 @@ const Burn = () => {
 								name="token"
 								rules={[{ required: true, message: 'Please select a token' }]}
 							>
-								<Select style={{ width: 300 }} allowClear placeholder="Select Coin">
+								<Select style={{ width: 300 }} allowClear placeholder="Select Coin" onChange={onChangeToken}>
 									{tokensList.map((tkn) => (
-										<Select.Option value={tkn.address}>{tkn.tfullname}</Select.Option>
+										<Select.Option value={tkn.id}>{tkn.tfullname}</Select.Option>
 									))}
 								</Select>
 							</Form.Item>
-							{form.selectedToken && <p>Token Address: {form.selectedToken}</p>}
-
 							<Form.Item
 								name="amount"
 								rules={[{ required: true, message: 'Please input token Amount' }]}
@@ -85,6 +88,12 @@ const Burn = () => {
 									}
 								/>
 							</Form.Item>
+
+							{selectedToken != null && <p className="deposite-info">Deposit Fees <p>
+								<Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag>
+							</p>
+							</p>}
+
 							<Form.Item
 							>
 								<Button className="burn-button" type="primary" htmlType="submit">Burn</Button>
