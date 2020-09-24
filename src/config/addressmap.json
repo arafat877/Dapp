@@ -20,5 +20,16 @@
 		"address": "0xB962776Fa4FaD32F46609A813488C4b62227325f",
 		"fees": "4",
 		"depositaddress": "0xA34eF48B73870FA2ACa1558239576cCBC60Ad542"
+	},
+	{
+		"id": 1,
+		"isERC": 1,
+		"name": "DAI",
+		"tname": "tDAI",
+		"tfullname": "Thirm Dai",
+		"image": "https://thirm.com/icons/tDAI.png",
+		"address": "0xB29c13A70792B5B5D1Ab8e40b92233A16568Fe32",
+		"fees": "4",
+		"depositaddress": "0xA34eF48B73870FA2ACa1558239576cCBC60Ad542"
 	}
 ]
