@@ -69,8 +69,13 @@ const HeaderBar = (props) => {
   const history = useHistory();
 
   const indiaTime = moment().tz("Asia/Kolkata");
-  const indiaTimeEndOfDay = moment().tz("Asia/Kolkata").endOf('date').subtract(6, 'hours');
-  const secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
+  let indiaTimeEndOfDay = moment().tz("Asia/Kolkata").endOf('day').subtract(6, 'hours');
+  let secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
+
+  if (secDiff < 0) {
+    indiaTimeEndOfDay = indiaTimeEndOfDay.add(1, 'day');
+    secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
+  }
   const deadline = moment.duration(indiaTime).asMilliseconds() + secDiff;
 
   return (
