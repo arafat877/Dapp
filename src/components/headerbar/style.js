@@ -92,6 +92,7 @@ export const StyledPopover = styled(Popover)`
 	width: 300px;
   @media (max-width: 768px) {
 		width: 220px;
+    font-size: 85%;
 	}
 	padding: 4px 8px;
   display: flex;
@@ -170,7 +171,7 @@ display: flex;
   align-items: center;
   .menu-icon {
     margin-right: 8px;
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
