@@ -1,11 +1,10 @@
-import { BorderlessTableOutlined, EyeOutlined, FireOutlined, FundOutlined, MoneyCollectOutlined, NodeIndexOutlined } from '@ant-design/icons';
+import { BorderlessTableOutlined, FireOutlined, NodeIndexOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SideMenu, SideSocial, SideWrapper, SocialAvatar } from './style';
-
 
 const TwitterIcon = require('../../assets/images/twitter.png');
 const DiscordIcon = require('../../assets/images/discord.png');
@@ -14,7 +13,6 @@ const GithubIcon = require('../../assets/images/github.png');
 const SideBar = (props) => {
 	const { active } = useWeb3React();
 
-
 	let addr = window.location.pathname.split('/')[1];
 
 	if (!addr) addr = 'overview';
@@ -22,16 +20,16 @@ const SideBar = (props) => {
 	return (
 		<SideWrapper>
 			{active && (
-				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz', 'config']} forceSubMenuRender={true}>
-					<Menu.Item icon={<EyeOutlined />} key="overview">
+				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
+					<Menu.Item icon={<BorderlessTableOutlined />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
 
-					<Menu.Item icon={<MoneyCollectOutlined />} key="tokens">
-						<Link to="/tokens">T-Tokens</Link>
+					<Menu.Item icon={<BorderlessTableOutlined />} key="tokens">
+						<Link to="/tokens">Vaults</Link>
 					</Menu.Item>
 
-					<SubMenu key="tokenz" icon={<MoneyCollectOutlined />} title="Actions">
+					<SubMenu key="tokenz" icon={<BorderlessTableOutlined />} title="T-Tokens">
 						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
 							<Link to="/mint">Mint</Link>
 						</Menu.Item>
@@ -41,14 +39,8 @@ const SideBar = (props) => {
 						</Menu.Item>
 					</SubMenu>
 
-					<SubMenu key="config" icon={<MoneyCollectOutlined />} title="Config">
-						<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
-							<Link to="/addressmap">Address</Link>
-						</Menu.Item>
-					</SubMenu>
-
-					<Menu.Item icon={<FundOutlined />} key="platform">
-						<Link to="/platform">Platforms</Link>
+					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
+						<Link to="/addressmap">Crosschain</Link>
 					</Menu.Item>
 				</SideMenu>
 			)}
@@ -76,6 +68,5 @@ const SideBar = (props) => {
 		</SideWrapper>
 	);
 };
-
 
 export default SideBar;

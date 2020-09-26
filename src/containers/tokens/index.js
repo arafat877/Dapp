@@ -16,11 +16,9 @@ const Tokens = () => {
 	const [tokensList, setTokensList] = useState([]);
 
 	useEffect(() => {
-
 		let stale = false;
 
 		const getTokenInformation = async () => {
-
 			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
 
 			const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
@@ -53,7 +51,6 @@ const Tokens = () => {
 				interestDataTemp.forEach((intr) => {
 					if (intr.Address === tkn.address) {
 						tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
-						tkn.platform = intr.Platform;
 					}
 				});
 				return tkn;
@@ -62,7 +59,6 @@ const Tokens = () => {
 			if (!stale) {
 				setTokensList(tokensListTemp);
 			}
-
 		};
 
 		getTokenInformation();
@@ -70,7 +66,6 @@ const Tokens = () => {
 		return () => {
 			stale = true;
 		};
-
 	}, [chainId, account]);
 
 	if (tokensList.length === 0) return <LoadingIndicator />;
@@ -117,6 +112,20 @@ const addressMapTableColumns = [
 		},
 	},
 	{
+		title: 'Mint',
+		dataIndex: 'mint',
+		key: 'mint',
+		render: () => {
+			return (
+				<Link to="/mint">
+					<Button link type="dashed" size="small">
+						Mint
+					</Button>
+				</Link>
+			);
+		},
+	},
+	{
 		title: 'Burn',
 		dataIndex: 'burn',
 		key: 'burn',
@@ -130,13 +139,9 @@ const addressMapTableColumns = [
 			);
 		},
 	},
+
 	{
-		title: 'Platform',
-		dataIndex: 'platform',
-		key: 'platform',
-	},
-	{
-		title: 'APY',
+		title: 'Yearly Growth',
 		dataIndex: 'apy',
 		key: 'apy',
 		render: (text, tkn) => {
