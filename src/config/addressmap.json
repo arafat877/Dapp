@@ -22,7 +22,7 @@
 		"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
 	},
 	{
-		"id": 1,
+		"id": 2,
 		"isERC": 1,
 		"name": "DAI",
 		"tname": "tDAI",

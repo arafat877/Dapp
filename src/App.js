@@ -10,13 +10,15 @@ import { abi, CONTRACT_ADDRESS_MAINNET, CONTRACT_ADDRESS_ROPSTEN, thirmAbi, THIR
 function getLibrary(provider) {
 	const library = new Web3Provider(provider);
 
-	const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URLS[1]));
+	let web3 = new Web3(new Web3.providers.HttpProvider(RPC_URLS[1]));
 	library.web3 = web3;
 
 	const chainId = provider.chainId;
 
-	if (chainId === '0x3') {
+	if (chainId === 3) {
 		library.contract = new web3.eth.Contract(abi, CONTRACT_ADDRESS_ROPSTEN);
+		web3 = new Web3(new Web3.providers.HttpProvider(RPC_URLS[3]));
+		library.web3 = web3;
 	} else {
 		library.contract = new web3.eth.Contract(abi, CONTRACT_ADDRESS_MAINNET);
 	}

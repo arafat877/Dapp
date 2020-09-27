@@ -27,7 +27,6 @@ const Mint = () => {
 					return token;
 				})
 			);
-
 			if (!stale) {
 				setTokensList(tempTokenList);
 			}
