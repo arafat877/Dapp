@@ -45,10 +45,10 @@ const Burn = () => {
 		if (bal) {
 			const ethBal = parseFloat(formatEther(bal)).toFixed(8);
 			form.setFieldsValue({
-				amount: ethBal
+				amount: ethBal,
 			});
 		}
-	}
+	};
 
 	const onFinish = async (values) => {
 		const contract = new library.web3.eth.Contract(thirmAbi, tokensList[values.token].address);
@@ -61,42 +61,41 @@ const Burn = () => {
 			<Col xs={24}>
 				<StyledCard>
 					<BurnInfo>
-						<Form
-							form={form}
-							name="basic"
-							onFinish={onFinish}
-						>
-							<Form.Item
-								name="token"
-								rules={[{ required: true, message: 'Please select a token' }]}
-							>
+						<Form form={form} name="basic" onFinish={onFinish}>
+							<Form.Item name="token" rules={[{ required: true, message: 'Please select a token' }]}>
 								<Select style={{ width: 300 }} allowClear placeholder="Select Coin" onChange={onChangeToken}>
 									{tokensList.map((tkn) => (
 										<Select.Option value={tkn.id}>{tkn.tfullname}</Select.Option>
 									))}
 								</Select>
 							</Form.Item>
-							<Form.Item
-								name="amount"
-								rules={[{ required: true, message: 'Please input token Amount' }]}
-							>
+							<Form.Item name="amount" rules={[{ required: true, message: 'Please input token Amount' }]}>
 								<Input
 									style={{ width: 300 }}
 									placeholder="Number of tokens to burn"
 									suffix={
-										<Button type="primary" danger onClick={onTokenMax}>MAX</Button>
+										<Button type="primary" danger onClick={onTokenMax}>
+											MAX
+										</Button>
 									}
 								/>
 							</Form.Item>
 
-							{selectedToken != null && <p className="deposite-info">Withdrawal Fees <p>
-								<Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag>
-							</p>
-							</p>}
+							{selectedToken != null && (
+								<p className="deposite-info">
+									Withdrawal Fees{' '}
+									<p>
+										<Tag>
+											{tokensList[selectedToken].fees} {tokensList[selectedToken].name}
+										</Tag>
+									</p>
+								</p>
+							)}
 
-							<Form.Item
-							>
-								<Button className="burn-button" type="primary" htmlType="submit">Burn</Button>
+							<Form.Item>
+								<Button className="burn-button" type="primary" htmlType="submit">
+									Burn
+								</Button>
 							</Form.Item>
 						</Form>
 					</BurnInfo>
