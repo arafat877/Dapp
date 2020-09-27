@@ -112,28 +112,28 @@ const addressMapTableColumns = [
 		},
 	},
 	{
-		title: 'Mint',
-		dataIndex: 'mint',
-		key: 'mint',
+		title: 'Deposit',
+		dataIndex: 'deposit',
+		key: 'deposit',
 		render: () => {
 			return (
-				<Link to="/mint">
+				<Link to="/deposit">
 					<Button link type="dashed" size="small">
-						Mint
+						Deposit
 					</Button>
 				</Link>
 			);
 		},
 	},
 	{
-		title: 'Burn',
-		dataIndex: 'burn',
-		key: 'burn',
+		title: 'Withdraw',
+		dataIndex: 'withdraw',
+		key: 'withdraw',
 		render: () => {
 			return (
-				<Link to="/burn">
+				<Link to="/withdraw">
 					<Button danger type="dashed" size="small">
-						Burn
+						Withdraw
 					</Button>
 				</Link>
 			);

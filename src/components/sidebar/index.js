@@ -30,12 +30,12 @@ const SideBar = (props) => {
 					</Menu.Item>
 
 					<SubMenu key="tokenz" icon={<BorderlessTableOutlined />} title="T-Tokens">
-						<Menu.Item icon={<NodeIndexOutlined />} key="mint">
-							<Link to="/mint">Mint</Link>
+						<Menu.Item icon={<NodeIndexOutlined />} key="deposit">
+							<Link to="/deposit">Deposit</Link>
 						</Menu.Item>
 
-						<Menu.Item icon={<FireOutlined />} key="burn">
-							<Link to="/burn">Burn</Link>
+						<Menu.Item icon={<FireOutlined />} key="withdraw">
+							<Link to="/withdraw">Withdraw</Link>
 						</Menu.Item>
 					</SubMenu>
 

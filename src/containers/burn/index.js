@@ -94,7 +94,7 @@ const Burn = () => {
 
 							<Form.Item>
 								<Button className="burn-button" type="primary" htmlType="submit">
-									Burn
+									Withdraw
 								</Button>
 							</Form.Item>
 						</Form>

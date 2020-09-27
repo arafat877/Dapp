@@ -48,8 +48,8 @@ function MainContent() {
 								<Route exact path="/" component={() => <OverView />} />
 								<Route exact path="/addressmap" component={() => <AddressMap />} />
 								<Route exact path="/tokens" component={() => <Tokens />} />
-								<Route exact path="/burn" component={() => <Burn />} />
-								<Route exact path="/mint" component={() => <Mint />} />
+								<Route exact path="/withdraw" component={() => <Burn />} />
+								<Route exact path="/deposit" component={() => <Mint />} />
 							</Switch>
 						</Web3Wrapper>
 					</StyledContent>
