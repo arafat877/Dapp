@@ -5,6 +5,7 @@ import React from 'react';
 import { getErrorMessage } from './../../hooks/index';
 import { AvatarIcon, ConnectorButton, ErrorAlert, LoginInfo } from './style';
 
+
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
@@ -32,7 +33,7 @@ const ConnectWallet = (props) => {
               const currentConnector = connectorsByName[name];
               return (
                 <Col>
-                  {name === 'Injected' && (
+                  {currentConnector && name === 'Injected' && (
                     <ConnectorButton
                       key={name}
                       onClick={() => {
@@ -43,7 +44,7 @@ const ConnectWallet = (props) => {
                       <p>Metamask</p>
                     </ConnectorButton>
                   )}
-                  {name === 'walletlink' && (
+                  {currentConnector && name === 'walletlink' && (
                     <ConnectorButton
                       type="secondary"
                       key={name}
@@ -56,7 +57,7 @@ const ConnectWallet = (props) => {
                     </ConnectorButton>
                   )}
 
-                  {name === 'walletConnect' && (
+                  {currentConnector && name === 'walletConnect' && (
                     <ConnectorButton
                       type="secondary"
                       key={name}

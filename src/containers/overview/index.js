@@ -28,6 +28,7 @@ const OverView = () => {
 		let stale = false;
 
 		const getTokenBalances = async () => {
+
 			const balance = formatEther(await library.getBalance(account));
 
 			if (!stale) {
@@ -35,6 +36,7 @@ const OverView = () => {
 			}
 
 			const thrmBal = await library.thirm.methods.balanceOf(account).call();
+
 			if (thrmBal) {
 				setThrmBalance(formatEther(thrmBal));
 			}

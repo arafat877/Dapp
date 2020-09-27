@@ -3,12 +3,9 @@ import {
   NoEthereumProviderError,
   UserRejectedRequestError as UserRejectedRequestErrorInjected
 } from "@web3-react/injected-connector";
-import {
-  UserRejectedRequestError as UserRejectedRequestErrorWalletConnect
-} from "@web3-react/walletconnect-connector";
+import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from "@web3-react/walletconnect-connector";
 import { useEffect, useState } from "react";
 import { injected, walletConnect, walletlink } from "./connectors";
-
 
 /*
   ****************************************************************
