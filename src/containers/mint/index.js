@@ -66,7 +66,7 @@ const Mint = () => {
 									{selectedToken != null && <p className="deposite-info">Deposit Fees <p><Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag></p></p>}
 
 									{
-										selectedToken != null && tokensList[selectedToken].isERC === 0 && <p className="deposite-info">Sign this message while depositing <p><Input value={`myaddress: ${account}`} /></p></p>
+										selectedToken != null && tokensList[selectedToken].isERC === 0 && <p className="deposite-info">sign this message with deposit address<p><Input value={`myaddress: ${account}`} /></p></p>
 									}
 
 								</Col>
