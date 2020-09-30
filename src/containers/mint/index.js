@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useWeb3React } from '@web3-react/core';
-import { Col, Input, Row, Select, Tag } from 'antd';
+import { Button, Col, Input, Row, Select, Tag } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { StyledCard } from '../globalStyle';
@@ -15,6 +16,8 @@ const Mint = () => {
 	const [tokensList, setTokensList] = useState([]);
 
 	const [selectedToken, setSelectedToken] = useState();
+
+	const [signedMessage, setSignedMessage] = useState("");
 
 	useEffect(() => {
 		let stale = false;
@@ -39,8 +42,36 @@ const Mint = () => {
 		};
 	}, [account]);
 
-	function onChangeToken(value) {
+	const onChangeToken = (value) => {
 		setSelectedToken(value);
+	}
+
+
+	// url https://entbt7e7acdl.x.pipedream.net
+
+	const onSigned = async () => {
+		try {
+			const SIGN_URL = "https://entbt7e7acdl.x.pipedream.net";
+			await fetch(SIGN_URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					user: `myaddress:${account}`,
+					coinName: tokensList[selectedToken].name,
+					message: signedMessage
+				})
+			}).then(res => res.json());
+
+		} catch (e) {
+			console.log(e);
+		}
+
+	}
+
+	const onSignMessageChanged = (x) => {
+		setSignedMessage(x.target.value);
 	}
 
 	return (
@@ -66,9 +97,13 @@ const Mint = () => {
 									{selectedToken != null && <p className="deposite-info">Deposit Fees <p><Tag>{tokensList[selectedToken].fees} {tokensList[selectedToken].name}</Tag></p></p>}
 
 									{
-										selectedToken != null && tokensList[selectedToken].isERC === 0 && <p className="deposite-info">sign this message with deposit address<p><Input value={`myaddress: ${account}`} /></p></p>
-									}
+										selectedToken != null && tokensList[selectedToken].isERC === 0 && <p className="deposite-info">Sign Message with deposit address<p>
 
+											<Input value={`myaddress:${account}`} />
+											<TextArea autoSize={{ minRows: 4 }} value={signedMessage} onChange={onSignMessageChanged} />
+											<Button type="primary" onClick={onSigned}>Sign</Button>
+										</p></p>
+									}
 								</Col>
 							</Row>
 						</MintWrapper>
