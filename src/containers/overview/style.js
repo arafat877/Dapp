@@ -67,3 +67,10 @@ export const OverviewCard = styled.a`
 	}
 	padding: 4px;
 `;
+
+export const DiscordBox = styled.div`
+	margin: 16px 1px;
+	iframe {
+		box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+	}	
+`;

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
-import { LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
+import { DiscordBox, LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
 
 const OverView = () => {
 	const { library, account } = useWeb3React();
@@ -180,8 +180,9 @@ const OverView = () => {
 
 				</RightSideCard>
 
-
-				<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+				<DiscordBox>
+					<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+				</DiscordBox>
 
 			</Col>
 		</Row>
