@@ -62,7 +62,11 @@ const Tokens = () => {
 				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
 					const contract = new library.web3.eth.Contract(thirmAbi, tkn.address);
 					const bal = await contract.methods.balanceOf(account).call();
-					tkn.balance = bal * tkn.value;
+
+					const tknBalance = library.web3.utils.fromWei(bal, 'ether').toString();
+
+					tkn.balance = Number.parseFloat(parseFloat(tknBalance) * tkn.value).toFixed(8);
+
 					return tkn;
 				}));
 
@@ -105,17 +109,23 @@ const addressMapTableColumns = [
 		key: 'name',
 	},
 	{
-		title: 'Symbol',
-		dataIndex: 'symbol',
-		key: 'symbol',
-	},
-	{
 		title: 'Address',
 		key: 'address',
 		dataIndex: 'address',
 	},
 	{
-		title: 'Value',
+		title: 'Holdings',
+		dataIndex: 'symbol',
+		key: 'symbol',
+		render: (text, tkn) => {
+			if (text) {
+				return <>{`${tkn.balance} ${text} `}</>;
+			}
+			return null;
+		},
+	},
+	{
+		title: 'Rate',
 		key: 'value',
 		dataIndex: 'value',
 		render: (text, tkn) => {
@@ -126,7 +136,7 @@ const addressMapTableColumns = [
 		},
 	},
 	{
-		title: 'Balance',
+		title: 'Total Backed',
 		key: 'balance',
 		dataIndex: 'balance',
 		render: (text, tkn) => {

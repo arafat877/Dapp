@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const SideMenu = styled(Menu)`
 	background-color: #fff;
 	border: 0;
-	margin-top: 24px;
+	margin-top: 36px;
 	@media only screen and (max-width: 768px) {
 		margin-top: 4px;
 	}

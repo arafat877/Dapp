@@ -11,7 +11,7 @@ export const ThirmTheme = {
 };
 
 export const StyledContent = styled(Layout.Content)`
-	margin: 28px auto 0 auto;
+	margin: 36px auto 0 auto;
 	padding: 54px;
 	background-color: #fafafa;
 	@media (max-width: 768px) {
