@@ -5,7 +5,7 @@ import { RecoilRoot } from 'recoil';
 import Web3 from 'web3';
 import MainContent from './containers';
 import { RPC_URLS } from './hooks/connectors';
-import { abi, CONTRACT_ADDRESS_MAINNET, CONTRACT_ADDRESS_ROPSTEN, thirmAbi, THIRM_CONTRACT_ADDRESS } from './utils/config';
+import { abi, CONTRACT_ADDRESS_MAINNET, CONTRACT_ADDRESS_ROPSTEN, signatureAbi, SIGNATURE_CONTRACT_ADDRESS, thirmAbi, THIRM_CONTRACT_ADDRESS } from './utils/config';
 
 function getLibrary(provider) {
 	const library = new Web3Provider(provider);
@@ -24,6 +24,7 @@ function getLibrary(provider) {
 	}
 
 	library.thirm = new web3.eth.Contract(thirmAbi, THIRM_CONTRACT_ADDRESS);
+	library.signature = new web3.eth.Contract(signatureAbi, SIGNATURE_CONTRACT_ADDRESS);
 
 	library.pollingInterval = 12000;
 	return library;

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TOKEN_INTEREST_URL } from '../../utils/config';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { TOKEN_LIST_URL } from './../../utils/config';
+import { thirmAbi, TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { StyledTable, TokenTableContainer } from './style';
 
@@ -19,42 +19,56 @@ const Tokens = () => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-			let tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
+			let tokensListTemp;
+			try {
+				tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
 
-			const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
+				const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
 
-			// Filter by network and blacklisted
-			tokensListTemp = tokensListTemp
-				.filter((tkn) => tkn.chainId === chainId)
-				.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
-				.map((tkn) => {
-					tkn.key = tkn.name;
-					tkn.value = 1;
-					return tkn;
-				});
-
-			// Get token value
-			tokensListTemp = await Promise.all(
-				tokensListTemp.map(async (tkn) => {
-					const res = await library.contract.methods.getTToken(tkn.symbol).call();
-					if (res && res > 1) {
-						tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
-					} else {
+				// Filter by network and blacklisted
+				tokensListTemp = tokensListTemp
+					.filter((tkn) => tkn.chainId === chainId)
+					.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
+					.map((tkn) => {
+						tkn.key = tkn.name;
 						tkn.value = 1;
-					}
-					return tkn;
-				})
-			);
+						return tkn;
+					});
 
-			// get APY and platform data && merge
-			tokensListTemp = tokensListTemp.map((tkn) => {
-				interestDataTemp.forEach((intr) => {
-					if (intr.Address === tkn.address) {
-						tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
-					}
+				// Get token value
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async (tkn) => {
+						const res = await library.contract.methods.getTToken(tkn.symbol).call();
+						if (res && res > 1) {
+							tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
+						} else {
+							tkn.value = 1;
+						}
+						return tkn;
+					})
+				);
+
+				// get APY and platform data && merge
+				tokensListTemp = tokensListTemp.map((tkn) => {
+					interestDataTemp.forEach((intr) => {
+						if (intr.Address === tkn.address) {
+							tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
+						}
+					});
+					return tkn;
 				});
-				return tkn;
-			});
+
+				// Get token balance
+				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
+					const contract = new library.web3.eth.Contract(thirmAbi, tkn.address);
+					const bal = await contract.methods.balanceOf(account).call();
+					tkn.balance = bal * tkn.value;
+					return tkn;
+				}));
+
+			} catch (e) {
+				throw e;
+			}
 
 			if (!stale) {
 				setTokensList(tokensListTemp);
@@ -109,6 +123,14 @@ const addressMapTableColumns = [
 				return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
 			}
 			return null;
+		},
+	},
+	{
+		title: 'Balance',
+		key: 'balance',
+		dataIndex: 'balance',
+		render: (text, tkn) => {
+			return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
 		},
 	},
 	{

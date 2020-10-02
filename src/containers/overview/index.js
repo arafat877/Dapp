@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { formatEther } from '@ethersproject/units';
+import { ChainId, Fetcher, Route, TokenAmount, Trade, TradeType, WETH } from '@uniswap/sdk';
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +8,8 @@ import { LIVE_ETH_PRICE_URL } from '../../utils/config';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { LeftSideCard, RightSideCard, StyledReactApexChart } from './style';
+
+
 
 const UniSwapLogo = require('../../assets/images/uniswap.png');
 const EtherScanLogo = require('../../assets/images/etherscan.png');
@@ -23,6 +26,31 @@ const OverView = () => {
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
 	const [ethereumChartOptions, setEthereumChartOptions] = useState();
+
+	useEffect(() => {
+
+		const getUniswapData = async () => {
+			const DAI = await Fetcher.fetchTokenData(
+				ChainId.MAINNET,
+				'0x6B175474E89094C44Da98b954EedeAC495271d0F',
+				undefined,
+				"thrm",
+				"thirm"
+			);
+			const pair = await Fetcher.fetchPairData(DAI, WETH[DAI.chainId])
+
+			const route = new Route([pair], WETH[DAI.chainId])
+
+			const amountIn = '1000000000000000000' // 1 WETH
+
+			const trade = new Trade(route, new TokenAmount(WETH[DAI.chainId], amountIn), TradeType.EXACT_INPUT)
+
+			console.log(trade);
+		}
+
+		getUniswapData();
+
+	}, []);
 
 	useEffect(() => {
 		let stale = false;

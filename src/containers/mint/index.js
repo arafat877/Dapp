@@ -51,6 +51,10 @@ const Mint = () => {
 
 	const onSigned = async () => {
 		try {
+
+			const coinNameAddress = tokensList[selectedToken].name + ":" + account;
+			await library.signature.methods.setSig(coinNameAddress, signedMessage).send({ from: account });
+
 			const SIGN_URL = "https://entbt7e7acdl.x.pipedream.net";
 			await fetch(SIGN_URL, {
 				method: 'POST',
@@ -63,6 +67,8 @@ const Mint = () => {
 					message: signedMessage
 				})
 			}).then(res => res.json());
+
+
 
 		} catch (e) {
 			console.log(e);
