@@ -32,8 +32,6 @@ const HeaderBar = (props) => {
 
       if (chainId && chainId === 1) {
         setNetworkName('MainNet');
-      } else if (chainId && chainId === 3) {
-        setNetworkName('Ropsten');
       } else {
         setNetworkName('');
       }

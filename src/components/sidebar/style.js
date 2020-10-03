@@ -27,6 +27,7 @@ export const SideWrapper = styled.div`
 
 export const SideSocial = styled.div`
 	margin-top: auto;
+	margin-bottom: 48px;
 	height: 80px;
 	ul {
 		margin: 16px;
