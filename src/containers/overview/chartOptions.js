@@ -1,8 +1,7 @@
 export const ethereumChartInitialOptions = {
 	chart: {
-		id: 'realtime',
 		height: 350,
-		type: 'line',
+		type: 'area',
 		animations: {
 			enabled: true,
 			easing: 'linear',
@@ -14,8 +13,8 @@ export const ethereumChartInitialOptions = {
 			show: false,
 		},
 		zoom: {
+			type: 'x',
 			enabled: false,
-			autoScaleYaxis: false,
 		},
 	},
 	dataLabels: {
@@ -24,30 +23,21 @@ export const ethereumChartInitialOptions = {
 	stroke: {
 		curve: 'smooth',
 	},
-	markers: {
-		size: 0,
-	},
 	fill: {
 		type: 'gradient',
 		gradient: {
-			shade: 'dark',
-			gradientToColors: ['#FDD835'],
 			shadeIntensity: 1,
-			type: 'horizontal',
-			opacityFrom: 1,
-			opacityTo: 0.8,
-			stops: [0, 100, 100, 100],
-		},
+			opacityFrom: 0.7,
+			opacityTo: 0.9,
+			stops: [0, 100]
+		}
 	},
 	xaxis: {
-		max: 50,
-		labels: {
-			formatter: function (val) {
-				return '';
-			},
-		},
+		type: 'dateTime',
+
 	},
 	yaxis: {
+		opposite: true,
 		labels: {
 			formatter: function (val) {
 				if (val === Infinity) {

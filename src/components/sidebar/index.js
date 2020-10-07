@@ -1,4 +1,4 @@
-import { BorderlessTableOutlined, FireOutlined, NodeIndexOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, BorderlessTableOutlined, EyeOutlined, FireOutlined, NodeIndexOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -21,27 +21,23 @@ const SideBar = (props) => {
 		<SideWrapper>
 			{active && (
 				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
-					<Menu.Item icon={<BorderlessTableOutlined />} key="overview">
+					<Menu.Item icon={<EyeOutlined style={{ fontSize: 17 }} />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
 
-					<Menu.Item icon={<BorderlessTableOutlined />} key="tokens">
-						<Link to="/tokens">Vaults</Link>
+					<Menu.Item icon={<BorderlessTableOutlined style={{ fontSize: 17 }} />} key="tokens">
+						<Link to="/vaults">Vaults</Link>
 					</Menu.Item>
 
-					<SubMenu key="tokenz" icon={<BorderlessTableOutlined />} title="T-Tokens">
-						<Menu.Item icon={<NodeIndexOutlined />} key="deposit">
+					<SubMenu key="tokenz" icon={<AppstoreOutlined style={{ fontSize: 17 }} />} title="T-Tokens">
+						<Menu.Item icon={<NodeIndexOutlined style={{ fontSize: 17 }} />} key="deposit">
 							<Link to="/deposit">Deposit</Link>
 						</Menu.Item>
 
-						<Menu.Item icon={<FireOutlined />} key="withdraw">
+						<Menu.Item icon={<FireOutlined style={{ fontSize: 17 }} />} key="withdraw">
 							<Link to="/withdraw">Withdraw</Link>
 						</Menu.Item>
 					</SubMenu>
-
-					<Menu.Item icon={<BorderlessTableOutlined />} key="addressmap">
-						<Link to="/addressmap">Crosschain</Link>
-					</Menu.Item>
 				</SideMenu>
 			)}
 

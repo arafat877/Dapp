@@ -5,7 +5,7 @@ export const SideMenu = styled(Menu)`
 	background-color: #fff;
 	border: 0;
 	margin-top: 36px;
-	@media only screen and (max-width: 768px) {
+	@media only screen and (max-width: 992px) {
 		margin-top: 4px;
 	}
 `;
@@ -19,7 +19,7 @@ export const SideWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 60px;
-	@media (max-width: 768px) {
+	@media (max-width: 992px) {
 		margin-top: 60px;
 		width: 200px;
 	}
@@ -27,7 +27,6 @@ export const SideWrapper = styled.div`
 
 export const SideSocial = styled.div`
 	margin-top: auto;
-	margin-bottom: 48px;
 	height: 80px;
 	ul {
 		margin: 16px;

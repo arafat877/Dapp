@@ -14,7 +14,7 @@ export const StyledContent = styled(Layout.Content)`
 	margin: 36px auto 0 auto;
 	padding: 54px;
 	background-color: #fafafa;
-	@media (max-width: 768px) {
+	@media (max-width: 992px) {
 		margin: 60px auto;
 		padding: 16px;
 	}

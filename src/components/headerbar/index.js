@@ -6,7 +6,9 @@ import Countdown from 'antd/lib/statistic/Countdown';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
+import { collapsedState } from './../../utils/recoilStates';
 import { ConnectedAvatar, CountdownWrapper, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -14,7 +16,9 @@ const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 const HeaderBar = (props) => {
 
-  const { collapsed, onLeftDrawerOpen } = props;
+  const { onLeftDrawerOpen } = props;
+
+  const collapsed = useRecoilValue(collapsedState);
 
   const { deactivate, active, account, connector, chainId } = useWeb3React();
 
@@ -30,8 +34,8 @@ const HeaderBar = (props) => {
     const setWalletAndNetworkName = () => {
       if (!account && !chainId) return;
 
-      if (chainId && chainId === 1) {
-        setNetworkName('MainNet');
+      if (chainId && chainId === 3) {
+        setNetworkName('Ropsten');
       } else {
         setNetworkName('');
       }
@@ -84,7 +88,7 @@ const HeaderBar = (props) => {
           <ThirmLogo>
             <Link to="/">
               <span className="logo-text">
-                THIRM DAPP <Tag color="volcano">BETA</Tag>
+                THIRM DAPP <Tag color="volcano">WIP</Tag>
               </span>
             </Link>
           </ThirmLogo>

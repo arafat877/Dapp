@@ -2,11 +2,12 @@
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Row } from 'antd';
+import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
-import { LIVE_ETH_PRICE_URL } from '../../utils/config';
+import { LIVE_THRM_PRICE_URL } from '../../utils/config';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
-import { DiscordBox, LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
+import { LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
 
 const OverView = () => {
 	const { library, account } = useWeb3React();
@@ -18,37 +19,36 @@ const OverView = () => {
 	const [tokenOwned, setTokenOwned] = useState(0.0);
 
 	const [thirmValue, setThirmValue] = useState(0.0);
+
 	const [transactionCount, setTransactionCount] = useState(0);
 
 	const [ethereumChartSeriesData, setEthereumChartSeriesData] = useState([]);
 
+	const [ethereumChartSeriesDate, setEthereumChartSeriesDate] = useState([]);
+
 	const [ethereumChartOptions, setEthereumChartOptions] = useState();
 
 	useEffect(() => {
-
-
 		const getThirmValue = async () => {
-			const res = await fetch("https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2", {
-				method: "POST",
-				body: JSON.stringify({ query: `query { token(id : "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"){ id derivedETH tradeVolume txCount totalLiquidity } }` }),
-				headers: { 'Content-Type': 'application/json' }
+			const res = await fetch(LIVE_THRM_PRICE_URL, {
+				method: 'POST',
+				body: JSON.stringify({ query: `query { token(id : "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
+				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 
 			const { derivedETH, txCount } = res.data.token;
 
 			setThirmValue(derivedETH);
 			setTransactionCount(txCount);
-		}
+		};
 
 		getThirmValue();
-
 	}, []);
 
 	useEffect(() => {
 		let stale = false;
 
 		const getTokenBalances = async () => {
-
 			const balance = formatEther(await library.getBalance(account));
 
 			if (!stale) {
@@ -83,30 +83,51 @@ const OverView = () => {
 		setEthereumChartOptions(ethereumChartInitialOptions);
 
 		const getRealTimeEthBalance = async () => {
+			const limit = 10;
 
-			const ethJson = await fetch(LIVE_ETH_PRICE_URL).then((res) => res.json());
-			const ethBalance = ethJson.price;
+			const res = await fetch(LIVE_THRM_PRICE_URL, {
+				method: 'POST',
+				body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"}) { id priceUSD } }` }),
+				headers: { 'Content-Type': 'application/json' },
+			}).then((res) => res.json());
+
+			const ethBalances = res.data.tokenDayDatas;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
-			if (ethereumChartSeriesData.length === 0) {
-				ethereumChartSeriesDataTemp = Array(50).fill(ethBalance);
+			if (ethBalances.length > 0) {
+				ethBalances.map((usd) => {
+					ethereumChartSeriesDataTemp.push(usd.priceUSD);
+					return usd;
+				})
 			}
-			ethereumChartSeriesDataTemp.reverse().unshift(ethBalance);
-			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.slice(0, 50).reverse();
+			if (ethereumChartSeriesDataTemp.length < limit) {
+				for (let i = ethereumChartSeriesDataTemp.length; i < limit; i++) {
+					ethereumChartSeriesDataTemp.unshift(0);
+				}
+			}
+
+			let ethereumChartSeriesDateTemp = ethereumChartSeriesDate;
+			for (let i = 0; i < limit; i++) {
+				const day = moment().tz("America/Los_Angeles").subtract(i, 'days');
+				ethereumChartSeriesDateTemp.push(day.format("D MMM"));
+			}
+
+			ethereumChartSeriesDateTemp = ethereumChartSeriesDateTemp.reverse();
+
+			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.reverse().slice(0, limit).reverse();
 
 			if (!stale) {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
+				setEthereumChartSeriesDate(ethereumChartSeriesDateTemp);
 			}
 		};
-		const checkEthBalance = setInterval(() => {
-			getRealTimeEthBalance();
-		}, 3000);
 
+		getRealTimeEthBalance();
 		return () => {
-			clearInterval(checkEthBalance);
 			stale = true;
 		};
-	}, [ethereumChartSeriesData.length]);
+	}, [account]);
+
 
 	const [thrmBalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
 
@@ -137,7 +158,6 @@ const OverView = () => {
 						<span className="balance-front">{tokenOwnedFront}</span>
 						<span className="balance-end">{`.${tokenOwnedEnd} %`}</span>
 					</p>
-
 				</LeftSideCard>
 				<LeftSideCard>
 					<p className="card-text balance-unit">1 THRM </p>
@@ -152,38 +172,35 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 
-				<OverviewCard href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
+				<OverviewCard target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
 					<Button type="primary">Uniswap</Button>
 				</OverviewCard>
 
-				<OverviewCard href="https://etherscan.io/token/0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
+				<OverviewCard target="_blank" href="https://etherscan.io/token/0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
 					<Button type="primary">EtherScan</Button>
 				</OverviewCard>
 			</Col>
 			<Col xs={24} xl={16}>
 				<RightSideCard>
-					<h3 className="card-text">Ethereum Price</h3>
-					{
-						ethereumChartOptions && <StyledReactApexChart
-							options={ethereumChartOptions}
+					<h3 className="card-text">THRM Price</h3>
+					{ethereumChartSeriesData.length > 0 ? (
+						<StyledReactApexChart
+							options={{
+								...ethereumChartOptions, labels: ethereumChartSeriesDate,
+							}}
 							series={[
 								{
 									name: 'USDT',
 									data: ethereumChartSeriesData,
 								},
 							]}
-							type="line"
+							type="area"
 							height={305}
-						/>
+						/>) : <div style={{ height: 360 }} />
 					}
-
-
 				</RightSideCard>
 
-				<DiscordBox>
-					<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-				</DiscordBox>
-
+				<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 			</Col>
 		</Row>
 	);
