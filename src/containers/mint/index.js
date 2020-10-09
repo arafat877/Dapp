@@ -1,10 +1,12 @@
+import { CopyOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Col, Form, Input, Row, Tabs } from 'antd';
+import { Avatar, Button, Col, Form, Input, notification, Row, Tabs, Tag } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { useRecoilValue } from 'recoil';
+import { useMainContract } from '../../hooks';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard } from './../burn/style';
@@ -13,6 +15,8 @@ const config = require('../../utils/config.json');
 
 const Mint = () => {
 	const { account, library } = useWeb3React();
+
+	const mainContract = useMainContract();
 
 	const [tokensList, setTokensList] = useState([]);
 
@@ -27,13 +31,18 @@ const Mint = () => {
 
 		const getTokenAddress = async () => {
 			let tempTokenList = config.tokens;
-			tempTokenList = await Promise.all(
-				tempTokenList.map(async (token) => {
-					const addr = await library.contract.methods.getAddress(account, token.name).call();
-					token.address = addr;
-					return token;
-				})
-			);
+
+			try {
+				tempTokenList = await Promise.all(
+					tempTokenList.map(async (token) => {
+						const addr = await mainContract.getAddress(account, token.name);
+						token.address = addr;
+						return token;
+					})
+				);
+			} catch (e) {
+				console.log(e);
+			}
 
 			if (!stale) {
 				setTokensList(tempTokenList);
@@ -45,7 +54,7 @@ const Mint = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account, library.contract.methods]);
+	}, [account, library, mainContract]);
 
 	const onChangeToken = (value) => {
 		setSelectedToken(value);
@@ -54,9 +63,9 @@ const Mint = () => {
 	const onSigned = async (values) => {
 		try {
 			const coinNameAddress = tokensList[selectedToken].name + ':' + values.coinAddress;
-			await library.contract.methods.setSig(coinNameAddress, values.signedMessage).send({ from: account });
+			await mainContract.setSig(coinNameAddress, values.signedMessage);
 		} catch (e) {
-			throw e;
+			console.log(e);
 		}
 	};
 
@@ -79,8 +88,18 @@ const Mint = () => {
 								<MintBox>
 									<div className="qr-code">{selectedToken != null && <QRCode value={tokensList[selectedToken].depositaddress} size={200} />}</div>
 
-									<div style={{ marginBottom: 16 }}>
-										<Input addonBefore="Deposit Address" value={tokensList[selectedToken].depositaddress} defaultValue="loading" />
+									<div className="deposit-info">
+										<Tag color="magenta">{tokensList[selectedToken].depositaddress}</Tag>
+										<CopyOutlined
+											onClick={() => {
+												navigator.clipboard.writeText(tokensList[selectedToken].depositaddress)
+												notification["success"]({
+													message: 'Deposit Address',
+													description:
+														'Deposit Address has been copied to clipboard.',
+													placement: 'bottomRight'
+												});
+											}} />
 									</div>
 
 									{selectedToken != null && (

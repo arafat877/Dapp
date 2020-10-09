@@ -49,11 +49,16 @@ export const RightSideCard = styled(StyledCard)`
 		margin-top: -4px;
 		font-weight: 700;
 	}
+	.loading-chart {
+		display: flex;
+  	justify-content: center;
+  	align-items: center;
+		height: 320px;
+	}
 `;
 
 export const StyledReactApexChart = styled(ReactApexChart)`
 	width: 100%;
-	padding: 24px;
 `;
 
 

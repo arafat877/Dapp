@@ -1,11 +1,14 @@
+import { Contract } from '@ethersproject/contracts';
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import {
   NoEthereumProviderError,
   UserRejectedRequestError as UserRejectedRequestErrorInjected
 } from "@web3-react/injected-connector";
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from "@web3-react/walletconnect-connector";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { abi, thirmAbi } from '../utils/config';
 import { injected, walletConnect, walletlink } from "./connectors";
+const config = require('../utils/config.json');
 
 /*
   ****************************************************************
@@ -103,7 +106,7 @@ export function getErrorMessage(error) {
   if (error instanceof NoEthereumProviderError) {
     return "No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.";
   } else if (error instanceof UnsupportedChainIdError) {
-    return "You're connected to an unsupported network. Change the network to Ropsten.";
+    return `You're connected to an unsupported network. Change the network to ${config.network}.`;
   } else if (
     error instanceof UserRejectedRequestErrorInjected ||
     error instanceof UserRejectedRequestErrorWalletConnect
@@ -113,4 +116,35 @@ export function getErrorMessage(error) {
     console.error(error);
     return "An unknown error occurred. Check the console for more details.";
   }
+}
+
+/*
+  ****************************************************************
+  * All the contracts hook
+  ****************************************************************
+*/
+export function useMainContract() {
+  const { library, account } = useWeb3React()
+
+  return useMemo(() => {
+    try {
+      return new Contract(config.CONTRACT_ADDRESS, abi, library.getSigner(account).connectUnchecked());
+    } catch (error) {
+      console.error('Failed to get contract', error)
+      return null
+    }
+  }, [library, account]);
+}
+
+export function useThirmContract() {
+  const { library, account } = useWeb3React()
+
+  return useMemo(() => {
+    try {
+      return new Contract(config.THIRM_CONTRACT_ADDRESS, thirmAbi, library.getSigner(account).connectUnchecked());
+    } catch (error) {
+      console.error('Failed to get contract', error)
+      return null
+    }
+  }, [library, account]);
 }
