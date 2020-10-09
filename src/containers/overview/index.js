@@ -108,7 +108,7 @@ const OverView = () => {
 
 			let ethereumChartSeriesDateTemp = ethereumChartSeriesDate;
 			for (let i = 0; i < limit; i++) {
-				const day = moment().tz("America/Los_Angeles").subtract(i, 'days');
+				const day = moment().tz("Asia/Hong_Kong").subtract(i, 'days');
 				ethereumChartSeriesDateTemp.push(day.format("D MMM"));
 			}
 
