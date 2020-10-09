@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DownOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
+import { CopyOutlined, DownOutlined, LoginOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Badge, Col, Row, Tag } from 'antd';
+import { Badge, Col, notification, Row, Tag } from 'antd';
 import Countdown from 'antd/lib/statistic/Countdown';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
@@ -10,10 +10,14 @@ import { useRecoilValue } from 'recoil';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
 import { collapsedState } from './../../utils/recoilStates';
 import { ConnectedAvatar, CountdownWrapper, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
+
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
+
+const config = require('../../utils/config.json');
+
 const HeaderBar = (props) => {
 
   const { onLeftDrawerOpen } = props;
@@ -21,9 +25,6 @@ const HeaderBar = (props) => {
   const collapsed = useRecoilValue(collapsedState);
 
   const { deactivate, active, account, connector, chainId } = useWeb3React();
-
-  const [networkName, setNetworkName] = useState('');
-
   const [popoverVisible, setPopoverVisible] = useState(false);
 
   const [walletName, setWalletName] = useState('');
@@ -31,14 +32,8 @@ const HeaderBar = (props) => {
   const [walletIcon, setWalletIcon] = useState('');
 
   useEffect(() => {
-    const setWalletAndNetworkName = () => {
-      if (!account && !chainId) return;
-
-      if (chainId && chainId === 3) {
-        setNetworkName('Ropsten');
-      } else {
-        setNetworkName('');
-      }
+    const getWalletNameAndIcon = () => {
+      if (!account) return;
 
       if (connector === injected) {
         setWalletName('Meta Mask');
@@ -61,7 +56,8 @@ const HeaderBar = (props) => {
       }
     };
 
-    setWalletAndNetworkName();
+    getWalletNameAndIcon();
+
   }, [account, chainId]);
 
   const onPopoverVisible = (val) => {
@@ -88,7 +84,7 @@ const HeaderBar = (props) => {
           <ThirmLogo>
             <Link to="/">
               <span className="logo-text">
-                THIRM DAPP <Tag color="volcano">WIP</Tag>
+                THIRM DAPP <Tag color="volcano">{config.status}</Tag>
               </span>
             </Link>
           </ThirmLogo>
@@ -102,21 +98,23 @@ const HeaderBar = (props) => {
             <Countdown title={null} value={deadline} />
           </CountdownWrapper>}
           {
-            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={networkName} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
+            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config.network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
               <div className="left-content">
                 {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
                 <div className="connection-info">
                   <span className="connection-info-up">{walletName}</span>
+
                   <span className="connection-info-down">{account && account.substr(0, 5)}...{account && account.substr(39)}</span>
+
+
+
                 </div>
               </div>
 
               <div className="right-content">
-                {networkName && (
-                  <Tag className="network-name" color="success">
-                    {networkName}
-                  </Tag>
-                )}
+                <Tag className="network-name" color="success">
+                  {config.network}
+                </Tag>
                 {
                   popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />
                 }
@@ -124,20 +122,22 @@ const HeaderBar = (props) => {
 
             </StyledPopover> : <StyledPopover placement="bottomRight" title={null} content={null} trigger="click" onVisibleChange={onPopoverVisible} visible={false} onClick={() => history.push('/')}>
                 <div className="left-content">
-                  <Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
-                    <ConnectedAvatar src={LoginKeyIcon} />
-                  </Badge>
+                  {!collapsed &&
+                    <Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
+                      <ConnectedAvatar src={LoginKeyIcon} />
+                    </Badge>
+                  }
                   <div className="connection-info">
                     <span className="connection-info-up">Not Connected</span>
                     <span className="connection-info-down">Connect Wallet</span>
                   </div>
                 </div>
-                <DownOutlined className="dropdown-icon" />
+                <LoginOutlined className="dropdown-icon" />
               </StyledPopover>
           }
         </HeaderMeta>
       </Col>
-    </Row>
+    </Row >
   );
 }
 
@@ -148,7 +148,18 @@ const ActivePopoverContent = ({ account, active, deactivate, walletName, network
       <ConnectedAvatar src={`https://robohash.org/${account}?set=set5`} size={60} />
       <Tag className="account-address">
         {account}
+        <CopyOutlined
+          onClick={() => {
+            navigator.clipboard.writeText(account)
+            notification["success"]({
+              message: 'Account Address',
+              description:
+                'Your account address has been copied to clipboard.',
+              placement: 'bottomRight'
+            });
+          }} />
       </Tag>
+
 
       <Col xs={24}>
         <ul className="connection-info">

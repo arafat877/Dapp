@@ -1,30 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Button, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMainContract } from '../../hooks';
 import { TOKEN_INTEREST_URL } from '../../utils/config';
+import { getThirmTokenContract } from '../../utils/helpers';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { thirmAbi, TOKEN_LIST_URL } from './../../utils/config';
+import { TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
-import { StyledTable, TokenTableContainer } from './style';
+import { CustomSpin, StyledTable, TokenTableContainer } from './style';
 
 const Tokens = () => {
 	const { chainId, account, library } = useWeb3React();
 
 	const [tokensList, setTokensList] = useState([]);
 
+	const [priceLoading, setPriceLoading] = useState([]);
+
+	const mainContract = useMainContract();
+
 	useEffect(() => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-			let tokensListTemp;
+			let tokensListTemp = setTokensList;
+
 			try {
 				tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
-
-				const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
-
 				// Filter by network and blacklisted
 				tokensListTemp = tokensListTemp
 					.filter((tkn) => tkn.chainId === chainId)
@@ -32,23 +37,20 @@ const Tokens = () => {
 					.map((tkn) => {
 						tkn.key = tkn.name;
 						tkn.value = 1;
+						tkn.apy = "";
+						tkn.balance = "0.00000000";
 						return tkn;
 					});
+				if (!stale) {
+					setTokensList(tokensListTemp);
+					setPriceLoading(true);
+				}
+			} catch (e) {
+				console.log(e);
+			}
 
-				// Get token value
-				tokensListTemp = await Promise.all(
-					tokensListTemp.map(async (tkn) => {
-						const res = await library.contract.methods.getTToken(tkn.symbol).call();
-						if (res && res > 1) {
-							tkn.value = library.web3.utils.fromWei(res, 'ether').toString();
-						} else {
-							tkn.value = 1;
-						}
-						return tkn;
-					})
-				);
-
-				// get APY and platform data && merge
+			try {
+				const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
 				tokensListTemp = tokensListTemp.map((tkn) => {
 					interestDataTemp.forEach((intr) => {
 						if (intr.Address === tkn.address) {
@@ -57,25 +59,43 @@ const Tokens = () => {
 					});
 					return tkn;
 				});
+			} catch (e) {
+				console.log(e);
+			}
 
-				// Get token balance
+			try {
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async (tkn) => {
+						const val = await mainContract.getTToken(tkn.symbol);
+
+						if (val && val > 1) {
+							tkn.value = Number.parseFloat(formatEther(val)).toFixed(2);
+						} else {
+							tkn.value = 1;
+						}
+						return tkn;
+					})
+				);
+			} catch (e) {
+				console.log(e);
+			}
+
+			try {
 				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
-					const contract = new library.web3.eth.Contract(thirmAbi, tkn.address);
-					const bal = await contract.methods.balanceOf(account).call();
-
-					const tknBalance = library.web3.utils.fromWei(bal, 'ether').toString();
-
+					const contract = getThirmTokenContract(library, account, tkn.address);
+					const bal = await contract.balanceOf(account);
+					const tknBalance = formatEther(bal);
 					tkn.balance = Number.parseFloat(parseFloat(tknBalance) * tkn.value).toFixed(8);
-
 					return tkn;
 				}));
 
 			} catch (e) {
-				throw e;
+				console.log(e);
 			}
 
 			if (!stale) {
 				setTokensList(tokensListTemp);
+				setPriceLoading(false);
 			}
 		};
 
@@ -88,10 +108,10 @@ const Tokens = () => {
 
 	if (tokensList.length === 0) return <LoadingIndicator />;
 
-	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={addressMapTableColumns} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
+	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={addressMapTableColumns(priceLoading)} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
 };
 
-const addressMapTableColumns = [
+const addressMapTableColumns = (priceLoading) => ([
 	{
 		title: 'Token',
 		dataIndex: 'logoURI',
@@ -117,7 +137,9 @@ const addressMapTableColumns = [
 		title: 'Holdings',
 		dataIndex: 'symbol',
 		key: 'symbol',
+		width: 180,
 		render: (text, tkn) => {
+			if (priceLoading) return <CustomSpin size="small" />;
 			if (text) {
 				return <>{`${tkn.balance} ${text} `}</>;
 			}
@@ -128,7 +150,9 @@ const addressMapTableColumns = [
 		title: 'Rate',
 		key: 'value',
 		dataIndex: 'value',
+		width: 100,
 		render: (text, tkn) => {
+			if (priceLoading) return <CustomSpin size="small" />;
 			if (text) {
 				return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
 			}
@@ -139,7 +163,9 @@ const addressMapTableColumns = [
 		title: 'Total Backed',
 		key: 'balance',
 		dataIndex: 'balance',
+		width: 180,
 		render: (text, tkn) => {
+			if (priceLoading) return <CustomSpin size="small" />;
 			return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
 		},
 	},
@@ -176,13 +202,14 @@ const addressMapTableColumns = [
 		title: 'Yearly Growth',
 		dataIndex: 'apy',
 		key: 'apy',
-		render: (text, tkn) => {
+		render: (text) => {
+			if (priceLoading) return <CustomSpin size="small" />;
 			if (text) {
 				return <Tag color={text === 0 ? 'warning' : 'success'}>{`${text} %`}</Tag>;
 			}
 			return null;
 		},
 	},
-];
+]);
 
 export default Tokens;

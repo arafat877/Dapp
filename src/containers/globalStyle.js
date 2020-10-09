@@ -41,6 +41,10 @@ export const StyledSider = styled(Layout.Sider)`
 
 export const StyledDrawer = styled(Drawer)`
 	background-color: #fafafa;
+	.ant-drawer-body {
+		margin: 0;
+		padding: 0;
+	}
 `;
 
 export const StyledCard = styled(Card)`

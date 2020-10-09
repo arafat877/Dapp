@@ -42,7 +42,7 @@ export const WithdrawWrapper = styled(StyledCard)`
 	@media only screen and (max-width: 992px) {
     padding: 8px;
   }
-	min-height: 400px;
+	min-height: 500px;
 `;
 
 export const StyledTabs = styled(Tabs)`

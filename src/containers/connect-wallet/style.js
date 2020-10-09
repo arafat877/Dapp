@@ -2,20 +2,21 @@ import { Alert, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 
 
-export const LoginInfo = styled.h1`
-  font-size: 30px;
-  text-align: left;
+export const LoginInfo = styled.h2`
+  font-size: 24px;
+  margin: 10px;
   margin-bottom: 40px;
 `;
 
 export const ConnectorButton = styled(Button)`
-  margin: 8px 4px;
-  padding: 10px;
+  margin: 8px;
+  padding: 16px;
   height: 100px;
   width: 120px;
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+  border: 0;
   &:focus, &:hover, &:active &:focus-within {
     outline: none;
-    border: 1px solid #f9f9f9;
     background-color: #f9f9f9;
   }
 `;
@@ -26,5 +27,5 @@ export const AvatarIcon = styled(Avatar)`
 `;
 
 export const ErrorAlert = styled(Alert)`
-margin-top: 36px;
+  margin-top: 36px;
 `;

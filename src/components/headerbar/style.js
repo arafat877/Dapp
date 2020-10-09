@@ -64,6 +64,16 @@ export const PopverWrapper = styled.div`
      }
    }
  }
+
+ .account-address {
+   padding: 4px;
+   font-size: 12px;
+    .anticon {
+        cursor: pointer;
+        padding: 8px;
+        font-size: 14px;
+      }
+ }
 `;
 
 export const DisconnectButton = styled(Button)`
@@ -91,13 +101,6 @@ export const ConnectedAvatar = styled(Avatar)`
 	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
 	margin-right: 4px;
   padding: 10px;
-
-  @media (max-width: 992px) {
-		height: 32px;
-  	width: 32px;
-    padding: 4px;
-    margin-right: 2px;
-	}
 `;
 
 export const StyledPopover = styled(Popover)`
@@ -152,10 +155,6 @@ export const StyledPopover = styled(Popover)`
   .active-dot {
     height: 16px;
     width: 16px;
-    @media (max-width: 992px) {
-      height: 8px;
-      width: 8px;
-	  }
     border-radius: 50%;
     background-color: green;
     border: 2px solid #fff;
@@ -190,10 +189,6 @@ export const LogoMeta = styled.div`
   .menu-icon {
     margin-right: 8px;
     font-size: 18px;
-    @media (max-width: 992px) {
-      font-size: 15px;
-      margin-right: 4px;
-	  }
   }
 `;
 

@@ -21,7 +21,7 @@ export const SideWrapper = styled.div`
 	margin-top: 60px;
 	@media (max-width: 992px) {
 		margin-top: 60px;
-		width: 200px;
+		width: 255px;
 	}
 `;
 

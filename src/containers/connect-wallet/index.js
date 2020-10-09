@@ -72,7 +72,7 @@ const ConnectWallet = (props) => {
 						})}
 				</Row>
 			</Col>
-			<Col xs={12}>{!!error && <ErrorAlert message="Error" description={getErrorMessage(error)} type="error" showIcon />}</Col>
+			<Col xs={24}>{!!error && <ErrorAlert message="Error" description={getErrorMessage(error)} type="error" showIcon />}</Col>
 		</Row>
 	);
 };

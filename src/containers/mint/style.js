@@ -31,6 +31,17 @@ export const MintBox = styled.div`
 		padding: 4px 18px;
 	}
 	.fee-info {
-		padding: 4px 0;
+		padding: 16px 0;
+		text-align: center;
+	}
+	.deposit-info {
+		display: flex;
+		font-size: 18px;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		.anticon {
+			cursor: pointer;
+		}
 	}
 `;

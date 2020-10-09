@@ -4,14 +4,17 @@ import { Avatar, Button, Col, Form, Input, Row, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useMainContract } from '../../hooks';
+import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { thirmAbi } from './../../utils/config';
 import config from './../../utils/config.json';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
 const Burn = () => {
 	const { account, library } = useWeb3React();
+
+	const mainContract = useMainContract();
 
 	const [tokensList, setTokensList] = useState([]);
 
@@ -27,22 +30,25 @@ const Burn = () => {
 
 		const getTokensList = async () => {
 			let tokensListTemp = config.tokens;
-
-			tokensListTemp = await Promise.all(
-				tokensListTemp.map(async (token) => {
-					if (token.isERC === 0) {
-						const addr = await library.contract.methods.getAddress(account, token.name).call();
-						if (addr !== '') {
-							token.userAddress = addr;
+			try {
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async (token) => {
+						if (token.isERC === 0) {
+							const addr = await mainContract.getAddress(account, token.name);
+							if (addr !== '') {
+								token.userAddress = addr;
+							} else {
+								token.userAddress = null;
+							}
 						} else {
 							token.userAddress = null;
 						}
-					} else {
-						token.userAddress = null;
-					}
-					return token;
-				})
-			);
+						return token;
+					})
+				);
+			} catch (e) {
+				console.log(e);
+			}
 
 			if (!stale) {
 				setTokensList(tokensListTemp);
@@ -54,39 +60,53 @@ const Burn = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account, library.contract.methods]);
+	}, [account, mainContract]);
+
 
 	const onTokenMax = async () => {
-		if (selectedToken == null) return;
-		const contract = new library.web3.eth.Contract(thirmAbi, tokensList[selectedToken].address);
-		const bal = await contract.methods.balanceOf(account).call();
-		if (bal) {
-			const ethBal = parseFloat(formatEther(bal)).toFixed(8);
-			form.setFieldsValue({
-				amount: ethBal,
-			});
+
+		try {
+			const contract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
+			const bal = await contract.balanceOf(account);
+			if (bal) {
+				const ethBal = parseFloat(formatEther(bal)).toFixed(8);
+				form.setFieldsValue({
+					amount: ethBal,
+				});
+			}
+		} catch (e) {
+			console.log(e);
 		}
 	};
 
 	const onFinish = async (values) => {
-		const contract = new library.web3.eth.Contract(thirmAbi, tokensList[selectedToken].address);
-		const tokenAmountWei = library.web3.utils.toWei(values.amount, 'ether');
-		await contract.methods.burn(tokenAmountWei).send({ from: account });
+		try {
+			const contract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
+			const tknAmount = formatEther(values.amount);
+			await contract.burn(tknAmount);
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const setTokenAddress = async (address) => {
-		const res = await library.contract.methods.setAddress(tokensList[selectedToken].name, address).send({ from: account });
 
-		if (res) {
-			let tempTokenList = [...tokensList];
+		try {
+			const res = await mainContract.setAddress(tokensList[selectedToken].name, address);
 
-			tempTokenList = tempTokenList.map((token) => {
-				if (Object.keys(res).length > 0 && token.name === tokensList[selectedToken].name) {
-					token.userAddress = address;
-				}
-				return token;
-			});
-			setTokensList(tempTokenList);
+			if (res) {
+				let tempTokenList = [...tokensList];
+
+				tempTokenList = tempTokenList.map((token) => {
+					if (Object.keys(res).length > 0 && token.name === tokensList[selectedToken].name) {
+						token.userAddress = address;
+					}
+					return token;
+				});
+				setTokensList(tempTokenList);
+			}
+		} catch (e) {
+			console.log(e);
 		}
 	};
 
@@ -146,7 +166,6 @@ const Burn = () => {
 								<Col xs={24} xl={12}>
 									<WithdrawBox>
 										<p className="address-info">{tokensList[selectedToken].userAddress !== null ? '' : 'You have not set the address.'}</p>
-
 										<Form
 											form={form2}
 											layout="vertical"

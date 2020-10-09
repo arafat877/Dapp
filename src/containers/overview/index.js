@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, Spin } from 'antd';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import { LIVE_THRM_PRICE_URL } from '../../utils/config';
+import { useThirmContract } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
@@ -27,6 +28,8 @@ const OverView = () => {
 	const [ethereumChartSeriesDate, setEthereumChartSeriesDate] = useState([]);
 
 	const [ethereumChartOptions, setEthereumChartOptions] = useState();
+
+	const thirmContract = useThirmContract();
 
 	useEffect(() => {
 		const getThirmValue = async () => {
@@ -55,13 +58,13 @@ const OverView = () => {
 				setEthBalance(balance);
 			}
 
-			const thrmBal = await library.thirm.methods.balanceOf(account).call();
+			const thrmBal = await thirmContract.balanceOf(account);
 
 			if (thrmBal) {
 				setThrmBalance(formatEther(thrmBal));
 			}
 
-			const totalSupply = await library.thirm.methods.totalSupply().call();
+			const totalSupply = await thirmContract.totalSupply();
 			let tokenOwned = parseFloat((parseFloat(thrmBal).toFixed(8) / totalSupply) * 100);
 			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
 
@@ -83,17 +86,22 @@ const OverView = () => {
 		setEthereumChartOptions(ethereumChartInitialOptions);
 
 		const getRealTimeEthBalance = async () => {
+			let ethBalances = [];
 			const limit = 10;
-
-			const res = await fetch(LIVE_THRM_PRICE_URL, {
-				method: 'POST',
-				body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"}) { id priceUSD } }` }),
-				headers: { 'Content-Type': 'application/json' },
-			}).then((res) => res.json());
-
-			const ethBalances = res.data.tokenDayDatas;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
+			try {
+				const res = await fetch(LIVE_THRM_PRICE_URL, {
+					method: 'POST',
+					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"}) { id priceUSD } }` }),
+					headers: { 'Content-Type': 'application/json' },
+				}).then((res) => res.json());
+
+				ethBalances = res.data.tokenDayDatas;
+
+			} catch (e) {
+				console.log(e);
+			}
 			if (ethBalances.length > 0) {
 				ethBalances.map((usd) => {
 					ethereumChartSeriesDataTemp.push(usd.priceUSD);
@@ -126,7 +134,7 @@ const OverView = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account]);
+	}, []);
 
 
 	const [thrmBalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
@@ -196,7 +204,7 @@ const OverView = () => {
 							]}
 							type="area"
 							height={305}
-						/>) : <div style={{ height: 360 }} />
+						/>) : <div className="loading-chart"><Spin size="large" /></div>
 					}
 				</RightSideCard>
 

@@ -1,4 +1,7 @@
 
+import { Contract } from '@ethersproject/contracts';
+import { ttokensAbi } from './config';
+
 export const formatFrontBackBalance = (balance) => {
   let balanceFront = '';
   let balanceBack = '';
@@ -8,4 +11,8 @@ export const formatFrontBackBalance = (balance) => {
     balanceBack = balanceSplit[1];
   }
   return [balanceFront, balanceBack];
+}
+
+export const getThirmTokenContract = (library, account, address) => {
+  return new Contract(address, ttokensAbi, library.getSigner(account).connectUnchecked());
 }
