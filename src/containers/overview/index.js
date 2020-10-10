@@ -180,11 +180,11 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 
-				<OverviewCard target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
+				<OverviewCard target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0xb526fd41360c98929006f3bdcbd16d55de4b0069">
 					<Button type="primary">Uniswap</Button>
 				</OverviewCard>
 
-				<OverviewCard target="_blank" href="https://etherscan.io/token/0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c">
+				<OverviewCard target="_blank" href="https://etherscan.io/token/0xb526fd41360c98929006f3bdcbd16d55de4b0069">
 					<Button type="primary">EtherScan</Button>
 				</OverviewCard>
 			</Col>
