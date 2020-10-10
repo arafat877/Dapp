@@ -4,7 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Row, Spin } from 'antd';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
-import { LIVE_THRM_PRICE_URL } from '../../utils/config';
+import { LIVE_THRM_PRICE_URL, THIRM_TOKEN_ADDRESS } from '../../utils/config';
 import { useThirmContract } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
@@ -35,7 +35,7 @@ const OverView = () => {
 		const getThirmValue = async () => {
 			const res = await fetch(LIVE_THRM_PRICE_URL, {
 				method: 'POST',
-				body: JSON.stringify({ query: `query { token(id : "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
+				body: JSON.stringify({ query: `query { token(id : "${THIRM_TOKEN_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
 				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 
@@ -93,7 +93,7 @@ const OverView = () => {
 			try {
 				const res = await fetch(LIVE_THRM_PRICE_URL, {
 					method: 'POST',
-					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "0xa93f2a6b50d92bd64848f5ea15164f558b75ce9c"}) { id priceUSD } }` }),
+					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${THIRM_TOKEN_ADDRESS}"}) { id priceUSD } }` }),
 					headers: { 'Content-Type': 'application/json' },
 				}).then((res) => res.json());
 
@@ -180,11 +180,11 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 
-				<OverviewCard target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0xb526fd41360c98929006f3bdcbd16d55de4b0069">
+				<OverviewCard target="_blank" href={`https://app.uniswap.org/#/swap?outputCurrency=${THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">Uniswap</Button>
 				</OverviewCard>
 
-				<OverviewCard target="_blank" href="https://etherscan.io/token/0xb526fd41360c98929006f3bdcbd16d55de4b0069">
+				<OverviewCard target="_blank" href={`https://etherscan.io/token/${THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">EtherScan</Button>
 				</OverviewCard>
 			</Col>
