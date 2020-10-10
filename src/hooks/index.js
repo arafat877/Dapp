@@ -6,7 +6,7 @@ import {
 } from "@web3-react/injected-connector";
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from "@web3-react/walletconnect-connector";
 import { useEffect, useMemo, useState } from "react";
-import { abi, thirmAbi } from '../utils/config';
+import { abi, ttokensAbi } from '../utils/config';
 import { injected, walletConnect, walletlink } from "./connectors";
 const config = require('../utils/config.json');
 
@@ -141,7 +141,7 @@ export function useThirmContract() {
 
   return useMemo(() => {
     try {
-      return new Contract(config.THIRM_CONTRACT_ADDRESS, thirmAbi, library.getSigner(account).connectUnchecked());
+      return new Contract(config.THIRM_CONTRACT_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
