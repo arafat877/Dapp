@@ -3,9 +3,9 @@
 	"CONTRACT_ADDRESS": "0xac3fa20951c52302b5903c2621ca82adefc1978e",
 	"THIRM_CONTRACT_ADDRESS": "0x3bbeedd17a20cfd7c3961b829ace91c2b5ebf473",
 	"RPC_URL": "https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
-	"CHAINID": 3,
+	"CHAINID": 1,
 	"status": "WIP",
-	"network": "Ropsten",
+	"network": "Mainet",
 	"tokens": [
 		{
 			"id": 0,
