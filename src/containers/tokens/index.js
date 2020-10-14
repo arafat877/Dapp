@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Button, Tag } from 'antd';
+import { Button } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -25,41 +25,21 @@ const Tokens = () => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-
 			let tokensListTemp = tokensList;
 
 			try {
-				tokensListTemp = tokensListTemp
-					.map((tkn) => {
-						tkn.key = tkn.name;
-						tkn.value = 1;
-						tkn.apy = "";
-						tkn.balance = "0.00000000";
-						return tkn;
-					});
+				tokensListTemp = tokensListTemp.map((tkn) => {
+					tkn.key = tkn.name;
+					tkn.value = 1;
+					tkn.apy = '';
+					tkn.balance = '0.00000000';
+					return tkn;
+				});
 
 				if (!stale) {
 					setTokensList(tokensListTemp);
 					setPriceLoading(false);
 				}
-
-			} catch (e) {
-				console.log(e);
-			}
-
-			try {
-
-				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
-					const interestApy = await fetch(config[chainId].TOKEN_INTEREST_URL + tkn.address).then((res) => res.json());
-
-					tkn.apy = Number.parseFloat(interestApy.i).toFixed(2);
-					return tkn;
-				}));
-
-				if (!stale) {
-					setTokensList(tokensListTemp);
-				}
-
 			} catch (e) {
 				console.log(e);
 			}
@@ -84,19 +64,20 @@ const Tokens = () => {
 			}
 
 			try {
-				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
-					const contract = getThirmTokenContract(library, account, tkn.address);
-					const bal = await contract.balanceOf(account);
-					const tknBalance = formatEther(bal);
-					tkn.balance = Number.parseFloat(parseFloat(tknBalance) * tkn.value).toFixed(8);
-					return tkn;
-				}));
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async (tkn) => {
+						const contract = getThirmTokenContract(library, account, tkn.address);
+						const bal = await contract.balanceOf(account);
+						const tknBalance = formatEther(bal);
+						tkn.balance = Number.parseFloat(parseFloat(tknBalance) * tkn.value).toFixed(8);
+						return tkn;
+					})
+				);
 
 				if (!stale) {
 					setTokensList(tokensListTemp);
 					setPriceLoading(false);
 				}
-
 			} catch (e) {
 				console.log(e);
 			}
@@ -114,7 +95,7 @@ const Tokens = () => {
 	return <TokenTableContainer>{tokensList.length > 0 && <StyledTable size="medium" columns={addressMapTableColumns(priceLoading)} type="fixed" dataSource={tokensList} pagination={false} scroll={{ x: 250 }} />}</TokenTableContainer>;
 };
 
-const addressMapTableColumns = (priceLoading) => ([
+const addressMapTableColumns = (priceLoading) => [
 	{
 		title: 'Token',
 		dataIndex: 'image',
@@ -200,19 +181,6 @@ const addressMapTableColumns = (priceLoading) => ([
 			);
 		},
 	},
-
-	{
-		title: 'Yearly Growth',
-		dataIndex: 'apy',
-		key: 'apy',
-		render: (text) => {
-			if (priceLoading) return <CustomSpin size="small" />;
-			if (text) {
-				return <Tag color={text === 0 ? 'warning' : 'success'}>{`${text} %`}</Tag>;
-			}
-			return null;
-		},
-	},
-]);
+];
 
 export default Tokens;
