@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import styled from 'styled-components';
-import { StyledCard } from '../globalStyle';
+import { StyledCard, ThirmTheme } from '../globalStyle';
 
 export const TokenCard = styled(StyledCard)`
 	cursor: pointer;
@@ -38,21 +38,28 @@ export const WithdrawBox = styled.div`
 
 
 export const WithdrawWrapper = styled(StyledCard)`
-	padding: 16px 36px;
+	padding: 48px 24px;
 	@media only screen and (max-width: 992px) {
-    padding: 8px;
+    padding: 4px;
   }
 	min-height: 500px;
+	.ant-card-body {
+    padding: 0;
+	}
 `;
 
 export const StyledTabs = styled(Tabs)`
 .ant-tabs-nav-list .ant-tabs-tab {
-  background: #fafafa;
-	border-color: #fafafa;
 	height: 60px;
 	margin: 4px 0;
+	border: 0;
+	background-color: #fff;
 }
 .ant-tabs-nav-list .ant-tabs-tab-active {
-  background: #eaeaea;
-}
+	background: ${ThirmTheme.primaryColor};
+	.ant-card-meta-title {
+		color: #ffffff;
+	}
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+	}
 `;

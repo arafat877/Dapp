@@ -121,17 +121,18 @@ const Burn = () => {
 	if (tokensList.length === 0) return <LoadingIndicator />;
 
 	return (
-		<WithdrawWrapper>
-			<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card" animated={true}>
-				{tokensList.map((tkn) => (
-					<Tabs.TabPane
-						tab={
-							<TokenCard>
-								<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.name} />
-							</TokenCard>
-						}
-						key={tkn.id}
-					>
+
+		<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card" animated={true}>
+			{tokensList.map((tkn) => (
+				<Tabs.TabPane
+					tab={
+						<TokenCard>
+							<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.name} />
+						</TokenCard>
+					}
+					key={tkn.id}
+				>
+					<WithdrawWrapper>
 						<Row gutter={24}>
 							<Col xs={24} xl={12}>
 								<WithdrawBox>
@@ -200,10 +201,11 @@ const Burn = () => {
 								</Col>
 							)}
 						</Row>
-					</Tabs.TabPane>
-				))}
-			</StyledTabs>
-		</WithdrawWrapper>
+					</WithdrawWrapper>
+				</Tabs.TabPane>
+			))}
+		</StyledTabs>
+
 	);
 };
 

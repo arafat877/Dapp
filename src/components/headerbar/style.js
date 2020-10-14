@@ -4,15 +4,19 @@ import { ThirmTheme } from './../../containers/globalStyle';
 
 export const ThirmLogo = styled.div`
 	display: flex;
+  padding: 4px;
+  margin-right: 16px;
 	.logo-text {
-		margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 		font-size: 18px;
+    line-height: 24px;
 		font-weight: 700;
-    @media only screen and (max-width: 992px) {
-      margin-left: 2px;
-		  font-size: 15px;
-  }
 	}
+  .tag-text {
+    margin: 0 8px;
+  }
 `;
 
 export const ConnectorButton = styled(Button)`
@@ -110,13 +114,12 @@ export const StyledPopover = styled(Popover)`
     font-size: 90%;
     padding: 2px 4px;
 	}
-	padding: 4px 8px;
+	padding: 0 8px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-left: 1px solid #e3e3e3;
-  border-right: 1px solid #e3e3e3;
   cursor: pointer;
   .left-content, .right-content {
     display: flex;

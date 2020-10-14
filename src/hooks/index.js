@@ -6,9 +6,12 @@ import {
 } from "@web3-react/injected-connector";
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from "@web3-react/walletconnect-connector";
 import { useEffect, useMemo, useState } from "react";
-import { abi, ttokensAbi } from '../utils/config';
 import { injected, walletConnect, walletlink } from "./connectors";
 const config = require('../utils/config.json');
+
+
+const ttokensAbi = require(`../utils/abis/ttokens.json`);
+const abi = require(`../utils/abis/abi.json`);
 
 /*
   ****************************************************************

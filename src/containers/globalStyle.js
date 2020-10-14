@@ -15,7 +15,7 @@ export const StyledContent = styled(Layout.Content)`
 	padding: 54px;
 	background-color: #fafafa;
 	@media (max-width: 992px) {
-		margin: 60px auto;
+		margin: 70px auto;
 		padding: 16px;
 	}
 `;
@@ -23,10 +23,11 @@ export const StyledContent = styled(Layout.Content)`
 export const StyledHeader = styled(Layout.Header)`
 	background-color: #fff;
 	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
-	padding: 0 8px;
+	padding: 8px;
 	position: fixed;
 	z-index: 99;
 	width: 100%;
+	height: 70px;
 `;
 
 export const StyledSider = styled(Layout.Sider)`

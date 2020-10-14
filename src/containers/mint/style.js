@@ -2,11 +2,14 @@ import styled from 'styled-components';
 import { StyledCard } from '../globalStyle';
 
 export const MintWrapper = styled(StyledCard)`
-	padding: 16px 36px;
+	padding: 48px 24px;
 	@media only screen and (max-width: 992px) {
-		padding: 8px;
+		padding: 4px;
 	}
 	min-height: 500px;
+	.ant-card-body {
+    padding: 0;
+	}
 `;
 
 export const MintBox = styled.div`

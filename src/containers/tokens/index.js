@@ -6,12 +6,12 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMainContract } from '../../hooks';
-import { TOKEN_INTEREST_URL } from '../../utils/config';
 import { getThirmTokenContract } from '../../utils/helpers';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { TOKEN_LIST_URL } from './../../utils/config';
 import { blackListTokenAddress } from './blackListTokenAddress';
 import { CustomSpin, StyledTable, TokenTableContainer } from './style';
+
+const config = require('./../../utils/config');
 
 const Tokens = () => {
 	const { chainId, account, library } = useWeb3React();
@@ -29,7 +29,7 @@ const Tokens = () => {
 			let tokensListTemp = setTokensList;
 
 			try {
-				tokensListTemp = (await fetch(TOKEN_LIST_URL).then((res) => res.json())).tokens;
+				tokensListTemp = (await fetch(config.TOKEN_LIST_URL).then((res) => res.json())).tokens;
 				// Filter by network and blacklisted
 				tokensListTemp = tokensListTemp
 					.filter((tkn) => tkn.chainId === chainId)
@@ -50,7 +50,7 @@ const Tokens = () => {
 			}
 
 			try {
-				const interestDataTemp = (await fetch(TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
+				const interestDataTemp = (await fetch(config.TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
 				tokensListTemp = tokensListTemp.map((tkn) => {
 					interestDataTemp.forEach((intr) => {
 						if (intr.Address === tkn.address) {

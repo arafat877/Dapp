@@ -1,6 +1,5 @@
-
 import { Contract } from '@ethersproject/contracts';
-import { ttokensAbi } from './config';
+const ttokensAbi = require(`../utils/abis/ttokens.json`);
 
 export const formatFrontBackBalance = (balance) => {
   let balanceFront = '';

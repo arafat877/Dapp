@@ -72,17 +72,17 @@ const Mint = () => {
 	if (tokensList.length === 0) return <LoadingIndicator />;
 
 	return (
-		<MintWrapper>
-			<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card" animated={true}>
-				{tokensList.map((tkn) => (
-					<Tabs.TabPane
-						tab={
-							<TokenCard>
-								<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.name} />
-							</TokenCard>
-						}
-						key={tkn.id}
-					>
+		<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card" animated={true}>
+			{tokensList.map((tkn) => (
+				<Tabs.TabPane
+					tab={
+						<TokenCard>
+							<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.name} />
+						</TokenCard>
+					}
+					key={tkn.id}
+				>
+					<MintWrapper>
 						<Row gutter={24}>
 							<Col xs={24} xl={12}>
 								<MintBox>
@@ -135,10 +135,11 @@ const Mint = () => {
 								</Col>
 							)}
 						</Row>
-					</Tabs.TabPane>
-				))}
-			</StyledTabs>
-		</MintWrapper>
+					</MintWrapper>
+				</Tabs.TabPane>
+			))}
+		</StyledTabs>
+
 	);
 };
 

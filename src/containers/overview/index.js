@@ -4,11 +4,12 @@ import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Row, Spin } from 'antd';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
-import { LIVE_THRM_PRICE_URL, THIRM_TOKEN_ADDRESS } from '../../utils/config';
 import { useThirmContract } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
+
+const config = require('../../utils/config');
 
 const OverView = () => {
 	const { library, account } = useWeb3React();
@@ -33,9 +34,9 @@ const OverView = () => {
 
 	useEffect(() => {
 		const getThirmValue = async () => {
-			const res = await fetch(LIVE_THRM_PRICE_URL, {
+			const res = await fetch(config.LIVE_THRM_PRICE_URL, {
 				method: 'POST',
-				body: JSON.stringify({ query: `query { token(id : "${THIRM_TOKEN_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
+				body: JSON.stringify({ query: `query { token(id : "${config.THIRM_TOKEN_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
 				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 
@@ -91,14 +92,13 @@ const OverView = () => {
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
 			try {
-				const res = await fetch(LIVE_THRM_PRICE_URL, {
+				const res = await fetch(config.LIVE_THRM_PRICE_URL, {
 					method: 'POST',
-					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${THIRM_TOKEN_ADDRESS}"}) { id priceUSD } }` }),
+					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${config.THIRM_TOKEN_ADDRESS}"}) { id priceUSD } }` }),
 					headers: { 'Content-Type': 'application/json' },
 				}).then((res) => res.json());
 
 				ethBalances = res.data.tokenDayDatas;
-
 			} catch (e) {
 				console.log(e);
 			}
@@ -106,7 +106,7 @@ const OverView = () => {
 				ethBalances.map((usd) => {
 					ethereumChartSeriesDataTemp.push(usd.priceUSD);
 					return usd;
-				})
+				});
 			}
 			if (ethereumChartSeriesDataTemp.length < limit) {
 				for (let i = ethereumChartSeriesDataTemp.length; i < limit; i++) {
@@ -116,8 +116,8 @@ const OverView = () => {
 
 			let ethereumChartSeriesDateTemp = ethereumChartSeriesDate;
 			for (let i = 0; i < limit; i++) {
-				const day = moment().tz("Asia/Hong_Kong").subtract(i, 'days');
-				ethereumChartSeriesDateTemp.push(day.format("D MMM"));
+				const day = moment().tz('Asia/Hong_Kong').subtract(i, 'days');
+				ethereumChartSeriesDateTemp.push(day.format('D MMM'));
 			}
 
 			ethereumChartSeriesDateTemp = ethereumChartSeriesDateTemp.reverse();
@@ -135,7 +135,6 @@ const OverView = () => {
 			stale = true;
 		};
 	}, []);
-
 
 	const [thrmBalanceFront, thrmBalanceEnd] = formatFrontBackBalance(thrmBalance);
 
@@ -155,7 +154,7 @@ const OverView = () => {
 						<span className="balance-end">{`.${ethBalanceEnd}`}</span>
 					</p>
 
-					<p className="card-text balance-unit">THRM</p>
+					<p className="card-text balance-unit">THIRM</p>
 					<p className="card-number">
 						<span className="balance-front">{thrmBalanceFront}</span>
 						<span className="balance-end">{`.${thrmBalanceEnd}`}</span>
@@ -168,7 +167,7 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 				<LeftSideCard>
-					<p className="card-text balance-unit">1 THRM </p>
+					<p className="card-text balance-unit">1 THIRM </p>
 					<p className="card-number">
 						<span className="balance-front">{thrmValueFront}</span>
 						<span className="balance-end">{`.${thrmValueEnd}`} ETH</span>
@@ -180,21 +179,22 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 
-				<OverviewCard target="_blank" href={`https://app.uniswap.org/#/swap?outputCurrency=${THIRM_TOKEN_ADDRESS}`}>
+				<OverviewCard target="_blank" href={`https://app.uniswap.org/#/swap?outputCurrency=${config.THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">Uniswap</Button>
 				</OverviewCard>
 
-				<OverviewCard target="_blank" href={`https://etherscan.io/token/${THIRM_TOKEN_ADDRESS}`}>
+				<OverviewCard target="_blank" href={`https://etherscan.io/token/${config.THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">EtherScan</Button>
 				</OverviewCard>
 			</Col>
 			<Col xs={24} xl={16}>
 				<RightSideCard>
-					<h3 className="card-text">THRM Price</h3>
+					<h3 className="card-text">THIRM Price</h3>
 					{ethereumChartSeriesData.length > 0 ? (
 						<StyledReactApexChart
 							options={{
-								...ethereumChartOptions, labels: ethereumChartSeriesDate,
+								...ethereumChartOptions,
+								labels: ethereumChartSeriesDate,
 							}}
 							series={[
 								{
@@ -204,8 +204,12 @@ const OverView = () => {
 							]}
 							type="area"
 							height={305}
-						/>) : <div className="loading-chart"><Spin size="large" /></div>
-					}
+						/>
+					) : (
+							<div className="loading-chart">
+								<Spin size="large" />
+							</div>
+						)}
 				</RightSideCard>
 
 				<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>

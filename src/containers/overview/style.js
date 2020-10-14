@@ -40,8 +40,9 @@ export const LeftSideCard = styled(StyledCard)`
 `;
 
 export const RightSideCard = styled(StyledCard)`
-	margin: 8px 0;
+	margin: 16px 0;
 	width: 100%;
+	padding: 0;
 	.card-text {
 		font-size: 16px;
 	color: ${ThirmTheme.primaryColor};

@@ -84,7 +84,7 @@ const HeaderBar = (props) => {
           <ThirmLogo>
             <Link to="/">
               <span className="logo-text">
-                THIRM DAPP <Tag color="volcano">{config.status}</Tag>
+                THIRM DAPP <Tag className="tag-text" color="volcano">{config.status}</Tag>
               </span>
             </Link>
           </ThirmLogo>
@@ -103,10 +103,7 @@ const HeaderBar = (props) => {
                 {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
                 <div className="connection-info">
                   <span className="connection-info-up">{walletName}</span>
-
                   <span className="connection-info-down">{account && account.substr(0, 5)}...{account && account.substr(39)}</span>
-
-
 
                 </div>
               </div>
