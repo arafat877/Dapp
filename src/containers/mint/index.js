@@ -14,7 +14,7 @@ import { MintBox, MintWrapper } from './style';
 const config = require('../../utils/config.json');
 
 const Mint = () => {
-	const { account, library } = useWeb3React();
+	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
 
@@ -30,7 +30,7 @@ const Mint = () => {
 		let stale = false;
 
 		const getTokenAddress = async () => {
-			let tempTokenList = config.tokens;
+			let tempTokenList = config[chainId].tokens;
 
 			try {
 				tempTokenList = await Promise.all(
@@ -54,7 +54,7 @@ const Mint = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account, library, mainContract]);
+	}, [account, chainId, library, mainContract]);
 
 	const onChangeToken = (value) => {
 		setSelectedToken(value);

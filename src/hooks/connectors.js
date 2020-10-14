@@ -12,16 +12,16 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 const config = require('../utils/config.json');
 
 export const injected = new InjectedConnector({
-	supportedChainIds: [config.CHAINID],
+	supportedChainIds: [1, 3],
 });
 
 export const walletlink = new WalletLinkConnector({
-	url: config.RPC_URL,
+	url: config["1"].RPC_URL,
 	appName: 'THIRM DAPP',
 });
 
 export const walletConnect = new WalletConnectConnector({
-	rpc: { [config.CHAINID]: config.RPC_URL },
+	rpc: { 1: config["1"].RPC_URL },
 	bridge: 'https://bridge.walletconnect.org',
 	qrcode: true,
 	pollingInterval: 12000,

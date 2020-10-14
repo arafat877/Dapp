@@ -75,7 +75,6 @@ const HeaderBar = (props) => {
     secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
   }
   const deadline = moment.duration(indiaTime).asMilliseconds() + secDiff;
-
   return (
     <Row justify="space-between" align="middle">
       <Col xs={12}>
@@ -84,7 +83,7 @@ const HeaderBar = (props) => {
           <ThirmLogo>
             <Link to="/">
               <span className="logo-text">
-                THIRM DAPP <Tag className="tag-text" color="volcano">{config.status}</Tag>
+                THIRM DAPP {active && <Tag className="tag-text" color="volcano">{config[chainId].status}</Tag>}
               </span>
             </Link>
           </ThirmLogo>
@@ -98,7 +97,7 @@ const HeaderBar = (props) => {
             <Countdown title={null} value={deadline} />
           </CountdownWrapper>}
           {
-            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config.network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
+            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config[chainId].network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
               <div className="left-content">
                 {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
                 <div className="connection-info">
@@ -110,7 +109,7 @@ const HeaderBar = (props) => {
 
               <div className="right-content">
                 <Tag className="network-name" color="success">
-                  {config.network}
+                  {config[chainId].network}
                 </Tag>
                 {
                   popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />

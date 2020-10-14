@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { useMainContract } from '../../hooks';
 import { getThirmTokenContract } from '../../utils/helpers';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { blackListTokenAddress } from './blackListTokenAddress';
 import { CustomSpin, StyledTable, TokenTableContainer } from './style';
 
 const config = require('./../../utils/config');
@@ -16,7 +15,7 @@ const config = require('./../../utils/config');
 const Tokens = () => {
 	const { chainId, account, library } = useWeb3React();
 
-	const [tokensList, setTokensList] = useState([]);
+	const [tokensList, setTokensList] = useState(config[chainId].tokens);
 
 	const [priceLoading, setPriceLoading] = useState([]);
 
@@ -26,14 +25,11 @@ const Tokens = () => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-			let tokensListTemp = setTokensList;
+
+			let tokensListTemp = tokensList;
 
 			try {
-				tokensListTemp = (await fetch(config.TOKEN_LIST_URL).then((res) => res.json())).tokens;
-				// Filter by network and blacklisted
 				tokensListTemp = tokensListTemp
-					.filter((tkn) => tkn.chainId === chainId)
-					.filter((tkn) => !blackListTokenAddress.includes(tkn.address))
 					.map((tkn) => {
 						tkn.key = tkn.name;
 						tkn.value = 1;
@@ -41,24 +37,29 @@ const Tokens = () => {
 						tkn.balance = "0.00000000";
 						return tkn;
 					});
+
 				if (!stale) {
 					setTokensList(tokensListTemp);
-					setPriceLoading(true);
+					setPriceLoading(false);
 				}
+
 			} catch (e) {
 				console.log(e);
 			}
 
 			try {
-				const interestDataTemp = (await fetch(config.TOKEN_INTEREST_URL).then((res) => res.json())).tokens;
-				tokensListTemp = tokensListTemp.map((tkn) => {
-					interestDataTemp.forEach((intr) => {
-						if (intr.Address === tkn.address) {
-							tkn.apy = Number.parseFloat(intr.Interest).toFixed(2);
-						}
-					});
+
+				tokensListTemp = await Promise.all(tokensListTemp.map(async (tkn) => {
+					const interestApy = await fetch(config[chainId].TOKEN_INTEREST_URL + tkn.address).then((res) => res.json());
+
+					tkn.apy = Number.parseFloat(interestApy.i).toFixed(2);
 					return tkn;
-				});
+				}));
+
+				if (!stale) {
+					setTokensList(tokensListTemp);
+				}
+
 			} catch (e) {
 				console.log(e);
 			}
@@ -66,8 +67,7 @@ const Tokens = () => {
 			try {
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (tkn) => {
-						const val = await mainContract.getTToken(tkn.symbol);
-
+						const val = await mainContract.getTToken(tkn.name);
 						if (val && val > 1) {
 							tkn.value = Number.parseFloat(formatEther(val)).toFixed(2);
 						} else {
@@ -76,6 +76,9 @@ const Tokens = () => {
 						return tkn;
 					})
 				);
+				if (!stale) {
+					setTokensList(tokensListTemp);
+				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -89,13 +92,13 @@ const Tokens = () => {
 					return tkn;
 				}));
 
+				if (!stale) {
+					setTokensList(tokensListTemp);
+					setPriceLoading(false);
+				}
+
 			} catch (e) {
 				console.log(e);
-			}
-
-			if (!stale) {
-				setTokensList(tokensListTemp);
-				setPriceLoading(false);
 			}
 		};
 
@@ -114,8 +117,8 @@ const Tokens = () => {
 const addressMapTableColumns = (priceLoading) => ([
 	{
 		title: 'Token',
-		dataIndex: 'logoURI',
-		key: 'logoURI',
+		dataIndex: 'image',
+		key: 'image',
 		render: (text) => {
 			if (text) {
 				return <Avatar src={text} />;
@@ -135,8 +138,8 @@ const addressMapTableColumns = (priceLoading) => ([
 	},
 	{
 		title: 'Holdings',
-		dataIndex: 'symbol',
-		key: 'symbol',
+		dataIndex: 'name',
+		key: 'name',
 		width: 180,
 		render: (text, tkn) => {
 			if (priceLoading) return <CustomSpin size="small" />;
@@ -154,7 +157,7 @@ const addressMapTableColumns = (priceLoading) => ([
 		render: (text, tkn) => {
 			if (priceLoading) return <CustomSpin size="small" />;
 			if (text) {
-				return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
+				return <>{`${text} ${tkn.name}`}</>;
 			}
 			return null;
 		},
@@ -166,7 +169,7 @@ const addressMapTableColumns = (priceLoading) => ([
 		width: 180,
 		render: (text, tkn) => {
 			if (priceLoading) return <CustomSpin size="small" />;
-			return <>{`${text} ${tkn.symbol.split('t')[1]}`}</>;
+			return <>{`${text} ${tkn.name}`}</>;
 		},
 	},
 	{

@@ -109,7 +109,7 @@ export function getErrorMessage(error) {
   if (error instanceof NoEthereumProviderError) {
     return "No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.";
   } else if (error instanceof UnsupportedChainIdError) {
-    return `You're connected to an unsupported network. Change the network to ${config.network}.`;
+    return `You're connected to an unsupported network. Change the network to Mainnet.`;
   } else if (
     error instanceof UserRejectedRequestErrorInjected ||
     error instanceof UserRejectedRequestErrorWalletConnect
@@ -127,27 +127,27 @@ export function getErrorMessage(error) {
   ****************************************************************
 */
 export function useMainContract() {
-  const { library, account } = useWeb3React()
+  const { library, account, chainId } = useWeb3React()
 
   return useMemo(() => {
     try {
-      return new Contract(config.CONTRACT_ADDRESS, abi, library.getSigner(account).connectUnchecked());
+      return new Contract(config[chainId].CONTRACT_ADDRESS, abi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [library, account]);
+  }, [chainId, library, account]);
 }
 
 export function useThirmContract() {
-  const { library, account } = useWeb3React()
+  const { library, account, chainId } = useWeb3React()
 
   return useMemo(() => {
     try {
-      return new Contract(config.THIRM_CONTRACT_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
+      return new Contract(config[chainId].THIRM_TOKEN_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [library, account]);
+  }, [chainId, library, account]);
 }

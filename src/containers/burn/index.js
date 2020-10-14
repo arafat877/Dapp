@@ -12,7 +12,7 @@ import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
 const Burn = () => {
-	const { account, library } = useWeb3React();
+	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
 
@@ -29,7 +29,7 @@ const Burn = () => {
 		let stale = false;
 
 		const getTokensList = async () => {
-			let tokensListTemp = config.tokens;
+			let tokensListTemp = config[chainId].tokens;
 			try {
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (token) => {
@@ -60,7 +60,7 @@ const Burn = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account, mainContract]);
+	}, [account, chainId, mainContract]);
 
 
 	const onTokenMax = async () => {
