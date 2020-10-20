@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { StyledCard, ThirmTheme } from './../globalStyle';
 
 export const LeftSideCard = styled(StyledCard)`
-	margin: 8px;
+	margin: 8px 0;
 	width: 100%;
 	display: inline-flex;
 	.card-text {
@@ -40,7 +40,7 @@ export const LeftSideCard = styled(StyledCard)`
 `;
 
 export const RightSideCard = styled(StyledCard)`
-	margin: 8px;
+	margin: 8px 0;
 	width: 100%;
 	padding: 0;
 	.card-text {

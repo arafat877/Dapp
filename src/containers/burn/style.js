@@ -49,6 +49,7 @@ export const WithdrawWrapper = styled(StyledCard)`
 `;
 
 export const StyledTabs = styled(Tabs)`
+padding: 0 8px 36px 0;
 .ant-tabs-nav-list .ant-tabs-tab {
 	height: 60px;
 	margin: 4px 0;
