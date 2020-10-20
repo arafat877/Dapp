@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Col, Form, Input, Row, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useMainContract } from '../../hooks';
 import { getThirmTokenContract } from "../../utils/helpers";
@@ -25,11 +27,21 @@ const Burn = () => {
 	const [form] = Form.useForm();
 	const [form2] = Form.useForm();
 
+	const history = useHistory();
+
 	useEffect(() => {
 		let stale = false;
 
 		const getTokensList = async () => {
-			let tokensListTemp = config[chainId].tokens;
+
+			const params = history.location.state;
+
+			if (params && params.token) {
+				setSelectedToken(params.token.toString());
+			}
+
+			let tokensListTemp = [...config[chainId].tokens];
+
 			try {
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (token) => {
@@ -60,7 +72,7 @@ const Burn = () => {
 		return () => {
 			stale = true;
 		};
-	}, [account, chainId, mainContract]);
+	}, [account, chainId]);
 
 
 	const onTokenMax = async () => {
@@ -133,7 +145,7 @@ const Burn = () => {
 					key={tkn.id}
 				>
 					<WithdrawWrapper>
-						<Row gutter={24}>
+						<Row gutter={24} justify="space-around">
 							<Col xs={24} xl={12}>
 								<WithdrawBox>
 									<Form form={form} layout="vertical" onFinish={onFinish} className="withdraw-form">
@@ -149,9 +161,7 @@ const Burn = () => {
 										</Form.Item>
 										{selectedToken != null && (
 											<p className="fee-info">
-												<p>
-													Withdrawal Fees {tokensList[selectedToken].fees} {tokensList[selectedToken].name}{' '}
-												</p>
+												Withdrawal Fees {tokensList[selectedToken].fees} {tokensList[selectedToken].name}{' '}
 											</p>
 										)}
 										<Form.Item className="withdraw-form-item">
@@ -180,7 +190,6 @@ const Burn = () => {
 												className="withdraw-form-item"
 												name="address"
 												label={`Enter your ${tokensList[selectedToken].name} Address`}
-												i
 												required
 												rules={[
 													{

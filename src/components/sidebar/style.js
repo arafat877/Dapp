@@ -13,7 +13,7 @@ export const SideMenu = styled(Menu)`
 export const SideWrapper = styled.div`
 	position: fixed;
 	top: 0px;
-	width: 250px;
+	width: 248px;
 	min-height: 100vh;
 	height: 100%;
 	display: flex;

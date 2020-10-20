@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { StyledCard, ThirmTheme } from './../globalStyle';
 
 export const LeftSideCard = styled(StyledCard)`
-	margin: 8px 4px;
+	margin: 8px;
 	width: 100%;
 	display: inline-flex;
 	.card-text {
@@ -40,7 +40,7 @@ export const LeftSideCard = styled(StyledCard)`
 `;
 
 export const RightSideCard = styled(StyledCard)`
-	margin: 16px 0;
+	margin: 8px;
 	width: 100%;
 	padding: 0;
 	.card-text {
@@ -72,4 +72,8 @@ export const OverviewCard = styled.a`
 		box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
 	}
 	padding: 4px;
+`;
+
+export const DiscordCard = styled.iframe`
+	margin: 8px;
 `;

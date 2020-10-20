@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useThirmContract } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
-import { LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
+import { DiscordCard, LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
 
 const config = require('../../utils/config');
 
@@ -53,24 +53,29 @@ const OverView = () => {
 		let stale = false;
 
 		const getTokenBalances = async () => {
-			const balance = formatEther(await library.getBalance(account));
 
-			if (!stale) {
-				setEthBalance(balance);
-			}
+			try {
+				const balance = formatEther(await library.getBalance(account));
 
-			const thrmBal = await thirmContract.balanceOf(account);
+				if (!stale) {
+					setEthBalance(balance);
+				}
 
-			if (thrmBal) {
-				setThrmBalance(formatEther(thrmBal));
-			}
+				const thrmBal = await thirmContract.balanceOf(account);
 
-			const totalSupply = await thirmContract.totalSupply();
-			let tokenOwned = parseFloat((parseFloat(thrmBal).toFixed(8) / totalSupply) * 100);
-			if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
+				if (thrmBal) {
+					setThrmBalance(formatEther(thrmBal));
+				}
 
-			if (!stale) {
-				setTokenOwned(tokenOwned.toFixed(8));
+				const totalSupply = await thirmContract.totalSupply();
+				let tokenOwned = parseFloat((parseFloat(thrmBal).toFixed(8) / totalSupply) * 100);
+				if (isNaN(tokenOwned)) tokenOwned = parseFloat(0.0);
+
+				if (!stale) {
+					setTokenOwned(tokenOwned.toFixed(8));
+				}
+			} catch (e) {
+				console.log(e);
 			}
 		};
 
@@ -88,7 +93,7 @@ const OverView = () => {
 
 		const getRealTimeEthBalance = async () => {
 			let ethBalances = [];
-			const limit = 10;
+			const limit = 15;
 			let ethereumChartSeriesDataTemp = ethereumChartSeriesData;
 
 			try {
@@ -117,7 +122,7 @@ const OverView = () => {
 			let ethereumChartSeriesDateTemp = ethereumChartSeriesDate;
 			for (let i = 0; i < limit; i++) {
 				const day = moment().tz('Asia/Hong_Kong').subtract(i, 'days');
-				ethereumChartSeriesDateTemp.push(day.format('D MMM'));
+				ethereumChartSeriesDateTemp.push(day.format(' D MMM'));
 			}
 
 			ethereumChartSeriesDateTemp = ethereumChartSeriesDateTemp.reverse();
@@ -212,7 +217,7 @@ const OverView = () => {
 						)}
 				</RightSideCard>
 
-				<iframe title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+				<DiscordCard title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></DiscordCard>
 			</Col>
 		</Row>
 	);

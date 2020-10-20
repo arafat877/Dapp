@@ -34,7 +34,6 @@ export const ethereumChartInitialOptions = {
 	},
 	xaxis: {
 		type: 'dateTime',
-
 	},
 	yaxis: {
 		opposite: true,

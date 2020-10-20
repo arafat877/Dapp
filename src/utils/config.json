@@ -4,20 +4,19 @@
 		"CONTRACT_ADDRESS": "0x2cAc0D049ebE6704C6bc9790eCA8616029ABCee9",
 		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
 		"RPC_URL": "https://mainnet.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
-		"TOKEN_INTEREST_URL": "https://thirm.amanistesting.repl.co/interest/",
 		"status": "WIP",
 		"network": "MainNet",
 		"tokens": [
 			{
 				"id": 0,
-				"isERC": 0,
-				"name": "BTC",
+				"isERC": 1,
+				"name": "renBTC",
 				"tname": "tBTC",
 				"tfullname": "Thirm Bitcoin",
 				"image": "https://thirm.com/icons/tBTC.png",
 				"address": "0x36910c9695C1286c9377CEbc61D37bDEFcFdeAC6",
-				"fees": "0.0001",
-				"depositaddress": "bc1qsrmj42myjqlthuu0g7d3c4r5pd8tplxzuv06x7"
+				"fees": "0.001",
+				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
 			},
 			{
 				"id": 1,
@@ -59,7 +58,6 @@
 		"CONTRACT_ADDRESS": "0xac3fa20951c52302b5903c2621ca82adefc1978e",
 		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
 		"RPC_URL": "https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
-		"TOKEN_INTEREST_URL": "https://thirm.amanistesting.repl.co/interest/",
 		"status": "WIP",
 		"network": "Ropsten",
 		"tokens": [

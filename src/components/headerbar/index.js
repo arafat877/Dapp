@@ -133,7 +133,7 @@ const HeaderBar = (props) => {
           }
         </HeaderMeta>
       </Col>
-    </Row >
+    </Row>
   );
 }
 

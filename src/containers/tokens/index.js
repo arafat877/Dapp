@@ -15,7 +15,7 @@ const config = require('./../../utils/config');
 const Tokens = () => {
 	const { chainId, account, library } = useWeb3React();
 
-	const [tokensList, setTokensList] = useState(config[chainId].tokens);
+	const [tokensList, setTokensList] = useState([]);
 
 	const [priceLoading, setPriceLoading] = useState([]);
 
@@ -25,23 +25,23 @@ const Tokens = () => {
 		let stale = false;
 
 		const getTokenInformation = async () => {
-			let tokensListTemp = tokensList;
+			let tokensListTemp = [...config[chainId].tokens];
 
 			try {
 				tokensListTemp = tokensListTemp.map((tkn) => {
 					tkn.key = tkn.name;
 					tkn.value = 1;
-					tkn.apy = '';
+					tkn.apy = 0;
 					tkn.balance = '0.00000000';
 					return tkn;
 				});
-
-				if (!stale) {
-					setTokensList(tokensListTemp);
-					setPriceLoading(false);
-				}
 			} catch (e) {
 				console.log(e);
+			}
+
+			if (!stale) {
+				setTokensList(tokensListTemp);
+				setPriceLoading(true);
 			}
 
 			try {
@@ -56,9 +56,6 @@ const Tokens = () => {
 						return tkn;
 					})
 				);
-				if (!stale) {
-					setTokensList(tokensListTemp);
-				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -73,13 +70,13 @@ const Tokens = () => {
 						return tkn;
 					})
 				);
-
-				if (!stale) {
-					setTokensList(tokensListTemp);
-					setPriceLoading(false);
-				}
 			} catch (e) {
 				console.log(e);
+			}
+
+			if (!stale) {
+				setTokensList(tokensListTemp);
+				setPriceLoading(false);
 			}
 		};
 
@@ -109,8 +106,8 @@ const addressMapTableColumns = (priceLoading) => [
 	},
 	{
 		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
+		dataIndex: 'tname',
+		key: 'tname',
 	},
 	{
 		title: 'Address',
@@ -119,8 +116,8 @@ const addressMapTableColumns = (priceLoading) => [
 	},
 	{
 		title: 'Holdings',
-		dataIndex: 'name',
-		key: 'name',
+		dataIndex: 'tname',
+		key: 'tname',
 		width: 180,
 		render: (text, tkn) => {
 			if (priceLoading) return <CustomSpin size="small" />;
@@ -157,10 +154,16 @@ const addressMapTableColumns = (priceLoading) => [
 		title: 'Deposit',
 		dataIndex: 'deposit',
 		key: 'deposit',
-		render: () => {
+		render: (text, tkn) => {
 			return (
-				<Link to="/deposit">
-					<Button link type="dashed" size="small">
+				<Link
+					to={{
+						pathname: '/deposit',
+						state: { token: tkn.id },
+					}}
+					href="#"
+				>
+					<Button type="dashed" size="small">
 						Deposit
 					</Button>
 				</Link>
@@ -171,9 +174,15 @@ const addressMapTableColumns = (priceLoading) => [
 		title: 'Withdraw',
 		dataIndex: 'withdraw',
 		key: 'withdraw',
-		render: () => {
+		render: (text, tkn) => {
 			return (
-				<Link to="/withdraw">
+				<Link
+					to={{
+						pathname: '/withdraw',
+						state: { token: tkn.id },
+					}}
+					href="#"
+				>
 					<Button danger type="dashed" size="small">
 						Withdraw
 					</Button>

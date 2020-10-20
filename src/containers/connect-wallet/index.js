@@ -19,6 +19,7 @@ const ConnectWallet = (props) => {
 		await activate(connectorsByName[name]);
 		window.localStorage.setItem('wallet', name);
 	};
+
 	return (
 		<Row>
 			<Col xs={24}>
@@ -30,7 +31,7 @@ const ConnectWallet = (props) => {
 						Object.keys(connectorsByName).map((name) => {
 							const currentConnector = connectorsByName[name];
 							return (
-								<Col>
+								<Col key={name}>
 									{currentConnector && name === 'Injected' && (
 										<ConnectorButton
 											key={name}

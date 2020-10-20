@@ -40,20 +40,20 @@ export const ConnectButton = styled(Button)`
   }
   margin: 6px;
   height: 45px;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #e9e9e9;
   border-radius: 5px;
   &:focus, &:hover, &:active &:focus-within {
     outline: none;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #e9e9e9;
   }
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.10);
 `;
 
 export const PopverWrapper = styled.div`
- width: 300px;  
+ width: 350px;  
  .account-address {
-   margin: 16px 0;
-   padding: 8px;
+   margin: 16px 4px;
+   padding: 8px 16px;
  }
  .connection-info {
    .connection-info-list {
@@ -61,10 +61,10 @@ export const PopverWrapper = styled.div`
      flex-direction: row;
      justify-content: space-between;
      padding: 8px 0;
-     border-bottom: 1px solid #e3e3e3;
+     border-bottom: 1px solid #e9e9e9;
 
      &:first-child {
-      border-top: 1px solid #e3e3e3;
+      border-top: 1px solid #e9e9e9;
      }
    }
  }
@@ -84,7 +84,7 @@ export const DisconnectButton = styled(Button)`
 	margin: 16px 0 8px 0;
 	height: 45px;
 	padding: 10px 16px;
-	border: 1px solid #e3e3e3;
+	border: 1px solid #e9e9e9;
   border-radius: 5px;
   background: #e74c3c;
   color: #fff;
@@ -93,7 +93,7 @@ export const DisconnectButton = styled(Button)`
 	&:hover,
 	&:active &:focus-within {
 		outline: none;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #e9e9e9;
     background: #c0392b;
     color: #fff;
 	}
@@ -119,7 +119,7 @@ export const StyledPopover = styled(Popover)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-left: 1px solid #e3e3e3;
+  border-left: 1px solid #e9e9e9;
   cursor: pointer;
   .left-content, .right-content {
     display: flex;
@@ -143,7 +143,7 @@ export const StyledPopover = styled(Popover)`
   }
   .dropdown-icon {
     margin: auto 8px;
-    background: #e3e3e3;
+    background: #e9e9e9;
     padding: 6px;
     border-radius: 50%;
   }
@@ -167,7 +167,7 @@ export const StyledPopover = styled(Popover)`
 export const CountdownWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
+  padding: 10px 16px;
   p {
     line-height: 1;
     margin: 0;
@@ -181,7 +181,7 @@ export const HeaderMeta = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-right: -8px;
+  height: 70px;
 `;
 
 export const LogoMeta = styled.div`

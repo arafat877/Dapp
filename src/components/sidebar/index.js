@@ -2,8 +2,8 @@ import { AppstoreOutlined, BorderlessTableOutlined, EyeOutlined, FireOutlined, N
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { SideMenu, SideSocial, SideWrapper, SocialAvatar } from './style';
 
 const TwitterIcon = require('../../assets/images/twitter.png');
@@ -13,9 +13,15 @@ const GithubIcon = require('../../assets/images/github.png');
 const SideBar = (props) => {
 	const { active } = useWeb3React();
 
-	let addr = window.location.pathname.split('/')[1];
+	const [addr, setAddr] = useState();
 
-	if (!addr) addr = 'overview';
+	const history = useHistory();
+
+	useEffect(() => {
+		let addrTemp = history.location.pathname.split('/')[1];
+		if (!addrTemp) addrTemp = 'overview';
+		setAddr(addrTemp);
+	}, [history, props]);
 
 	return (
 		<SideWrapper>
@@ -25,7 +31,7 @@ const SideBar = (props) => {
 						<Link to="/">Overview</Link>
 					</Menu.Item>
 
-					<Menu.Item icon={<BorderlessTableOutlined style={{ fontSize: 17 }} />} key="tokens">
+					<Menu.Item icon={<BorderlessTableOutlined style={{ fontSize: 17 }} />} key="vaults">
 						<Link to="/vaults">Vaults</Link>
 					</Menu.Item>
 

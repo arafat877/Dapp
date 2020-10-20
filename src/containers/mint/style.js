@@ -2,11 +2,10 @@ import styled from 'styled-components';
 import { StyledCard } from '../globalStyle';
 
 export const MintWrapper = styled(StyledCard)`
-	padding: 48px 24px;
+	padding: 80px 24px;
 	@media only screen and (max-width: 992px) {
-		padding: 4px;
+		padding: 36px 4px;
 	}
-	min-height: 500px;
 	.ant-card-body {
     padding: 0;
 	}
@@ -15,6 +14,7 @@ export const MintWrapper = styled(StyledCard)`
 export const MintBox = styled.div`
 	max-width: 600px;
 	padding: 0 24px;
+	margin: 0 auto;
 	.deposite-form-item {
 		input {
 			width: 100%;

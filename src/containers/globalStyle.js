@@ -18,12 +18,16 @@ export const StyledContent = styled(Layout.Content)`
 		margin: 70px auto;
 		padding: 16px;
 	}
+	.alert-message {
+		margin-bottom: 16px;
+		border: 1px solid #e9e9e9;
+	}
 `;
 
 export const StyledHeader = styled(Layout.Header)`
 	background-color: #fff;
-	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
-	padding: 8px;
+	border-bottom: 1px solid #e9e9e9;
+	padding: 0 8px;
 	position: fixed;
 	z-index: 99;
 	width: 100%;
@@ -32,9 +36,8 @@ export const StyledHeader = styled(Layout.Header)`
 
 export const StyledSider = styled(Layout.Sider)`
 	background-color: #fff;
-	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1), 0 15px 40px rgba(166, 173, 201, 0.15);
+	border-right: 1px solid #e9e9e9;
 	margin: 0;
-	padding: 0;
 	min-height: 100vh;
 	position: relative;
 	overflow: hidden;
