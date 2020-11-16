@@ -1,22 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { formatEther } from '@ethersproject/units';
+import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Col, Form, Input, Row, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { useMainContract } from '../../hooks';
+import { useMainContract, useThirmProtocolContract } from '../../hooks';
 import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import config from './../../utils/config.json';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
+
 const Burn = () => {
 	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
+
+	const thirmProtocolContract = useThirmProtocolContract();
 
 	const [tokensList, setTokensList] = useState([]);
 
@@ -88,9 +91,14 @@ const Burn = () => {
 
 	const onFinish = async (values) => {
 		try {
-			const contract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
-			const tknAmount = formatEther(values.amount);
-			await contract.burn(tknAmount);
+			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
+			const val = values.amount;
+			const tknAmount = parseEther(val);
+
+			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
+
+			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, tokensList[selectedToken].address, tknAmount);
+
 		} catch (e) {
 			console.log(e);
 		}
