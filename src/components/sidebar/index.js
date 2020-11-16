@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BorderlessTableOutlined, EyeOutlined, FireOutlined, NodeIndexOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, EyeOutlined, FireOutlined, NodeIndexOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -29,10 +29,6 @@ const SideBar = (props) => {
 				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
 					<Menu.Item icon={<EyeOutlined style={{ fontSize: 17 }} />} key="overview">
 						<Link to="/">Overview</Link>
-					</Menu.Item>
-
-					<Menu.Item icon={<BorderlessTableOutlined style={{ fontSize: 17 }} />} key="vaults">
-						<Link to="/vaults">Vaults</Link>
 					</Menu.Item>
 
 					<SubMenu key="tokenz" icon={<AppstoreOutlined style={{ fontSize: 17 }} />} title="T-Tokens">
