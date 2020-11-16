@@ -25,7 +25,6 @@ const Burn = () => {
 	const collapsed = useRecoilValue(collapsedState);
 
 	const [form] = Form.useForm();
-	const [form2] = Form.useForm();
 
 	const history = useHistory();
 
@@ -45,13 +44,9 @@ const Burn = () => {
 			try {
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (token) => {
-						if (token.isERC === 0) {
-							const addr = await mainContract.getAddress(account, token.name);
-							if (addr !== '') {
-								token.userAddress = addr;
-							} else {
-								token.userAddress = null;
-							}
+						const addr = await mainContract.getAddress(account, token.name);
+						if (addr !== '') {
+							token.userAddress = addr;
 						} else {
 							token.userAddress = null;
 						}
@@ -101,31 +96,6 @@ const Burn = () => {
 		}
 	};
 
-	const setTokenAddress = async (address) => {
-
-		try {
-			const res = await mainContract.setAddress(tokensList[selectedToken].name, address);
-
-			if (res) {
-				let tempTokenList = [...tokensList];
-
-				tempTokenList = tempTokenList.map((token) => {
-					if (Object.keys(res).length > 0 && token.name === tokensList[selectedToken].name) {
-						token.userAddress = address;
-					}
-					return token;
-				});
-				setTokensList(tempTokenList);
-			}
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
-	const onAddressSubmitted = (values) => {
-		setTokenAddress(values.address);
-	};
-
 	const onChangeToken = (value) => {
 		setSelectedToken(value);
 	};
@@ -172,43 +142,6 @@ const Burn = () => {
 									</Form>
 								</WithdrawBox>
 							</Col>
-
-							{tokensList[selectedToken].isERC === 0 && (
-								<Col xs={24} xl={12}>
-									<WithdrawBox>
-										<p className="address-info">{tokensList[selectedToken].userAddress !== null ? '' : 'You have not set the address.'}</p>
-										<Form
-											form={form2}
-											layout="vertical"
-											onFinish={onAddressSubmitted}
-											className="withdraw-form"
-											initialValues={{
-												address: tokensList[selectedToken].userAddress,
-											}}
-										>
-											<Form.Item
-												className="withdraw-form-item"
-												name="address"
-												label={`Enter your ${tokensList[selectedToken].name} Address`}
-												required
-												rules={[
-													{
-														required: true,
-														message: 'Address Required',
-													},
-												]}
-											>
-												<Input placeholder="Address" />
-											</Form.Item>
-											<Form.Item>
-												<Button type="primary" htmlType="submit" className="withdraw-button">
-													{`${tokensList[selectedToken].userAddress === null ? 'Set Address' : 'Change Address'}`}
-												</Button>
-											</Form.Item>
-										</Form>
-									</WithdrawBox>
-								</Col>
-							)}
 						</Row>
 					</WithdrawWrapper>
 				</Tabs.TabPane>

@@ -9,7 +9,6 @@
 		"tokens": [
 			{
 				"id": 0,
-				"isERC": 1,
 				"name": "WBTC",
 				"tname": "tBTC",
 				"tfullname": "Thirm Bitcoin",
@@ -20,7 +19,6 @@
 			},
 			{
 				"id": 1,
-				"isERC": 1,
 				"name": "ETH",
 				"tname": "tETH",
 				"tfullname": "Thirm Ethereum",
@@ -31,7 +29,6 @@
 			},
 			{
 				"id": 2,
-				"isERC": 1,
 				"name": "USDT",
 				"tname": "tUSDT",
 				"tfullname": "Thirm Tether",
@@ -42,7 +39,6 @@
 			},
 			{
 				"id": 3,
-				"isERC": 1,
 				"name": "DAI",
 				"tname": "tDAI",
 				"tfullname": "Thirm Dai",
@@ -64,7 +60,7 @@
 			{
 				"id": 0,
 				"isERC": 0,
-				"name": "BTC",
+				"name": "WBTC",
 				"tname": "tBTC",
 				"tfullname": "Thirm Bitcoin",
 				"image": "https://thirm.com/icons/tBTC.png",
@@ -74,7 +70,6 @@
 			},
 			{
 				"id": 1,
-				"isERC": 1,
 				"name": "ETH",
 				"tname": "tETH",
 				"tfullname": "Thirm Ethereum",
@@ -85,7 +80,6 @@
 			},
 			{
 				"id": 2,
-				"isERC": 1,
 				"name": "USDT",
 				"tname": "tUSDT",
 				"tfullname": "Thirm Tether",
@@ -96,7 +90,6 @@
 			},
 			{
 				"id": 3,
-				"isERC": 1,
 				"name": "DAI",
 				"tname": "tDAI",
 				"tfullname": "Thirm Dai",
