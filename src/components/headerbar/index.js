@@ -2,14 +2,12 @@
 import { CopyOutlined, DownOutlined, LoginOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Badge, Col, notification, Row, Tag } from 'antd';
-import Countdown from 'antd/lib/statistic/Countdown';
-import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
 import { collapsedState } from './../../utils/recoilStates';
-import { ConnectedAvatar, CountdownWrapper, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
+import { ConnectedAvatar, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
 
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -66,15 +64,6 @@ const HeaderBar = (props) => {
 
   const history = useHistory();
 
-  const indiaTime = moment().tz("Asia/Kolkata");
-  let indiaTimeEndOfDay = moment().tz("Asia/Kolkata").endOf('day').subtract(6, 'hours');
-  let secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
-
-  if (secDiff < 0) {
-    indiaTimeEndOfDay = indiaTimeEndOfDay.add(1, 'day');
-    secDiff = indiaTimeEndOfDay.diff(indiaTime, 'milliSeconds');
-  }
-  const deadline = moment.duration(indiaTime).asMilliseconds() + secDiff;
   return (
     <Row justify="space-between" align="middle">
       <Col xs={12}>
@@ -92,10 +81,6 @@ const HeaderBar = (props) => {
 
       <Col xs={12}>
         <HeaderMeta>
-          {!collapsed && <CountdownWrapper>
-            <p>Next Batch in</p>
-            <Countdown title={null} value={deadline} />
-          </CountdownWrapper>}
           {
             active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config[chainId].network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
               <div className="left-content">

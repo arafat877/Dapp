@@ -6,10 +6,9 @@ import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
 import Web3Wrapper from './../components/web3Wrapper/index';
 import { collapsedState } from './../utils/recoilStates';
-import Burn from './burn/index';
 import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
-import Mint from './mint/index';
 import OverView from './overview/index';
+import WithDraw from './withdraw/index';
 
 function MainContent() {
 	// Left Drawer Open and Close
@@ -47,8 +46,7 @@ function MainContent() {
 						<Web3Wrapper>
 							<Switch>
 								<Route exact path="/" component={() => <OverView />} />
-								<Route exact path="/withdraw" component={() => <Burn />} />
-								<Route exact path="/deposit" component={() => <Mint />} />
+								<Route exact path="/withdraw" component={() => <WithDraw />} />
 							</Switch>
 						</Web3Wrapper>
 					</StyledContent>

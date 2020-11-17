@@ -1,6 +1,5 @@
 import { Avatar, Button, Popover } from 'antd';
 import styled from 'styled-components';
-import { ThirmTheme } from './../../containers/globalStyle';
 
 export const ThirmLogo = styled.div`
 	display: flex;
@@ -162,19 +161,6 @@ export const StyledPopover = styled(Popover)`
     background-color: green;
     border: 2px solid #fff;
   }
-`;
-
-export const CountdownWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 16px;
-  p {
-    line-height: 1;
-    margin: 0;
-    color: ${ThirmTheme.textColorDark};
-    text-align: center;
-  }
-  font-weight: 600;
 `;
 
 export const HeaderMeta = styled.div`

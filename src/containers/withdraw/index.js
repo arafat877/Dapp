@@ -13,8 +13,7 @@ import config from './../../utils/config.json';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
-
-const Burn = () => {
+const WithDraw = () => {
 	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
@@ -95,9 +94,13 @@ const Burn = () => {
 			const val = values.amount;
 			const tknAmount = parseEther(val);
 
+			// Need to approve thirm before
 			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
 
-			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, tokensList[selectedToken].address, tknAmount);
+			// Need change
+			const accountAddress = "nano_" + account;
+
+			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, accountAddress, tknAmount);
 
 		} catch (e) {
 			console.log(e);
@@ -159,4 +162,4 @@ const Burn = () => {
 	);
 };
 
-export default Burn;
+export default WithDraw;
