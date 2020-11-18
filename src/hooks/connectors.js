@@ -8,11 +8,11 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
+import config from '../utils/config';
 
-const config = require('../utils/config.json');
 
 export const injected = new InjectedConnector({
-	supportedChainIds: [1, 3],
+	supportedChainIds: [config.chainID],
 });
 
 export const walletlink = new WalletLinkConnector({
@@ -21,7 +21,7 @@ export const walletlink = new WalletLinkConnector({
 });
 
 export const walletConnect = new WalletConnectConnector({
-	rpc: { 3: config.RPC_URL },
+	rpc: { [config.chainID]: config.RPC_URL },
 	bridge: 'https://bridge.walletconnect.org',
 	qrcode: true,
 	pollingInterval: 12000,

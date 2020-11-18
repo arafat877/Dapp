@@ -4,12 +4,12 @@ import { useWeb3React } from '@web3-react/core';
 import { Button, Col, Row, Spin } from 'antd';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
+import config from '../../utils/config';
 import { useThirmContract } from './../../hooks/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { DiscordCard, LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
 
-const config = require('../../utils/config');
 
 const OverView = () => {
 	const { library, account } = useWeb3React();

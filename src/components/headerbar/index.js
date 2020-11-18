@@ -5,16 +5,16 @@ import { Badge, Col, notification, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import config from '../../utils/config';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
 import { collapsedState } from './../../utils/recoilStates';
 import { ConnectedAvatar, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
+
 
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
 const WalletLinkIcon = require('../../assets/images/qr-code.png');
 const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
-
-const config = require('../../utils/config.json');
 
 const HeaderBar = (props) => {
 
