@@ -8,6 +8,7 @@
 		"tokens": [
 			{
 				"id": 0,
+				"coin": "BTC",
 				"name": "tBTC",
 				"fullname": "Thirm Bitcoin",
 				"image": "https://thirm.com/icons/tBTC.png",
@@ -15,6 +16,7 @@
 			},
 			{
 				"id": 1,
+				"coin": "NANO",
 				"name": "tNANO",
 				"fullname": "Thirm Nano",
 				"image": "https://thirm.com/icons/tNANO.png",
