@@ -7,7 +7,7 @@ import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { useMainContract, useThirmProtocolContract } from '../../hooks';
+import { useMainContract } from '../../hooks';
 import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import config from './../../utils/config.json';
@@ -24,8 +24,6 @@ const WithDraw = () => {
 
 	const mainContract = useMainContract();
 
-	const thirmProtocolContract = useThirmProtocolContract();
-
 	const [tokensList, setTokensList] = useState([]);
 
 	const [selectedToken, setSelectedToken] = useState(0);
@@ -33,6 +31,8 @@ const WithDraw = () => {
 	const [withDrawModalVisible, setWithDrawModalVisible] = useState(false);
 
 	const [withDrawAmount, setWithDrawAmount] = useState(false);
+
+	const [withdrawTokenAddress, setWithdrawTokenAddress] = useState(false);
 
 	const [currentWithdrawStep, setCurrentWithdrawStep] = useState(0);
 
@@ -58,26 +58,15 @@ const WithDraw = () => {
 			let tokensListTemp = [...config[chainId].tokens];
 
 			try {
-				tokensListTemp = await Promise.all(
-					tokensListTemp.map(async (token) => {
-						const addr = await mainContract.getAddress(account, token.name);
-						if (addr !== '') {
-							token.userAddress = addr;
-						} else {
-							token.userAddress = null;
-						}
-						return token;
-					})
-				);
 
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (token) => {
 						token.approved = false;
 						const tokenContract = getThirmTokenContract(library, account, token.address);
 
-						const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+						const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
 
-						if (allowance >= ALLOWANCE_LIMIT) {
+						if (allowance && allowance >= ALLOWANCE_LIMIT) {
 							token.approved = true;
 						}
 						return token;
@@ -120,13 +109,14 @@ const WithDraw = () => {
 	const onFinish = async (values) => {
 		setWithDrawModalVisible(true);
 		setWithDrawAmount(values.amount);
+		setWithdrawTokenAddress(values.tokenAddress);
 		setCurrentWithdrawStep(0);
 
 		try {
 
 			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
 
-			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
 
 			if (allowance >= ALLOWANCE_LIMIT) {
 				setCurrentWithdrawStep(1);
@@ -147,11 +137,11 @@ const WithDraw = () => {
 			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
 
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
+			await tokenContract.approve(config[chainId].CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
 			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
 
 				if (allowance >= ALLOWANCE_LIMIT) {
 					clearInterval(checkAllowance);
@@ -175,7 +165,7 @@ const WithDraw = () => {
 
 			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
 
-			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
 
 			if (allowance >= ALLOWANCE_LIMIT) {
 				setCurrentWithdrawStep(2);
@@ -183,11 +173,11 @@ const WithDraw = () => {
 			}
 
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
+			await tokenContract.approve(config[chainId].CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
 			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
 
 				if (allowance >= ALLOWANCE_LIMIT) {
 					tokensList[selectedToken].approved = true;
@@ -208,9 +198,7 @@ const WithDraw = () => {
 
 			const tknAmount = parseEther(withDrawAmount);
 
-			const accountAddress = "nano_" + account;
-
-			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, accountAddress, tknAmount);
+			await mainContract.registerWithdrawal(tokensList[selectedToken].name, withdrawTokenAddress, tknAmount);
 
 			setWithDrawModalVisible(false);
 
@@ -242,9 +230,16 @@ const WithDraw = () => {
 							<Col xs={24} xl={12}>
 								<WithdrawBox>
 									<Form form={form} layout="vertical" onFinish={onFinish} className="withdraw-form">
-										<Form.Item name="amount" rules={[{ required: true, message: 'Please input token Amount' }]} label="Enter number of tokens" className="withdraw-form-item">
+
+										<Form.Item name="tokenAddress" rules={[{ required: true, message: 'Please input token address' }]} label={`${tokensList[selectedToken].name} address`} className="withdraw-form-item">
 											<Input
-												placeholder="Number of tokens to burn"
+												placeholder={`Enter ${tokensList[selectedToken].name} address`}
+											/>
+										</Form.Item>
+
+										<Form.Item name="amount" rules={[{ required: true, message: 'Please input token Amount' }]} label="Number of tokens to withdraw" className="withdraw-form-item">
+											<Input
+												placeholder="Enter Number of tokens to withdraw"
 												suffix={
 													<Button type="primary" danger onClick={onTokenMax}>
 														MAX
@@ -252,11 +247,6 @@ const WithDraw = () => {
 												}
 											/>
 										</Form.Item>
-										{selectedToken != null && (
-											<p className="fee-info">
-												Withdrawal Fees {tokensList[selectedToken].fees} {tokensList[selectedToken].name}{' '}
-											</p>
-										)}
 
 										<Form.Item className="withdraw-form-item">
 											<Button className="withdraw-button" type="primary" htmlType="submit">

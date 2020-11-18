@@ -11,7 +11,6 @@ const config = require('../utils/config.json');
 
 
 const ttokensAbi = require(`../utils/abis/ttokens.json`);
-const thirmProtocolAbi = require(`../utils/abis/thirmProtocol.json`);
 const abi = require(`../utils/abis/abi.json`);
 
 /*
@@ -146,20 +145,6 @@ export function useThirmContract() {
   return useMemo(() => {
     try {
       return new Contract(config[chainId].THIRM_TOKEN_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
-    } catch (error) {
-      console.error('Failed to get contract', error)
-      return null
-    }
-  }, [chainId, library, account]);
-}
-
-
-export function useThirmProtocolContract() {
-  const { library, account, chainId } = useWeb3React();
-
-  return useMemo(() => {
-    try {
-      return new Contract(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, thirmProtocolAbi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
