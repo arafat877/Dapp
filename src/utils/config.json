@@ -3,7 +3,7 @@
 		"CORE": "0x000000000000006F6502B7F2bbaC8C30A3f67E9a",
 		"CONTRACT_ADDRESS": "0x2cAc0D049ebE6704C6bc9790eCA8616029ABCee9",
 		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
-		"THIRM_PROTOCOL_CONTRACT_ADDRESS": "0x9d5E6551E04c55698e253aCCCfDdC06FF4Ee476a",
+		"THIRM_PROTOCOL_CONTRACT_ADDRESS": "0x2F23df982Fd9ad9485ca1aAD37eFfB5630899B7a",
 		"RPC_URL": "https://mainnet.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
 		"status": "WIP",
 		"network": "MainNet",
@@ -54,7 +54,7 @@
 		"CORE": "0x000000000000006F6502B7F2bbaC8C30A3f67E9a",
 		"CONTRACT_ADDRESS": "0xac3fa20951c52302b5903c2621ca82adefc1978e",
 		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
-		"THIRM_PROTOCOL_CONTRACT_ADDRESS": "0x9d5E6551E04c55698e253aCCCfDdC06FF4Ee476a",
+		"THIRM_PROTOCOL_CONTRACT_ADDRESS": "0x2F23df982Fd9ad9485ca1aAD37eFfB5630899B7a",
 		"RPC_URL": "https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
 		"status": "WIP",
 		"network": "Ropsten",
@@ -99,7 +99,18 @@
 				"address": "0xB29c13A70792B5B5D1Ab8e40b92233A16568Fe32",
 				"fees": "4",
 				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
+			},
+			{
+				"id": 4,
+				"name": "NANO",
+				"tname": "tNANO",
+				"tfullname": "Thirm Nano",
+				"image": "https://thirm.com/icons/tNANO.png",
+				"address": "0x40972150eDcA90b32BA6b1A4CCda1f8aC275eD99",
+				"fees": "4",
+				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
 			}
+
 		]
 	}
 }

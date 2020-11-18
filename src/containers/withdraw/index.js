@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { LoadingOutlined } from '@ant-design/icons';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Col, Form, Input, Row, Tabs } from 'antd';
+import { Avatar, Button, Col, Form, Input, Modal, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -13,6 +14,11 @@ import config from './../../utils/config.json';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
+
+const { Step } = Steps;
+
+const ALLOWANCE_LIMIT = 1000000;
+
 const WithDraw = () => {
 	const { account, library, chainId } = useWeb3React();
 
@@ -23,6 +29,14 @@ const WithDraw = () => {
 	const [tokensList, setTokensList] = useState([]);
 
 	const [selectedToken, setSelectedToken] = useState(0);
+
+	const [withDrawModalVisible, setWithDrawModalVisible] = useState(false);
+
+	const [withDrawAmount, setWithDrawAmount] = useState(false);
+
+	const [currentWithdrawStep, setCurrentWithdrawStep] = useState(0);
+
+	const [processingApproval, setProcessingApproval] = useState(false);
 
 	const collapsed = useRecoilValue(collapsedState);
 
@@ -55,6 +69,21 @@ const WithDraw = () => {
 						return token;
 					})
 				);
+
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async (token) => {
+						token.approved = false;
+						const tokenContract = getThirmTokenContract(library, account, token.address);
+
+						const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+
+						if (allowance >= ALLOWANCE_LIMIT) {
+							token.approved = true;
+						}
+						return token;
+					})
+				);
+
 			} catch (e) {
 				console.log(e);
 			}
@@ -89,23 +118,106 @@ const WithDraw = () => {
 	};
 
 	const onFinish = async (values) => {
-		try {
-			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
-			const val = values.amount;
-			const tknAmount = parseEther(val);
+		setWithDrawModalVisible(true);
+		setWithDrawAmount(values.amount);
+		setCurrentWithdrawStep(0);
 
-			// Need to approve thirm before
+		try {
+
+			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
+
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+
+			if (allowance >= ALLOWANCE_LIMIT) {
+				setCurrentWithdrawStep(1);
+				if (tokensList[selectedToken].approved) {
+					setCurrentWithdrawStep(2);
+				}
+			}
+		} catch (e) {
+			console.log(e);
+		}
+
+	};
+
+	const approveThirm = async () => {
+
+		try {
+
+			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
+
+			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
 			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
 
-			// Need change
-			const accountAddress = "nano_" + account;
+			setProcessingApproval(true);
+			const checkAllowance = setInterval(async () => {
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
 
-			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, accountAddress, tknAmount);
+				if (allowance >= ALLOWANCE_LIMIT) {
+					clearInterval(checkAllowance);
+					setProcessingApproval(false);
+					if (tokensList[selectedToken].approved) {
+						setCurrentWithdrawStep(2);
+					} else {
+						setCurrentWithdrawStep(1);
+					}
+				}
+			}, 5000);
 
 		} catch (e) {
 			console.log(e);
 		}
-	};
+	}
+
+	const approveCurrentToken = async () => {
+
+		try {
+
+			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
+
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+
+			if (allowance >= ALLOWANCE_LIMIT) {
+				setCurrentWithdrawStep(2);
+				return;
+			}
+
+			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
+			await tokenContract.approve(config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS, tknAmount);
+
+			setProcessingApproval(true);
+			const checkAllowance = setInterval(async () => {
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].THIRM_PROTOCOL_CONTRACT_ADDRESS)));
+
+				if (allowance >= ALLOWANCE_LIMIT) {
+					tokensList[selectedToken].approved = true;
+					setProcessingApproval(false);
+					setCurrentWithdrawStep(2);
+					clearInterval(checkAllowance);
+				}
+			}, 5000);
+
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	const finishWithdraw = async () => {
+
+		try {
+
+			const tknAmount = parseEther(withDrawAmount);
+
+			const accountAddress = "nano_" + account;
+
+			await thirmProtocolContract.registerWithdrawal(tokensList[selectedToken].name, accountAddress, tknAmount);
+
+			setWithDrawModalVisible(false);
+
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	const onChangeToken = (value) => {
 		setSelectedToken(value);
@@ -115,7 +227,7 @@ const WithDraw = () => {
 
 	return (
 
-		<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card" animated={true}>
+		<StyledTabs defaultActiveKey={selectedToken} tabPosition={collapsed ? 'top' : 'left'} onChange={onChangeToken} type="card">
 			{tokensList.map((tkn) => (
 				<Tabs.TabPane
 					tab={
@@ -145,12 +257,49 @@ const WithDraw = () => {
 												Withdrawal Fees {tokensList[selectedToken].fees} {tokensList[selectedToken].name}{' '}
 											</p>
 										)}
+
 										<Form.Item className="withdraw-form-item">
 											<Button className="withdraw-button" type="primary" htmlType="submit">
 												Withdraw
 											</Button>
 										</Form.Item>
 									</Form>
+
+									<Modal
+										title="Withdraw"
+										visible={withDrawModalVisible}
+										onOk={() => setWithDrawModalVisible(false)}
+										onCancel={() => setWithDrawModalVisible(false)}
+										footer={null}
+									>
+										<Steps direction="vertical" current={currentWithdrawStep}>
+
+											<Step title="Approve THIRM" description={
+												<Button className="withdraw-button" type="primary" onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
+													Approve
+											</Button>
+											}
+
+												icon={currentWithdrawStep === 0 && processingApproval && <LoadingOutlined />}
+											/>
+
+											<Step title={`Approve ${tokensList[selectedToken].name}`} description={
+												<Button className="withdraw-button" type="primary" onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
+													Approve
+											</Button>
+											}
+												icon={currentWithdrawStep === 1 && processingApproval && <LoadingOutlined />}
+											/>
+
+											<Step title="Withdraw" description={
+												<Button className="withdraw-button" type="primary" onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
+													WithDraw
+											</Button>
+											} />
+
+										</Steps>
+									</Modal>
+
 								</WithdrawBox>
 							</Col>
 						</Row>
