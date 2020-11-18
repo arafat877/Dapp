@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LoadingOutlined } from '@ant-design/icons';
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Col, Form, Input, Modal, Row, Steps, Tabs } from 'antd';
+import { Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -90,6 +90,10 @@ const WithDraw = () => {
 	}, [account, chainId]);
 
 
+	const onChangeToken = (value) => {
+		setSelectedToken(value);
+	};
+
 	const onTokenMax = async () => {
 
 		try {
@@ -103,6 +107,9 @@ const WithDraw = () => {
 			}
 		} catch (e) {
 			console.log(e);
+			form.setFieldsValue({
+				amount: (0).toFixed(8),
+			});
 		}
 	};
 
@@ -137,22 +144,17 @@ const WithDraw = () => {
 			const tokenContract = getThirmTokenContract(library, account, config.THIRM_TOKEN_ADDRESS);
 
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
+			const approved = await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
-			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
-
-				if (allowance >= ALLOWANCE_LIMIT) {
-					clearInterval(checkAllowance);
-					setProcessingApproval(false);
-					if (tokensList[selectedToken].approved) {
-						setCurrentWithdrawStep(2);
-					} else {
-						setCurrentWithdrawStep(1);
-					}
+			library.once(approved.hash, () => {
+				setProcessingApproval(false);
+				if (tokensList[selectedToken].approved) {
+					setCurrentWithdrawStep(2);
+				} else {
+					setCurrentWithdrawStep(1);
 				}
-			}, 5000);
+			});
 
 		} catch (e) {
 			console.log(e);
@@ -165,27 +167,15 @@ const WithDraw = () => {
 
 			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
 
-			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
-
-			if (allowance >= ALLOWANCE_LIMIT) {
-				setCurrentWithdrawStep(2);
-				return;
-			}
-
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
+			const approved = await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
-			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
-
-				if (allowance >= ALLOWANCE_LIMIT) {
-					tokensList[selectedToken].approved = true;
-					setProcessingApproval(false);
-					setCurrentWithdrawStep(2);
-					clearInterval(checkAllowance);
-				}
-			}, 5000);
+			library.once(approved.hash, () => {
+				setProcessingApproval(false);
+				tokensList[selectedToken].approved = true;
+				setCurrentWithdrawStep(2);
+			});
 
 		} catch (e) {
 			console.log(e);
@@ -198,20 +188,29 @@ const WithDraw = () => {
 
 			const tknAmount = parseEther(withDrawAmount);
 
-			await mainContract.registerWithdrawal(tokensList[selectedToken].coin, withdrawTokenAddress, tknAmount, {
+			const withdrawed = await mainContract.registerWithdrawal(tokensList[selectedToken].coin, withdrawTokenAddress, tknAmount, {
 				gasLimit: 500000
 			});
 
-			setWithDrawModalVisible(false);
+			setProcessingApproval(true);
+			library.once(withdrawed.hash, () => {
+				setProcessingApproval(false);
+				setWithDrawModalVisible(false);
+
+				notification["success"]({
+					message: 'Withdrawed',
+					description:
+						`You have successfully withdrawed ${withDrawAmount} ${tokensList[selectedToken].coin}`,
+					placement: 'bottomRight'
+				});
+
+			});
 
 		} catch (e) {
 			console.log(e);
 		}
 	}
 
-	const onChangeToken = (value) => {
-		setSelectedToken(value);
-	};
 
 	if (tokensList.length === 0) return <LoadingIndicator />;
 
@@ -267,16 +266,15 @@ const WithDraw = () => {
 										<Steps direction="vertical" current={currentWithdrawStep}>
 
 											<Step title="Approve THIRM" description={
-												<Button className="withdraw-button" type="primary" onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
+												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
 													Approve
 											</Button>
 											}
-
 												icon={currentWithdrawStep === 0 && processingApproval && <LoadingOutlined />}
 											/>
 
-											<Step title={`Approve ${tokensList[selectedToken].name}`} description={
-												<Button className="withdraw-button" type="primary" onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
+											<Step title={`Approve ${tokensList[selectedToken].coin}`} description={
+												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
 													Approve
 											</Button>
 											}
@@ -284,10 +282,12 @@ const WithDraw = () => {
 											/>
 
 											<Step title="Withdraw" description={
-												<Button className="withdraw-button" type="primary" onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
+												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
 													WithDraw
 											</Button>
-											} />
+											}
+												icon={currentWithdrawStep === 2 && processingApproval && <LoadingOutlined />}
+											/>
 
 										</Steps>
 									</Modal>
