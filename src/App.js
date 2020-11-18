@@ -7,6 +7,7 @@ import MainContent from './containers';
 
 
 function getLibrary(provider) {
+
 	const library = new Web3Provider(provider);
 	library.pollingInterval = 12000;
 	let web3 = new Web3(provider);

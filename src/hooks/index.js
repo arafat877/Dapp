@@ -127,27 +127,27 @@ export function getErrorMessage(error) {
   ****************************************************************
 */
 export function useMainContract() {
-  const { library, account, chainId } = useWeb3React();
+  const { library, account } = useWeb3React();
 
   return useMemo(() => {
     try {
-      return new Contract(config[chainId].CONTRACT_ADDRESS, abi, library.getSigner(account).connectUnchecked());
+      return new Contract(config.CONTRACT_ADDRESS, abi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [chainId, library, account]);
+  }, [library, account]);
 }
 
 export function useThirmContract() {
-  const { library, account, chainId } = useWeb3React();
+  const { library, account } = useWeb3React();
 
   return useMemo(() => {
     try {
-      return new Contract(config[chainId].THIRM_TOKEN_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
+      return new Contract(config.THIRM_TOKEN_ADDRESS, ttokensAbi, library.getSigner(account).connectUnchecked());
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [chainId, library, account]);
+  }, [library, account]);
 }

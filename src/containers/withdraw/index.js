@@ -55,7 +55,7 @@ const WithDraw = () => {
 				setSelectedToken(params.token.toString());
 			}
 
-			let tokensListTemp = [...config[chainId].tokens];
+			let tokensListTemp = [...config.tokens];
 
 			try {
 
@@ -64,7 +64,7 @@ const WithDraw = () => {
 						token.approved = false;
 						const tokenContract = getThirmTokenContract(library, account, token.address);
 
-						const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
+						const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
 
 						if (allowance && allowance >= ALLOWANCE_LIMIT) {
 							token.approved = true;
@@ -114,9 +114,9 @@ const WithDraw = () => {
 
 		try {
 
-			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
+			const tokenContract = getThirmTokenContract(library, account, config.THIRM_TOKEN_ADDRESS);
 
-			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
 
 			if (allowance >= ALLOWANCE_LIMIT) {
 				setCurrentWithdrawStep(1);
@@ -134,14 +134,14 @@ const WithDraw = () => {
 
 		try {
 
-			const tokenContract = getThirmTokenContract(library, account, config[chainId].THIRM_TOKEN_ADDRESS);
+			const tokenContract = getThirmTokenContract(library, account, config.THIRM_TOKEN_ADDRESS);
 
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config[chainId].CONTRACT_ADDRESS, tknAmount);
+			await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
 			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
 
 				if (allowance >= ALLOWANCE_LIMIT) {
 					clearInterval(checkAllowance);
@@ -165,7 +165,7 @@ const WithDraw = () => {
 
 			const tokenContract = getThirmTokenContract(library, account, tokensList[selectedToken].address);
 
-			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
+			const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
 
 			if (allowance >= ALLOWANCE_LIMIT) {
 				setCurrentWithdrawStep(2);
@@ -173,11 +173,11 @@ const WithDraw = () => {
 			}
 
 			const tknAmount = parseEther(ALLOWANCE_LIMIT + "");
-			await tokenContract.approve(config[chainId].CONTRACT_ADDRESS, tknAmount);
+			await tokenContract.approve(config.CONTRACT_ADDRESS, tknAmount);
 
 			setProcessingApproval(true);
 			const checkAllowance = setInterval(async () => {
-				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config[chainId].CONTRACT_ADDRESS)));
+				const allowance = parseInt(formatEther(await tokenContract.allowance(account, config.CONTRACT_ADDRESS)));
 
 				if (allowance >= ALLOWANCE_LIMIT) {
 					tokensList[selectedToken].approved = true;

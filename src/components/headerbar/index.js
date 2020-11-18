@@ -72,7 +72,7 @@ const HeaderBar = (props) => {
           <ThirmLogo>
             <Link to="/">
               <span className="logo-text">
-                THIRM DAPP {active && <Tag className="tag-text" color="volcano">{config[chainId].status}</Tag>}
+                THIRM DAPP {active && <Tag className="tag-text" color="volcano">{config.status}</Tag>}
               </span>
             </Link>
           </ThirmLogo>
@@ -82,7 +82,7 @@ const HeaderBar = (props) => {
       <Col xs={12}>
         <HeaderMeta>
           {
-            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config[chainId].network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
+            active ? <StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config.network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
               <div className="left-content">
                 {!collapsed && <Badge count={<div className="active-dot" />} offset={[-8, 40]}><ConnectedAvatar src={walletIcon} /></Badge>}
                 <div className="connection-info">
@@ -94,7 +94,7 @@ const HeaderBar = (props) => {
 
               <div className="right-content">
                 <Tag className="network-name" color="success">
-                  {config[chainId].network}
+                  {config.network}
                 </Tag>
                 {
                   popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />

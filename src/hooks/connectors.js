@@ -16,12 +16,12 @@ export const injected = new InjectedConnector({
 });
 
 export const walletlink = new WalletLinkConnector({
-	url: config["1"].RPC_URL,
+	url: config.RPC_URL,
 	appName: 'THIRM DAPP',
 });
 
 export const walletConnect = new WalletConnectConnector({
-	rpc: { 1: config["1"].RPC_URL },
+	rpc: { 3: config.RPC_URL },
 	bridge: 'https://bridge.walletconnect.org',
 	qrcode: true,
 	pollingInterval: 12000,

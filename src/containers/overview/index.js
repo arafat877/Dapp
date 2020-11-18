@@ -12,7 +12,7 @@ import { DiscordCard, LeftSideCard, OverviewCard, RightSideCard, StyledReactApex
 const config = require('../../utils/config');
 
 const OverView = () => {
-	const { library, account, chainId } = useWeb3React();
+	const { library, account } = useWeb3React();
 
 	const [ethBalance, setEthBalance] = useState(0.0);
 
@@ -36,7 +36,7 @@ const OverView = () => {
 		const getThirmValue = async () => {
 			const res = await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
 				method: 'POST',
-				body: JSON.stringify({ query: `query { token(id : "${config[chainId].THIRM_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
+				body: JSON.stringify({ query: `query { token(id : "${config.THIRM_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
 				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 
@@ -99,7 +99,7 @@ const OverView = () => {
 			try {
 				const res = await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
 					method: 'POST',
-					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${config[chainId].THIRM_ADDRESS}"}) { id priceUSD } }` }),
+					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${config.THIRM_ADDRESS}"}) { id priceUSD } }` }),
 					headers: { 'Content-Type': 'application/json' },
 				}).then((res) => res.json());
 
@@ -184,11 +184,11 @@ const OverView = () => {
 					</p>
 				</LeftSideCard>
 
-				<OverviewCard target="_blank" href={`https://app.uniswap.org/#/swap?outputCurrency=${config[chainId].THIRM_TOKEN_ADDRESS}`}>
+				<OverviewCard target="_blank" href={`https://app.uniswap.org/#/swap?outputCurrency=${config.THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">Uniswap</Button>
 				</OverviewCard>
 
-				<OverviewCard target="_blank" href={`https://etherscan.io/token/${config[chainId].THIRM_TOKEN_ADDRESS}`}>
+				<OverviewCard target="_blank" href={`https://etherscan.io/token/${config.THIRM_TOKEN_ADDRESS}`}>
 					<Button type="primary">EtherScan</Button>
 				</OverviewCard>
 			</Col>
