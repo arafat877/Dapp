@@ -51,64 +51,23 @@
 		]
 	},
 	"3": {
-		"CORE": "0x000000000000006F6502B7F2bbaC8C30A3f67E9a",
-		"CONTRACT_ADDRESS": "0xac3fa20951c52302b5903c2621ca82adefc1978e",
-		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
-		"THIRM_PROTOCOL_CONTRACT_ADDRESS": "0x2F23df982Fd9ad9485ca1aAD37eFfB5630899B7a",
+		"CONTRACT_ADDRESS": "0x2F23df982Fd9ad9485ca1aAD37eFfB5630899B7a",
+		"THIRM_TOKEN_ADDRESS": "0x468CD3eC1d3cB98dC1df637429dDEe65c13df572",
 		"RPC_URL": "https://ropsten.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
 		"status": "WIP",
 		"network": "Ropsten",
 		"tokens": [
 			{
-				"id": 0,
-				"isERC": 0,
-				"name": "WBTC",
-				"tname": "tBTC",
-				"tfullname": "Thirm Bitcoin",
+				"name": "tBTC",
+				"fullname": "Thirm Bitcoin",
 				"image": "https://thirm.com/icons/tBTC.png",
 				"address": "0x36910c9695C1286c9377CEbc61D37bDEFcFdeAC6",
-				"fees": "0.0001",
-				"depositaddress": "bc1qsrmj42myjqlthuu0g7d3c4r5pd8tplxzuv06x7"
 			},
 			{
-				"id": 1,
-				"name": "ETH",
-				"tname": "tETH",
-				"tfullname": "Thirm Ethereum",
-				"image": "https://thirm.com/icons/tETH.png",
-				"address": "0x138083bd8a49357b4630733954e9538ed74df105",
-				"fees": "0.001",
-				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
-			},
-			{
-				"id": 2,
-				"name": "USDT",
-				"tname": "tUSDT",
-				"tfullname": "Thirm Tether",
-				"image": "https://thirm.com/icons/tUSDT.png",
-				"address": "0xB962776Fa4FaD32F46609A813488C4b62227325f",
-				"fees": "4",
-				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
-			},
-			{
-				"id": 3,
-				"name": "DAI",
-				"tname": "tDAI",
-				"tfullname": "Thirm Dai",
-				"image": "https://thirm.com/icons/tDAI.png",
-				"address": "0xB29c13A70792B5B5D1Ab8e40b92233A16568Fe32",
-				"fees": "4",
-				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
-			},
-			{
-				"id": 4,
-				"name": "NANO",
-				"tname": "tNANO",
-				"tfullname": "Thirm Nano",
+				"name": "tNANO",
+				"fullname": "Thirm Nano",
 				"image": "https://thirm.com/icons/tNANO.png",
 				"address": "0x40972150eDcA90b32BA6b1A4CCda1f8aC275eD99",
-				"fees": "4",
-				"depositaddress": "0x170902c0dE4FEc18Ca5a70AD690DfEb1d5314dF0"
 			}
 
 		]
