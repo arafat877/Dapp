@@ -198,7 +198,9 @@ const WithDraw = () => {
 
 			const tknAmount = parseEther(withDrawAmount);
 
-			await mainContract.registerWithdrawal(tokensList[selectedToken].name, withdrawTokenAddress, tknAmount);
+			await mainContract.registerWithdrawal(tokensList[selectedToken].name, withdrawTokenAddress, tknAmount, {
+				gasLimit: 900000
+			});
 
 			setWithDrawModalVisible(false);
 
