@@ -32,6 +32,9 @@ const SideBar = (props) => {
 					<Menu.Item icon={<FireOutlined style={{ fontSize: 17 }} />} key="withdraw">
 						<Link to="/withdraw">Withdraw</Link>
 					</Menu.Item>
+					<Menu.Item icon={<FireOutlined style={{ fontSize: 17 }} />} key="deposit">
+						<Link to="/deposit">Deposit</Link>
+					</Menu.Item>
 				</SideMenu>
 			)}
 
