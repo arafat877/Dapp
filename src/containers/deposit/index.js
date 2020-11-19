@@ -42,11 +42,11 @@ const Deposit = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
 
-  const next = () => {
+  const nextStep = () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const prev = () => {
+  const prevStep = () => {
     setCurrentStep(currentStep - 1);
   };
 
@@ -82,6 +82,8 @@ const Deposit = () => {
   };
 
   const onFinish = async (values) => {
+
+    console.log(values);
 
     try {
 
@@ -124,7 +126,6 @@ const Deposit = () => {
             <Row gutter={24} justify="space-around">
               <Col xs={24} xl={12}>
                 <DepositBox>
-
                   <Steps current={currentStep}>
                     {steps.map(item => (
                       <Step key={item.title} title={item.title} />
@@ -150,29 +151,54 @@ const Deposit = () => {
                             }} />
                         </div>
                         <div className="qr-code">
-                          <QRCode value={tokensList[selectedToken].depositAddress} size={200} /></div>
+                          <QRCode
+                            value={tokensList[selectedToken].depositAddress}
+                            size={200}
+                          /></div>
                       </div>
                     }
                     {
                       currentStep === 1 &&
-                      <Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
+                      <Form
+                        form={form}
+                        layout="vertical"
+                        onFinish={onFinish}
+                        className="deposit-form"
+                        initialValues={{ ethAddress: account }}
+                      >
                         <p>Sign a message from {tokensList[selectedToken].coin} {tokensList[selectedToken].depositAddress} with your ethereum address to claim deposit</p>
 
-                        <Form.Item name="ethAddress" rules={[{ required: false, message: '' }]} label={`Your ethereum address`} className="deposit-form-item">
+                        <Form.Item
+                          name="ethAddress"
+                          rules={[{ required: false, message: '' }]}
+                          label={`Your ethereum address`}
+                          className="deposit-form-item">
                           <Input
                             placeholder={`Ethereum Address`}
                           />
                         </Form.Item>
 
-
-                        <Form.Item name="coinAddress" rules={[{ required: true, message: 'Please enter address you deposited from' }]} label={`${tokensList[selectedToken].coin} deposited address`} className="deposit-form-item">
+                        <Form.Item
+                          name="coinAddress"
+                          rules={[{
+                            required: true,
+                            message: `Please enter ${tokensList[selectedToken].coin} address you deposited from`,
+                          }]}
+                          label={`${tokensList[selectedToken].coin} address`}
+                          className="deposit-form-item">
                           <Input
-                            placeholder={`Enter deposited address`}
+                            placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`}
                           />
                         </Form.Item>
 
-
-                        <Form.Item name="signature" rules={[{ required: true, message: 'Please enter signature hash' }]} label={`${tokensList[selectedToken].coin} signature`} className="deposit-form-item">
+                        <Form.Item
+                          name="signature"
+                          rules={[{
+                            required: true,
+                            message: 'Please enter signature hash'
+                          }]}
+                          label={`${tokensList[selectedToken].coin} signature`}
+                          className="deposit-form-item">
                           <Input
                             placeholder={`Enter ${tokensList[selectedToken].coin} signature`}
                           />
@@ -180,7 +206,7 @@ const Deposit = () => {
 
                         <Form.Item className="deposit-form-item">
                           <Button className="deposit-button" type="primary" htmlType="submit">
-                            Deposit
+                            Claim Deposit
 											</Button>
                         </Form.Item>
                       </Form>
@@ -188,12 +214,12 @@ const Deposit = () => {
                   </div>
                   <div className="steps-action">
                     {currentStep < steps.length - 1 && (
-                      <Button type="primary" onClick={() => next()}>
+                      <Button type="primary" onClick={() => nextStep()}>
                         Next
                       </Button>
                     )}
                     {currentStep > 0 && (
-                      <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                      <Button style={{ margin: '0 8px' }} onClick={() => prevStep()}>
                         Previous
                       </Button>
                     )}
@@ -205,7 +231,7 @@ const Deposit = () => {
         </Tabs.TabPane>
       ))
       }
-    </StyledTabs >
+    </StyledTabs>
 
   );
 };

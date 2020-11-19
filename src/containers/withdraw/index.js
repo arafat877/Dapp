@@ -221,7 +221,7 @@ const WithDraw = () => {
 				<Tabs.TabPane
 					tab={
 						<TokenCard>
-							<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.name} />
+							<Meta avatar={<Avatar src={tkn.image} size="small" />} title={tkn.coin} />
 						</TokenCard>
 					}
 					key={tkn.id}
@@ -230,15 +230,34 @@ const WithDraw = () => {
 						<Row gutter={24} justify="space-around">
 							<Col xs={24} xl={12}>
 								<WithdrawBox>
-									<Form form={form} layout="vertical" onFinish={onFinish} className="withdraw-form">
+									<Form
+										form={form}
+										layout="vertical"
+										onFinish={onFinish}
+										className="withdraw-form"
+									>
 
-										<Form.Item name="tokenAddress" rules={[{ required: true, message: 'Please input token address' }]} label={`${tokensList[selectedToken].name} address`} className="withdraw-form-item">
+										<Form.Item
+											name="tokenAddress"
+											rules={[{
+												required: true,
+												message: 'Please input token address'
+											}]}
+											label={`${tokensList[selectedToken].coin} address`}
+											className="withdraw-form-item">
 											<Input
-												placeholder={`Enter ${tokensList[selectedToken].name} address`}
+												placeholder={`Enter ${tokensList[selectedToken].coin} address`}
 											/>
 										</Form.Item>
 
-										<Form.Item name="amount" rules={[{ required: true, message: 'Please input token Amount' }]} label="Number of tokens to withdraw" className="withdraw-form-item">
+										<Form.Item
+											name="amount"
+											rules={[{
+												required: true,
+												message: 'Please input token Amount'
+											}]}
+											label="Number of tokens to withdraw"
+											className="withdraw-form-item">
 											<Input
 												placeholder="Enter Number of tokens to withdraw"
 												suffix={

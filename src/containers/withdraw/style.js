@@ -11,8 +11,8 @@ export const TokenCard = styled(StyledCard)`
 `;
 
 export const WithdrawBox = styled.div`
-	min-height: 510px;
-	padding: 0 24px;
+	min-height: 550px;
+	padding: 24px;
 	margin: 0 auto;
 	.withdraw-form-item {
 		input {
@@ -30,9 +30,9 @@ export const WithdrawBox = styled.div`
 
 
 export const WithdrawWrapper = styled(StyledCard)`
-	padding: 80px 24px;
+	padding: 24px;
 	@media only screen and (max-width: 992px) {
-    padding: 36px 4px;
+    padding: 24px 4px;
   }
 	.ant-card-body {
     padding: 0;
