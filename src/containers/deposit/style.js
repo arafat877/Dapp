@@ -13,7 +13,7 @@ padding: 24px;
 `;
 
 export const DepositBox = styled.div`
-	min-height: 550px;
+	min-height: 600px;
 	padding: 24px;
 	margin: 0 auto;
 	.deposit-form-item {
