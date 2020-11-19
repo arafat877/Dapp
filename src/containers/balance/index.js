@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ExportOutlined, ImportOutlined } from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
 import { Avatar, Button, Card, Col, List, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ReactComponent as depositSvg } from "../../assets/icons/deposit.svg";
+import { ReactComponent as withdrawSvg } from "../../assets/icons/withdraw.svg";
 import config from '../../utils/config';
 import { getThirmTokenContract } from "../../utils/helpers";
 import { StyledCard } from '../globalStyle';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { BalanceWrapper } from './style';
+
 
 const { Meta } = Card;
 
@@ -82,13 +85,13 @@ const Balance = () => {
                   width={300}
                   actions={[
                     <Link to={{ pathname: '/deposit', state: { token: item.id } }}>
-                      <Button type="link" block icon={<ImportOutlined />}>
+                      <Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />}>
                         Deposit
                   </Button>
                     </Link>
                     ,
                     <Link to={{ pathname: '/withdraw', state: { token: item.id } }}>
-                      <Button type="link" block icon={<ExportOutlined />}>
+                      <Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />}>
                         Withdraw
                   </Button>
                     </Link>,
