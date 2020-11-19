@@ -26,15 +26,6 @@ export const WithdrawBox = styled.div`
     	width: 100%;
     	padding: 16px;
   	}
-		.ant-tag {
-			padding: 4px 18px;
-		}
-		.fee-info {
-			padding: 4px 0;
-		}
-		.address-info {
-			margin: 24px 0;
-		}
 `;
 
 

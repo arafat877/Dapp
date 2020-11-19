@@ -1,4 +1,4 @@
-import { EyeOutlined, FireOutlined } from '@ant-design/icons';
+import { EyeOutlined, FireOutlined, LoginOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -32,7 +32,7 @@ const SideBar = (props) => {
 					<Menu.Item icon={<FireOutlined style={{ fontSize: 17 }} />} key="withdraw">
 						<Link to="/withdraw">Withdraw</Link>
 					</Menu.Item>
-					<Menu.Item icon={<FireOutlined style={{ fontSize: 17 }} />} key="deposit">
+					<Menu.Item icon={<LoginOutlined style={{ fontSize: 17 }} />} key="deposit">
 						<Link to="/deposit">Deposit</Link>
 					</Menu.Item>
 				</SideMenu>
