@@ -6,6 +6,7 @@ import HeaderBar from '../components/headerbar';
 import SideBar from '../components/sidebar';
 import Web3Wrapper from './../components/web3Wrapper/index';
 import { collapsedState } from './../utils/recoilStates';
+import Balance from './balance/index';
 import Deposit from './deposit/index';
 import { StyledContent, StyledDrawer, StyledHeader, StyledSider } from './globalStyle';
 import OverView from './overview/index';
@@ -49,6 +50,7 @@ function MainContent() {
 								<Route exact path="/" component={() => <OverView />} />
 								<Route exact path="/withdraw" component={() => <WithDraw />} />
 								<Route exact path="/deposit" component={() => <Deposit />} />
+								<Route exact path="/balance" component={() => <Balance />} />
 							</Switch>
 						</Web3Wrapper>
 					</StyledContent>
