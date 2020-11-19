@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Icon from '@ant-design/icons';
 import { formatEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
@@ -35,13 +34,11 @@ const Balance = () => {
             token.balance = (0).toFixed(8);
             try {
               const tokenContract = getThirmTokenContract(library, account, token.address);
-
-              const balance = formatEther(await tokenContract.balanceOf(account)).toFixed(8);
-              token.balance = balance;
+              const balance = await tokenContract.balanceOf(account);
+              token.balance = parseFloat(formatEther(balance)).toFixed(8);
             } catch (e) {
               console.log(e);
             }
-
             return token;
           })
         );
@@ -60,7 +57,7 @@ const Balance = () => {
     return () => {
       stale = true;
     };
-  }, [account, chainId]);
+  }, [account, chainId, library]);
 
 
   if (tokensList.length === 0) return <LoadingIndicator />;

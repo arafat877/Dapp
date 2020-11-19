@@ -14,23 +14,23 @@ const TwitterIcon = require('../../assets/images/twitter.png');
 const DiscordIcon = require('../../assets/images/discord.png');
 const GithubIcon = require('../../assets/images/github.png');
 
-const SideBar = (props) => {
+const SideBar = () => {
 	const { active } = useWeb3React();
 
-	const [addr, setAddr] = useState();
+	const [activePath, setActivePath] = useState("");
 
 	const history = useHistory();
 
 	useEffect(() => {
-		let addrTemp = history.location.pathname.split('/')[1];
-		if (!addrTemp) addrTemp = 'overview';
-		setAddr(addrTemp);
-	}, [history, props]);
+		let activePathTemp = history.location.pathname.split('/')[1];
+		if (!activePathTemp) activePathTemp = 'overview';
+		setActivePath(activePathTemp);
+	}, [history]);
 
 	return (
 		<SideWrapper>
 			{active && (
-				<SideMenu mode="inline" defaultSelectedKeys={[addr]} defaultOpenKeys={['tokenz']} forceSubMenuRender={true}>
+				<SideMenu mode="inline" defaultSelectedKeys={[activePath]}>
 					<Menu.Item icon={<Icon component={dashboardSvg} style={{ fontSize: 18 }} />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
