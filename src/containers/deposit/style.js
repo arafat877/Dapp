@@ -13,7 +13,7 @@ padding: 80px 24px;
 `;
 
 export const DepositBox = styled.div`
-	max-width: 450px;
+	min-height: 510px;
 	padding: 0 24px;
 	margin: 0 auto;
 	.deposit-form-item {
@@ -27,5 +27,33 @@ export const DepositBox = styled.div`
     	width: 100%;
     	padding: 16px;
   	}
+
+	.qr-code {
+		text-align: center;
+		padding: 24px;
+	}
+
+	.steps-content {
+		padding: 20px 0 0 0;
+	}
+
+	.deposit-info {
+		text-align: center;
+	}
+
+	.deposit-address {
+		display: flex;
+		font-size: 18px;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		.ant-tag {
+			padding: 4px 8px;
+    	font-size: 13px;
+		}
+		.anticon {
+			cursor: pointer;
+		}
+	}
 
 `;

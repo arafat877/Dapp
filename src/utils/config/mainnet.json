@@ -13,7 +13,8 @@
 				"name": "tBTC",
 				"fullname": "Thirm Bitcoin",
 				"image": "https://thirm.com/icons/tBTC.png",
-				"address": "0x36910c9695C1286c9377CEbc61D37bDEFcFdeAC6"
+				"address": "0x36910c9695C1286c9377CEbc61D37bDEFcFdeAC6",
+				"depositAddress": "bc1q7dqz2g6zqm42czwnu488dzp9qgfnvmy0ygjc5p"
 			},
 			{
 				"id": 1,
@@ -21,7 +22,8 @@
 				"name": "tNANO",
 				"fullname": "Thirm Nano",
 				"image": "https://thirm.com/icons/tNANO.png",
-				"address": "0x9DB44C215F14a874C0Ca45895f3A97f0839c29d9"
+				"address": "0x9DB44C215F14a874C0Ca45895f3A97f0839c29d9",
+				"depositAddress": "nano_1xcreozwzw6qpmwqcnooornssenu4x1ryf77pur9qmcubynmthun155k1bkc"
 			}
 		]
 	}
