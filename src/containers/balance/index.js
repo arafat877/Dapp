@@ -8,10 +8,9 @@ import { ReactComponent as depositSvg } from '../../assets/icons/deposit.svg';
 import { ReactComponent as withdrawSvg } from '../../assets/icons/withdraw.svg';
 import config from '../../utils/config';
 import { getThirmTokenContract } from '../../utils/helpers';
-import { StyledCard } from '../globalStyle';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { formatFrontBackBalance } from './../../utils/helpers';
-import { BalanceWrapper, StyledTTokenReactApexChart, TTokenTitle } from './style';
+import { BalanceWrapper, StyledTTokenReactApexChart, TTokenCard, TTokenTitle } from './style';
 import { tTokenChartOptions } from './tTokenChartOptions';
 
 const { Meta } = Card;
@@ -98,7 +97,7 @@ const Balance = () => {
 				<Col xs={24}>
 					<List
 						grid={{
-							gutter: 24,
+							gutter: 36,
 							xs: 1,
 							sm: 2,
 							md: 2,
@@ -111,7 +110,7 @@ const Balance = () => {
 							const [ethBalanceFront, ethBalanceEnd] = formatFrontBackBalance(item.balance);
 							return (
 								<List.Item>
-									<StyledCard
+									<TTokenCard
 										width={300}
 										title={
 											<TTokenTitle>
@@ -131,12 +130,12 @@ const Balance = () => {
 										}
 										actions={[
 											<Link to={{ pathname: '/deposit', state: { token: item.id } }}>
-												<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />}>
+												<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 20 }} />}>
 													Deposit
 											</Button>
 											</Link>,
 											<Link to={{ pathname: '/withdraw', state: { token: item.id } }}>
-												<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />}>
+												<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 20 }} />}>
 													Withdraw
 											</Button>
 											</Link>,
@@ -152,9 +151,9 @@ const Balance = () => {
 															{item.name}
 														</span>
 													</p>
-													<p className="coin-balance">
-														<span className="balance-end">{item.totalSupply}</span>
-														<span className="balance-unit">
+													<p className="coin-meta">
+														<span className="balance-prefix">{item.totalSupply}</span>
+														<span className="balance-suffix">
 															TOTAL SUPPLY
 													</span>
 													</p>
@@ -163,7 +162,7 @@ const Balance = () => {
 										/>
 										{
 											item.chartData.length > 0 && <Meta
-												description={
+												title={
 													<StyledTTokenReactApexChart
 														options={{
 															...tTokenChartOptions,
@@ -180,7 +179,7 @@ const Balance = () => {
 												}
 											/>
 										}
-									</StyledCard>
+									</TTokenCard>
 								</List.Item>
 							)
 						}}

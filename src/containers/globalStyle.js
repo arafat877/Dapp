@@ -9,6 +9,7 @@ export const ThirmTheme = {
 	textColorBlack: "#191919",
 	textColorDark: "#858585",
 	textColorGrey: "#bdbdbd",
+	darkBlue: '#192a56'
 };
 
 export const StyledContent = styled(Layout.Content)`
