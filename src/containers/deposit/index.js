@@ -176,6 +176,7 @@ const Deposit = () => {
 												}
 											}>
 												<Image
+													alt=""
 													preview={false}
 													width={120}
 													src={require("../../assets/images/noob.png")}
@@ -191,6 +192,7 @@ const Deposit = () => {
 												}
 											}>
 												<Image
+													alt=""
 													preview={false}
 													width={120}
 													src={require("../../assets/images/expert.png")}
@@ -314,8 +316,8 @@ const Deposit = () => {
 									expertiseLevel && expertiseLevel === 'noob' && <DepositBox>
 										<NoobInfo>
 											<Image
+												alt=""
 												preview={false}
-
 												src={require("../../assets/images/support.jpg")}
 											/>
 
