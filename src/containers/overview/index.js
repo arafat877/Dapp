@@ -10,7 +10,6 @@ import { formatFrontBackBalance } from './../../utils/helpers';
 import { ethereumChartInitialOptions } from './chartOptions';
 import { DiscordCard, LeftSideCard, OverviewCard, RightSideCard, StyledReactApexChart } from './style';
 
-
 const OverView = () => {
 	const { library, account } = useWeb3React();
 
@@ -36,7 +35,7 @@ const OverView = () => {
 		const getThirmValue = async () => {
 			const res = await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
 				method: 'POST',
-				body: JSON.stringify({ query: `query { token(id : "${config.THIRM_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
+				body: JSON.stringify({ query: `query { token(id : "${config.THIRM_TOKEN_ADDRESS}"){ id derivedETH tradeVolume txCount totalLiquidity untrackedVolumeUSD} }` }),
 				headers: { 'Content-Type': 'application/json' },
 			}).then((res) => res.json());
 
@@ -53,7 +52,6 @@ const OverView = () => {
 		let stale = false;
 
 		const getTokenBalances = async () => {
-
 			try {
 				const balance = formatEther(await library.getBalance(account));
 
@@ -99,7 +97,7 @@ const OverView = () => {
 			try {
 				const res = await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
 					method: 'POST',
-					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${config.THIRM_ADDRESS}"}) { id priceUSD } }` }),
+					body: JSON.stringify({ query: `{ tokenDayDatas( last: ${limit} where: { token: "${config.THIRM_TOKEN_ADDRESS}"}) { id priceUSD } }` }),
 					headers: { 'Content-Type': 'application/json' },
 				}).then((res) => res.json());
 
@@ -211,10 +209,10 @@ const OverView = () => {
 							height={305}
 						/>
 					) : (
-							<div className="loading-chart">
-								<Spin size="large" />
-							</div>
-						)}
+						<div className="loading-chart">
+							<Spin size="large" />
+						</div>
+					)}
 				</RightSideCard>
 
 				<DiscordCard title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></DiscordCard>

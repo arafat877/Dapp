@@ -1,9 +1,7 @@
 {
 		"CONTRACT_ADDRESS": "0x1688CEC6fC27aD4B4BA9F8B30887c320e2FF3b92",
-		"THIRM_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
 		"THIRM_TOKEN_ADDRESS": "0xb526fd41360c98929006f3bdcbd16d55de4b0069",
 		"RPC_URL": "https://mainnet.infura.io/v3/370da5783b9b4bc086067dcfb45ba7a3",
-		"status": "WIP",
 		"network": "MainNet",
 		"chainID": 1,
 		"tokens": [
