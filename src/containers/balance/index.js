@@ -10,7 +10,8 @@ import config from '../../utils/config';
 import { getThirmTokenContract } from '../../utils/helpers';
 import { StyledCard } from '../globalStyle';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { BalanceWrapper, StyledTTokenReactApexChart } from './style';
+import { formatFrontBackBalance } from './../../utils/helpers';
+import { BalanceWrapper, StyledTTokenReactApexChart, TTokenTitle } from './style';
 import { tTokenChartOptions } from './tTokenChartOptions';
 
 const { Meta } = Card;
@@ -106,63 +107,83 @@ const Balance = () => {
 							xxl: 4,
 						}}
 						dataSource={tokensList}
-						renderItem={(item) => (
-							<List.Item>
-								<StyledCard
-									width={300}
-									actions={[
-										<Link to={{ pathname: '/deposit', state: { token: item.id } }}>
-											<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />}>
-												Deposit
-											</Button>
-										</Link>,
-										<Link to={{ pathname: '/withdraw', state: { token: item.id } }}>
-											<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />}>
-												Withdraw
-											</Button>
-										</Link>,
-									]}
-								>
-									<Meta
-										avatar={<Avatar src={item.image} />}
-										title={item.name}
-										description={
-											<div className="coin-description">
-												<p className="coin-balance">{item.balance}</p>
-												<p>Total Supply: {item.totalSupply}</p>
-												<ul className="external-links">
-													<li>
-														<a href={`https://etherscan.io/token/${item.address}`}>Etherscan</a>
-													</li>
-													<li>
-														<a href={`https://uniswap.info/token/${item.address}`}>Uniswap</a>
-													</li>
-												</ul>
-											</div>
+						renderItem={(item) => {
+							const [ethBalanceFront, ethBalanceEnd] = formatFrontBackBalance(item.balance);
+							return (
+								<List.Item>
+									<StyledCard
+										width={300}
+										title={
+											<TTokenTitle>
+												<Avatar src={item.image} />
+												<h3>{item.name}</h3>
+											</TTokenTitle>
 										}
-									/>
-									{
-										item.chartData.length > 0 && <Meta
+										extra={
+											<ul className="external-links">
+												<li>
+													<a href={`https://etherscan.io/token/${item.address}`}>Etherscan</a>
+												</li>
+												<li>
+													<a href={`https://uniswap.info/token/${item.address}`}>Uniswap</a>
+												</li>
+											</ul>
+										}
+										actions={[
+											<Link to={{ pathname: '/deposit', state: { token: item.id } }}>
+												<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />}>
+													Deposit
+											</Button>
+											</Link>,
+											<Link to={{ pathname: '/withdraw', state: { token: item.id } }}>
+												<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />}>
+													Withdraw
+											</Button>
+											</Link>,
+										]}
+									>
+										<Meta
 											description={
-												<StyledTTokenReactApexChart
-													options={{
-														...tTokenChartOptions,
-													}}
-													series={[
-														{
-															name: item.name,
-															data: item.chartData,
-														},
-													]}
-													type="line"
-													height={150}
-												/>
+												<div className="coin-description">
+													<p className="coin-balance">
+														<span className="balance-front">{ethBalanceFront}</span>
+														<span className="balance-end">{`.${ethBalanceEnd}`}</span>
+														<span className="balance-unit">
+															{item.name}
+														</span>
+													</p>
+													<p className="coin-balance">
+														<span className="balance-end">{item.totalSupply}</span>
+														<span className="balance-unit">
+															TOTAL SUPPLY
+													</span>
+													</p>
+												</div>
 											}
 										/>
-									}
-								</StyledCard>
-							</List.Item>
-						)}
+										{
+											item.chartData.length > 0 && <Meta
+												description={
+													<StyledTTokenReactApexChart
+														options={{
+															...tTokenChartOptions,
+														}}
+														series={[
+															{
+																name: item.name,
+																data: item.chartData,
+															},
+														]}
+														type="line"
+														height={150}
+													/>
+												}
+											/>
+										}
+									</StyledCard>
+								</List.Item>
+							)
+						}}
 					/>
 				</Col>
 			</Row>

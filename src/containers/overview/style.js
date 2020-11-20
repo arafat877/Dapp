@@ -8,7 +8,7 @@ export const LeftSideCard = styled(StyledCard)`
 	display: inline-flex;
 	.card-text {
 		font-size: 16px;
-		color: ${ThirmTheme.primaryColor};
+		color: ${ThirmTheme.secondaryColor};
 		margin-bottom: -4px;
 		margin-top: -4px;
 		font-weight: 700;
@@ -20,7 +20,7 @@ export const LeftSideCard = styled(StyledCard)`
 
 	.balance-unit {
 		letter-spacing: 0.1rem;
-		color: ${ThirmTheme.primaryColor};
+		color: ${ThirmTheme.secondaryColor};
 	}
 	.balance-front {
 		color: ${ThirmTheme.textColorBlack};
@@ -45,7 +45,7 @@ export const RightSideCard = styled(StyledCard)`
 	padding: 0;
 	.card-text {
 		font-size: 16px;
-	color: ${ThirmTheme.primaryColor};
+	color: ${ThirmTheme.secondaryColor};
 		margin-bottom: -4px;
 		margin-top: -4px;
 		font-weight: 700;

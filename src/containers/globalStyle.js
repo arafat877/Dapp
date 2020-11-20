@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const ThirmTheme = {
 	primaryColor: "#2962ef",
+	secondaryColor: "#ee5253",
 	primaryDarkColor: "#001f6b",
 	primaryLightColor: "#a7bbef",
 	textColorBlack: "#191919",
