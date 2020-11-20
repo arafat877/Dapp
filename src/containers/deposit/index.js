@@ -295,7 +295,7 @@ const Deposit = () => {
 
 												src={require("../../assets/images/support.jpg")}
 											/>
-											<p className="noob-message">Email us at developers@thirm.com</p>
+											<p className="noob-message">Email us at <a href="mailto:developers@thirm.com">developers@thirm.com</a></p>
 											<p className="noob-message">We will assist you with the deposit process.</p>
 										</NoobInfo>
 									</DepositBox>
