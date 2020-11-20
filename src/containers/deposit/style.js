@@ -13,7 +13,7 @@ padding: 24px;
 `;
 
 export const DepositBox = styled.div`
-	min-height: 600px;
+	height: 600px;
 	padding: 24px;
 	margin: 0 auto;
 	.deposit-form-item {
@@ -55,5 +55,33 @@ export const DepositBox = styled.div`
 			cursor: pointer;
 		}
 	}
+	.expertise-title {
+		text-align: center;
+	}
 
 `;
+
+export const ExpertiseButtons = styled.div`
+	display: flex;
+	justify-content: center;
+	padding: 60px 0;
+	.expertise-item {
+		box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+		height: 210px;
+		margin: 24px;
+		padding: 24px 36px;
+		&:hover {
+			background-color: #e9e9e9;
+		}
+		.expertise-label {
+			margin-top: 24px;
+			}
+	}
+`;
+
+export const NoobInfo = styled.div`
+	.noob-message {
+		text-align: center;
+	}
+`;
+

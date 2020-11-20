@@ -11,7 +11,7 @@ export const TokenCard = styled(StyledCard)`
 `;
 
 export const WithdrawBox = styled.div`
-	min-height: 600px;
+	height: 600px;
 	padding: 24px;
 	margin: 0 auto;
 	.withdraw-form-item {
