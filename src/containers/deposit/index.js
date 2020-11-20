@@ -104,6 +104,18 @@ const Deposit = () => {
 		setTermAgreed(e.target.checked);
 	}
 
+	const checkCoinAddressMap = async (value) => {
+		try {
+			const mappedAddress = await mainContract.getAddressMap(value);
+			if (mappedAddress === '0x0000000000000000000000000000000000000000') return null;
+			return mappedAddress;
+		} catch (e) {
+			console.log(e);
+			return null;
+		}
+
+	}
+
 	const onFinish = async (values) => {
 
 		if (!termAgreed) return;
@@ -237,7 +249,18 @@ const Deposit = () => {
 																required: true,
 																message: `Please enter ${tokensList[selectedToken].coin} address you deposited from`,
 															},
+															() => ({
+																async validator(rule, value) {
+																	const mappedAddress = await checkCoinAddressMap(value);
+
+																	if (mappedAddress == null) {
+																		return Promise.resolve();
+																	}
+																	return Promise.reject(`Address mapped to ${mappedAddress} already`);
+																},
+															}),
 														]}
+
 														label={`${tokensList[selectedToken].coin} address`}
 														className="deposit-form-item"
 													>
@@ -301,7 +324,6 @@ const Deposit = () => {
 										</NoobInfo>
 									</DepositBox>
 								}
-
 
 							</Col>
 						</Row>
