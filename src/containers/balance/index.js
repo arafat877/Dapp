@@ -10,7 +10,8 @@ import config from '../../utils/config';
 import { getThirmTokenContract } from '../../utils/helpers';
 import { StyledCard } from '../globalStyle';
 import LoadingIndicator from './../../components/loadingIndicator/index';
-import { BalanceWrapper } from './style';
+import { BalanceWrapper, StyledTTokenReactApexChart } from './style';
+import { tTokenChartOptions } from './tTokenChartOptions';
 
 const { Meta } = Card;
 
@@ -28,14 +29,19 @@ const Balance = () => {
 			try {
 				tokensListTemp = await Promise.all(
 					tokensListTemp.map(async (token) => {
+
 						token.balance = (0).toFixed(8);
-						try {
-							const tokenContract = getThirmTokenContract(library, account, token.address);
-							const balance = await tokenContract.balanceOf(account);
-							token.balance = parseFloat(formatEther(balance)).toFixed(8);
-						} catch (e) {
-							console.log(e);
-						}
+						token.totalSupply = 0;
+						token.chartData = [];
+
+						const tokenContract = getThirmTokenContract(library, account, token.address);
+						const balance = await tokenContract.balanceOf(account);
+						token.balance = parseFloat(formatEther(balance)).toFixed(8);
+
+						const totalSupply = await tokenContract.totalSupply();
+
+						token.totalSupply = parseInt(formatEther(totalSupply));
+
 						return token;
 					})
 				);
@@ -46,6 +52,34 @@ const Balance = () => {
 			if (!stale) {
 				setTokensList(tokensListTemp);
 			}
+			try {
+				tokensListTemp = await Promise.all(
+					tokensListTemp.map(async token => {
+						const chartRes = await fetch('https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2', {
+							method: 'POST',
+							body: JSON.stringify({ query: `{ tokenDayDatas( last: 30 where: { token: "${token.address}"}) { id priceUSD } }` }),
+							headers: { 'Content-Type': 'application/json' },
+						}).then((res) => res.json());
+
+						const tTokenChartData = chartRes.data.tokenDayDatas;
+						const ethereumChartSeriesDataTemp = [];
+						tTokenChartData.map((usd) => {
+							ethereumChartSeriesDataTemp.push(usd.priceUSD);
+							return usd;
+						});
+
+						token.chartData = ethereumChartSeriesDataTemp;
+						return token;
+					}));
+
+			} catch (e) {
+				console.log(e);
+			}
+
+			if (!stale) {
+				setTokensList(tokensListTemp);
+			}
+
 		};
 
 		getTokensList();
@@ -91,10 +125,11 @@ const Balance = () => {
 								>
 									<Meta
 										avatar={<Avatar src={item.image} />}
-										title={item.coin}
+										title={item.name}
 										description={
 											<div className="coin-description">
 												<p className="coin-balance">{item.balance}</p>
+												<p>Total Supply: {item.totalSupply}</p>
 												<ul className="external-links">
 													<li>
 														<a href={`https://etherscan.io/token/${item.address}`}>Etherscan</a>
@@ -106,6 +141,25 @@ const Balance = () => {
 											</div>
 										}
 									/>
+									{
+										item.chartData.length > 0 && <Meta
+											description={
+												<StyledTTokenReactApexChart
+													options={{
+														...tTokenChartOptions,
+													}}
+													series={[
+														{
+															name: item.name,
+															data: item.chartData,
+														},
+													]}
+													type="line"
+													height={150}
+												/>
+											}
+										/>
+									}
 								</StyledCard>
 							</List.Item>
 						)}
