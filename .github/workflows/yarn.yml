@@ -14,6 +14,7 @@ jobs:
       sudo apt-get update -y 
       sudo apt install git -y
       sudo npm install -g yarn
+      yarn
       yarn build
 
    - name: Deploy 🚀
