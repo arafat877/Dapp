@@ -2,12 +2,11 @@
 import { useWeb3React } from '@web3-react/core';
 import { Col, Row } from 'antd';
 import React from 'react';
+import MetaMaskIcon from '../../assets/images/metamask.png';
+import WalletLinkIcon from '../../assets/images/qr-code.png';
+import WalletConnectIcon from '../../assets/images/wallet-connect.png';
 import { getErrorMessage } from './../../hooks/index';
 import { AvatarIcon, ConnectorButton, ErrorAlert, LoginInfo } from './style';
-
-const MetaMaskIcon = require('../../assets/images/metamask.png');
-const WalletLinkIcon = require('../../assets/images/qr-code.png');
-const WalletConnectIcon = require('../../assets/images/wallet-connect.png');
 
 const ConnectWallet = (props) => {
 	const { error } = useWeb3React();

@@ -7,12 +7,16 @@ import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import expertImage from '../../assets/images/expert.png';
+import noobImage from '../../assets/images/noob.png';
+import supportImage from "../../assets/images/support.jpg";
 import { useMainContract } from '../../hooks';
 import config from '../../utils/config';
 import { StyledTabs, TokenCard } from '../withdraw/style';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
 import { DepositBox, DepositWrapper, ExpertiseButtons, NoobInfo } from './style';
+
 
 const { Step } = Steps;
 
@@ -179,7 +183,7 @@ const Deposit = () => {
 													alt=""
 													preview={false}
 													width={120}
-													src={require("../../assets/images/noob.png")}
+													src={noobImage}
 												/>
 												<p className="expertise-label">
 													I'm a noob
@@ -195,7 +199,7 @@ const Deposit = () => {
 													alt=""
 													preview={false}
 													width={120}
-													src={require("../../assets/images/expert.png")}
+													src={expertImage}
 												/>
 												<p className="expertise-label">
 													I'm an expert
@@ -318,7 +322,7 @@ const Deposit = () => {
 											<Image
 												alt=""
 												preview={false}
-												src={require("../../assets/images/support.jpg")}
+												src={supportImage}
 											/>
 
 											<p className="noob-message">Email us at <a href="mailto:developers@thirm.com">developers@thirm.com</a></p>
