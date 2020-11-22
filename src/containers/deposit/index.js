@@ -325,7 +325,7 @@ const Deposit = () => {
 												src={supportImage}
 											/>
 
-											<p className="noob-message">Email us at <a href="mailto:developers@thirm.com">developers@thirm.com</a></p>
+											<p className="noob-message">Email us at <a href="mailto:developers@thirm.com">developer@thirm.com</a></p>
 											<p className="noob-message">We will map your address for you, its a one time process after that all your deposit will be processed automatically.</p>
 										</NoobInfo>
 									</DepositBox>
