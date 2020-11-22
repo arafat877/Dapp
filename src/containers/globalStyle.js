@@ -2,14 +2,14 @@ import { Card, Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const ThirmTheme = {
-	primaryColor: "#2962ef",
-	secondaryColor: "#ee5253",
+	primaryColor: "#3c40c6",
+	secondaryColor: "#3c6382",
 	primaryDarkColor: "#001f6b",
 	primaryLightColor: "#a7bbef",
 	textColorBlack: "#191919",
 	textColorDark: "#858585",
 	textColorGrey: "#bdbdbd",
-	darkBlue: '#192a56'
+	darkBlue: '#0c2461'
 };
 
 export const StyledContent = styled(Layout.Content)`
