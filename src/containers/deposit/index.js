@@ -101,6 +101,7 @@ const Deposit = () => {
 
 	const onCoinAddressChanged = ({ target: { value } }) => {
 		setCoinAddress(value);
+		setCoinAddressMapped(false);
 	}
 
 	const checkCoinAddressMap = async () => {
