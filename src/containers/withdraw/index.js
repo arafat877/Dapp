@@ -303,23 +303,27 @@ const WithDraw = () => {
 										<Steps direction="vertical" current={currentWithdrawStep}>
 
 											<Step title="Approve THIRM" description={
-												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
-													Approve
-											</Button>
+												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 0 && <CheckOutlined />} onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
+													{
+														currentWithdrawStep > 0 ? "Approved" : "Approve"
+													}
+												</Button>
 											}
 												icon={currentWithdrawStep === 0 && processingApproval && <LoadingOutlined />}
 											/>
 
 											<Step title={`Approve ${tokensList[selectedToken].coin}`} description={
-												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
-													Approve
-											</Button>
+												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 1 && <CheckOutlined />} onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
+													{
+														currentWithdrawStep > 1 ? "Approved" : "Approve"
+													}
+												</Button>
 											}
 												icon={currentWithdrawStep === 1 && processingApproval && <LoadingOutlined />}
 											/>
 
 											<Step title="Withdraw" description={
-												<Button className="withdraw-button" type="primary" icon={<CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
+												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 2 && <CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
 													WithDraw
 											</Button>
 											}

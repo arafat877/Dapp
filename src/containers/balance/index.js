@@ -130,12 +130,12 @@ const Balance = () => {
 										}
 										actions={[
 											<Link to={{ pathname: '/deposit', state: { token: item.id } }}>
-												<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 20 }} />}>
+												<Button type="link" block icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />}>
 													Deposit
 											</Button>
 											</Link>,
 											<Link to={{ pathname: '/withdraw', state: { token: item.id } }}>
-												<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 20 }} />}>
+												<Button type="link" block icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />}>
 													Withdraw
 											</Button>
 											</Link>,

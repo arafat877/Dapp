@@ -1,10 +1,25 @@
 import { Avatar, Menu } from 'antd';
 import styled from 'styled-components';
+import { ThirmTheme } from './../../containers/globalStyle';
 
 export const SideMenu = styled(Menu)`
 	background-color: #fff;
 	border: 0;
 	margin-top: 36px;
+	.ant-menu-item {
+		height: 50px;
+		padding: 6px 0;
+		.anticon {
+			color: #555;
+		}
+	}
+	.ant-menu-item-selected {
+		font-weight: 700;
+		color: ${ThirmTheme.primaryColor};
+		.anticon {
+			color: ${ThirmTheme.primaryColor};
+		}
+	}
 	@media only screen and (max-width: 992px) {
 		margin-top: 4px;
 	}
