@@ -7,7 +7,7 @@ import { ReactComponent as bitcoinSvg } from "../../assets/icons/bitcoin.svg";
 import { ReactComponent as dashboardSvg } from "../../assets/icons/dashboard.svg";
 import { ReactComponent as depositSvg } from "../../assets/icons/deposit.svg";
 import { ReactComponent as withdrawSvg } from "../../assets/icons/withdraw.svg";
-import { SideMenu, SideSocial, SideWrapper, SocialAvatar } from './style';
+import { SideMenu, SideSocial, SideWrapper, SocialAvatar, ThirmSideLogo } from './style';
 
 
 const TwitterIcon = require('../../assets/images/twitter.png');
@@ -29,8 +29,13 @@ const SideBar = () => {
 
 	return (
 		<SideWrapper>
+			<ThirmSideLogo>
+				<Link to="/">
+					<span className="logo-text">THIRM DAPP</span>
+				</Link>
+			</ThirmSideLogo>
 			{active && (
-				<SideMenu mode="inline" defaultSelectedKeys={[activePath]}>
+				<SideMenu mode="inline" defaultSelectedKeys={[activePath]} theme="dark">
 					<Menu.Item icon={<Icon component={dashboardSvg} style={{ fontSize: 18 }} />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>

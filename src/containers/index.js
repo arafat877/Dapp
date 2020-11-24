@@ -46,7 +46,7 @@ function MainContent() {
 			</StyledHeader>
 
 			<Layout>
-				<StyledSider width={250} breakpoint="lg" onCollapse={onCollapse} collapsed={collapsed} trigger={null} collapsedWidth={0} >
+				<StyledSider width={250} breakpoint="lg" onCollapse={onCollapse} collapsed={collapsed} trigger={null} collapsedWidth={0} theme="dark">
 					{!collapsed && <SideBar />}
 				</StyledSider>
 				<StyledContent>

@@ -6,6 +6,7 @@ export const LeftSideCard = styled(StyledCard)`
 	margin: 8px 0;
 	width: 100%;
 	display: inline-flex;
+	
 	.card-text {
 		font-size: 16px;
 		color: ${ThirmTheme.secondaryColor};

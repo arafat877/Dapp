@@ -13,9 +13,6 @@ export const ThirmLogo = styled.div`
     line-height: 24px;
 		font-weight: 700;
 	}
-  .tag-text {
-    margin: 0 8px;
-  }
 `;
 
 export const ConnectorButton = styled(Button)`
