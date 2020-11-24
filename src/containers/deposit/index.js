@@ -239,7 +239,7 @@ const Deposit = () => {
 														<QRCode value={tokensList[selectedToken].depositAddress} size={200} />
 													</div>
 													<p className="deposit-info">Estimated Deposit Fee: {
-														tokensList[selectedToken].depositeFee}</p>
+														tokensList[selectedToken].depositFee}</p>
 												</div>
 											)}
 											{currentStep === 1 && (
