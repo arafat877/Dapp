@@ -39,6 +39,12 @@ export const DepositBox = styled.div`
 
 	.deposit-info {
 		text-align: center;
+		.ant-tag {
+			font-size: 13px;
+			margin: 16px 0;
+			padding: 4px 8px;
+			width: 100%;
+		}
 	}
 
 	.deposit-address {
@@ -79,9 +85,4 @@ export const ExpertiseButtons = styled.div`
 	}
 `;
 
-export const NoobInfo = styled.div`
-	.noob-message {
-		text-align: center;
-	}
-`;
 
