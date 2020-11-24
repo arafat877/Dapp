@@ -146,7 +146,7 @@ const Balance = () => {
 												<div className="coin-description">
 													<div className="coin-balance">
 														<p className="balance-unit">
-															PRICE
+															YOU HAVE
 														</p>
 														<span className="balance-front">{ethBalanceFront}</span>
 														<span className="balance-end">{`.${ethBalanceEnd}`}</span>
