@@ -12,7 +12,7 @@ import config from '../../utils/config';
 import { StyledTabs, TokenCard } from '../withdraw/style';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
-import { DepositBox, DepositWrapper } from './style';
+import { AddressMappedInfo, DepositBox, DepositWrapper } from './style';
 
 const { Step } = Steps;
 
@@ -52,10 +52,6 @@ const Deposit = () => {
 	const [termAgreed, setTermAgreed] = useState(false);
 
 	const nextStep = async () => {
-		if (currentStep === 1) {
-			await checkCoinAddressMap();
-		}
-
 		setCurrentStep(currentStep + 1);
 	};
 
@@ -92,18 +88,20 @@ const Deposit = () => {
 		setCurrentStep(0);
 	};
 
+	const onCoinAddressSubmitted = async (values) => {
+		setCoinAddress(values.coinAddress);
+		await checkCoinAddressMap(values.coinAddress);
+		setCurrentStep(currentStep + 1);
+	}
+
 	const onTermAgreed = (e) => {
 		setTermAgreed(e.target.checked);
 	};
 
-	const onCoinAddressChanged = ({ target: { value } }) => {
-		setCoinAddress(value);
+	const checkCoinAddressMap = async (coinAddressVal) => {
 		setCoinAddressMapped(false);
-	}
-
-	const checkCoinAddressMap = async () => {
 		try {
-			const mappedAddress = await mainContract.getAddressMap(coinAddress);
+			const mappedAddress = await mainContract.getAddressMap(coinAddressVal);
 			if (mappedAddress !== '0x0000000000000000000000000000000000000000') {
 				setCoinAddressMapped(true);
 			}
@@ -115,6 +113,8 @@ const Deposit = () => {
 
 	const onFinish = async (values) => {
 		if (!termAgreed) return;
+
+		console.log(coinAddress);
 
 		try {
 			const signatureSubmitted = await mainContract.submitSignature(account, tokensList[selectedToken].coin, coinAddress, values.signature, {
@@ -186,9 +186,26 @@ const Deposit = () => {
 												initialValues={{
 													coinAddress: coinAddress,
 												}}
+												onFinish={onCoinAddressSubmitted}
 											>
-												<Form.Item name="coinAddress" label={`${tokensList[selectedToken].coin} address`} className="deposit-form-item">
-													<Input placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} onChange={onCoinAddressChanged} />
+												<Form.Item
+													name="coinAddress"
+													label={`${tokensList[selectedToken].coin} address`}
+													className="deposit-form-item"
+													rules={[
+														{
+															required: true,
+															message: `Please input the ${tokensList[selectedToken].coin} address`,
+														},
+													]}
+												>
+													<Input placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} />
+												</Form.Item>
+
+												<Form.Item className="deposit-form-item">
+													<Button className="deposit-button" type="primary" htmlType="submit">
+														Verify
+													</Button>
 												</Form.Item>
 											</Form>
 										)}
@@ -246,16 +263,18 @@ const Deposit = () => {
 										)}
 
 										{currentStep === 2 && coinAddressMapped && (
-											<div className="deposit-info">
-												<p>
-													You have already mapped your <bold> {coinAddress} </bold> address, all your deposits are going to be automatically minted.
+											<AddressMappedInfo>
+												<div className="deposit-info">
+													<p>
+														You address  <strong> {coinAddress} </strong> has already been mapped. All your deposits are going to be automatically minted.
 												</p>
-											</div>
+												</div>
+											</AddressMappedInfo>
 										)}
 									</div>
 									<div className="steps-action">
-										{currentStep < steps.length - 1 && (
-											<Button type="primary" onClick={() => nextStep()}>
+										{currentStep === 0 && (
+											<Button className="deposit-button" type="primary" onClick={() => nextStep()}>
 												Next
 											</Button>
 										)}

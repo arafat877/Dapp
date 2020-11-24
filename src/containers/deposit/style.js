@@ -85,4 +85,6 @@ export const ExpertiseButtons = styled.div`
 	}
 `;
 
-
+export const AddressMappedInfo = styled.div`
+	margin: 40px 0;
+`
