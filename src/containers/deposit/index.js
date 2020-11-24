@@ -75,21 +75,6 @@ const Deposit = () => {
 
 			let tokensListTemp = [...config.tokens];
 
-			try {
-				const gasPrice = (await fetch("https://ethgasstation.info/api/ethgasAPI.json").then(res => res.json())).average;
-
-				const gasPriceInEth = gasPrice / 10;
-
-				tokensListTemp = await Promise.all(tokensListTemp.map(async (token) => {
-
-					token.depositFee = token.depositFee * gasPriceInEth;
-
-					return token;
-				}))
-			} catch (e) {
-				console.log(e);
-			}
-
 			if (!stale) {
 				setTokensList(tokensListTemp);
 			}
@@ -253,7 +238,7 @@ const Deposit = () => {
 													<div className="qr-code">
 														<QRCode value={tokensList[selectedToken].depositAddress} size={200} />
 													</div>
-													<p className="deposit-info">Estimated Deposit Fee:  {tokensList[selectedToken].depositFee} {tokensList[selectedToken].name}</p>
+													<p className="deposit-info">Estimated Deposit Fee: 4 tNANO</p>
 												</div>
 											)}
 											{currentStep === 1 && (
