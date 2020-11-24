@@ -13,8 +13,7 @@
 				"image": "https://thirm.com/icons/tNANO.png",
 				"address": "0x9DB44C215F14a874C0Ca45895f3A97f0839c29d9",
 				"depositAddress": "nano_154c1u5w5t8jewwac1q44oja9ugr89hirsqcdudkytuan4418bf8pfrgjudz",
-				"depositFee": 0.15,
-				"withdrawFee": 1
+				"depositFee": 0.15
 			}
 		]
 	}

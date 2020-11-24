@@ -279,7 +279,7 @@ const WithDraw = () => {
 											/>
 										</Form.Item>
 
-										<p className="withdraw-info">Withdraw Fee: {tokensList[selectedToken].withdrawFee} THIRM</p>
+										<p className="withdraw-info">Withdraw Fee: 1 THIRM</p>
 										{
 											lowThirmWarning && <p className="withdraw-info">
 												<Tag icon={<ExclamationCircleOutlined />} color="volcano">You have less than 10 THIRM. Do you still want to continue?</Tag>
