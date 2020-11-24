@@ -26,6 +26,14 @@ export const WithdrawBox = styled.div`
     	width: 100%;
     	padding: 16px;
   	}
+
+		.withdraw-info {
+			text-align: center;
+				.ant-tag {
+					font-size: 13px;
+					padding: 4px 8px;
+				}
+		}
 `;
 
 

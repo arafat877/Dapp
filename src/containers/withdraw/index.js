@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CheckOutlined, ExclamationCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs } from 'antd';
+import { Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs, Tag } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useMainContract } from '../../hooks';
 import config from '../../utils/config';
 import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
+import { useThirmContract } from './../../hooks/index';
 import { collapsedState } from './../../utils/recoilStates';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
@@ -23,6 +24,8 @@ const WithDraw = () => {
 	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
+
+	const thirmContract = useThirmContract();
 
 	const [tokensList, setTokensList] = useState([]);
 
@@ -37,6 +40,8 @@ const WithDraw = () => {
 	const [currentWithdrawStep, setCurrentWithdrawStep] = useState(0);
 
 	const [processingApproval, setProcessingApproval] = useState(false);
+
+	const [lowThirmWarning, setLowThirmWarning] = useState(false);
 
 	const collapsed = useRecoilValue(collapsedState);
 
@@ -56,6 +61,12 @@ const WithDraw = () => {
 			}
 
 			let tokensListTemp = [...config.tokens];
+
+			const thrmBal = formatEther(await thirmContract.balanceOf(account));
+
+			if (thrmBal < 10) {
+				setLowThirmWarning(true);
+			}
 
 			try {
 
@@ -267,6 +278,13 @@ const WithDraw = () => {
 												}
 											/>
 										</Form.Item>
+
+										<p className="withdraw-info">Withdraw Fee: {tokensList[selectedToken].withdrawFee} THIRM</p>
+										{
+											lowThirmWarning && <p className="withdraw-info">
+												<Tag icon={<ExclamationCircleOutlined />} color="volcano">You have less than 10 THIRM. Do you still want to continue?</Tag>
+											</p>
+										}
 
 										<Form.Item className="withdraw-form-item">
 											<Button className="withdraw-button" type="primary" htmlType="submit">

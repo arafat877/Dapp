@@ -260,7 +260,13 @@ const Deposit = () => {
 												<Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
 													<p>Sign a message from {tokensList[selectedToken].coin} address you deposited to claim deposit. You only need to do this once & system will automatically credit all future deposits.</p>
 
-													<Form.Item name="ethAddress" rules={[{ required: false, message: '' }]} label={`Message To Sign`} className="deposit-form-item">
+													<Form.Item
+														name="ethAddress"
+														rules={[{
+															required: false,
+															message: ''
+														}]}
+														label={`Message To Sign`} className="deposit-form-item">
 														<Input placeholder={`Ethereum Address`} />
 													</Form.Item>
 
