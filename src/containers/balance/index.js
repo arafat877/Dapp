@@ -144,19 +144,19 @@ const Balance = () => {
 										<Meta
 											description={
 												<div className="coin-description">
-													<p className="coin-balance">
+													<div className="coin-balance">
+														<p className="balance-unit">
+															PRICE
+														</p>
 														<span className="balance-front">{ethBalanceFront}</span>
 														<span className="balance-end">{`.${ethBalanceEnd}`}</span>
-														<span className="balance-unit">
-															{item.name}
-														</span>
-													</p>
-													<p className="coin-meta">
-														<span className="balance-prefix">{item.totalSupply}</span>
-														<span className="balance-suffix">
+													</div>
+													<div className="coin-balance">
+														<p className="balance-unit">
 															TOTAL SUPPLY
-													</span>
-													</p>
+														</p>
+														<span className="balance-end">{item.totalSupply}</span>
+													</div>
 												</div>
 											}
 										/>
