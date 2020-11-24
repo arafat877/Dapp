@@ -60,7 +60,6 @@ export const TTokenTitle = styled.div`
 `;
 
 export const TTokenCard = styled(StyledCard)`
-border-radius: 10px;
   .ant-card-head {
     background-color: ${ThirmTheme.darkBlue};
   }

@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { StyledCard, ThirmTheme } from './../globalStyle';
 
 export const LeftSideCard = styled(StyledCard)`
-	margin: 8px 0;
+	margin: 16px 0;
 	width: 100%;
 	display: inline-flex;
-	
+	background: #6441A5; 
+	background: -webkit-linear-gradient(to right, #FFFFFF, #FAFAFA);
+	background: linear-gradient(to right, #FFFFFF, #FAFAFA); 
 	.card-text {
 		font-size: 16px;
 		color: ${ThirmTheme.secondaryColor};
@@ -42,9 +44,12 @@ export const LeftSideCard = styled(StyledCard)`
 `;
 
 export const RightSideCard = styled(StyledCard)`
-	margin: 8px 0;
+	margin: 16px 0;
 	width: 100%;
 	padding: 0;
+	background: #6441A5; 
+	background: -webkit-linear-gradient(to right, #FFFFFF, #FAFAFA);
+	background: linear-gradient(to right, #FFFFFF, #FAFAFA); 
 	.card-text {
 		font-size: 16px;
 	color: ${ThirmTheme.secondaryColor};

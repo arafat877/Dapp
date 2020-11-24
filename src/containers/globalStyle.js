@@ -7,6 +7,7 @@ export const ThirmTheme = {
 	primaryDarkColor: "#001f6b",
 	primaryLightColor: "#a7bbef",
 	textColorBlack: "#191919",
+	textColorWhite: "#F9F9F9",
 	textColorDark: "#858585",
 	textColorGrey: "#bdbdbd",
 	darkBlue: '#0c2461',
@@ -16,10 +17,7 @@ export const ThirmTheme = {
 export const StyledContent = styled(Layout.Content)`
 	margin: 36px auto 0 auto;
 	padding: 65px;
-	background: #F9F9F9;
-	background: -webkit-linear-gradient(to left, #FFFFFF, #F9F9F9); 
-	background: linear-gradient(to left, #FFFFFF, #F9F9F9);
-
+	background: #FFFFFF;
 	@media (max-width: 992px) {
 		margin: 70px auto;
 		padding: 16px;
@@ -58,7 +56,8 @@ export const StyledDrawer = styled(Drawer)`
 `;
 
 export const StyledCard = styled(Card)`
-	border: 0;
-	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+	border-radius: 10px;
 	overflow: hidden;
+	border: 0;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1), 2px 15px 40px rgba(166, 173, 201, 0.2);
 `;
