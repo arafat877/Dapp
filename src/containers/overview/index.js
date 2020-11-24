@@ -17,6 +17,8 @@ const OverView = () => {
 
 	const [thrmBalance, setThrmBalance] = useState(0.0);
 
+	const [thrmTokenPrice, setThrmTokenPrice] = useState(0.0);
+
 	const [tokenOwned, setTokenOwned] = useState(0.0);
 
 	const [thirmValue, setThirmValue] = useState(0.0);
@@ -105,6 +107,7 @@ const OverView = () => {
 			} catch (e) {
 				console.log(e);
 			}
+
 			if (ethBalances.length > 0) {
 				ethBalances.map((usd) => {
 					ethereumChartSeriesDataTemp.push(usd.priceUSD);
@@ -127,6 +130,8 @@ const OverView = () => {
 
 			ethereumChartSeriesDataTemp = ethereumChartSeriesDataTemp.reverse().slice(0, limit).reverse();
 
+			setThrmTokenPrice(ethereumChartSeriesDataTemp[limit - 1]);
+
 			if (!stale) {
 				setEthereumChartSeriesData(ethereumChartSeriesDataTemp);
 				setEthereumChartSeriesDate(ethereumChartSeriesDateTemp);
@@ -146,6 +151,10 @@ const OverView = () => {
 	const [thrmValueFront, thrmValueEnd] = formatFrontBackBalance(thirmValue);
 
 	const [tokenOwnedFront, tokenOwnedEnd] = formatFrontBackBalance(tokenOwned);
+
+
+
+	const [thrmTokenPriceFront, thrmTokenPriceEnd] = formatFrontBackBalance(thrmTokenPrice);
 
 	return (
 		<Row gutter={24}>
@@ -193,6 +202,10 @@ const OverView = () => {
 			<Col xs={24} xl={16}>
 				<RightSideCard>
 					<h3 className="card-text">THIRM Price</h3>
+					<span className="card-number">
+						<span className="balance-front">{thrmTokenPriceFront}</span>
+						<span className="balance-end">{`.${thrmTokenPriceEnd}`}</span>
+					</span>
 					{ethereumChartSeriesData.length > 0 ? (
 						<StyledReactApexChart
 							options={{
@@ -209,10 +222,10 @@ const OverView = () => {
 							height={305}
 						/>
 					) : (
-						<div className="loading-chart">
-							<Spin size="large" />
-						</div>
-					)}
+							<div className="loading-chart">
+								<Spin size="large" />
+							</div>
+						)}
 				</RightSideCard>
 
 				<DiscordCard title="discord" src="https://discord.com/widget?id=712795894982115380&theme=dark" width="100%" height="350" frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></DiscordCard>

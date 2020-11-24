@@ -16,20 +16,21 @@ export const LeftSideCard = styled(StyledCard)`
 	.card-number {
 		font-size: 36px;
 		font-weight: 600;
+		.balance-front {
+			color: ${ThirmTheme.textColorBlack};
+			font-weight: 700;
+		}
+		.balance-end {
+			color: ${ThirmTheme.textColorGrey};
+			font-weight: 600;
+		}
 	}
 
 	.balance-unit {
 		letter-spacing: 0.1rem;
 		color: ${ThirmTheme.secondaryColor};
 	}
-	.balance-front {
-		color: ${ThirmTheme.textColorBlack};
-		font-weight: 700;
-	}
-	.balance-end {
-		color: ${ThirmTheme.textColorGrey};
-		font-weight: 600;
-	}
+
 
 	.card-logo img {
 		width: 150px;
@@ -56,10 +57,24 @@ export const RightSideCard = styled(StyledCard)`
   	align-items: center;
 		height: 320px;
 	}
+
+	.card-number {
+		font-size: 36px;
+		font-weight: 600;
+		.balance-front {
+			color: ${ThirmTheme.textColorBlack};
+			font-weight: 700;
+		}
+		.balance-end {
+			color: ${ThirmTheme.textColorGrey};
+			font-weight: 600;
+		}
+	}
 `;
 
 export const StyledReactApexChart = styled(ReactApexChart)`
 	width: 100%;
+	margin-bottom: -16px;
 `;
 
 
@@ -75,5 +90,5 @@ export const OverviewCard = styled.a`
 `;
 
 export const DiscordCard = styled.iframe`
-	margin: 8px;
+	margin: 8px 0;
 `;
