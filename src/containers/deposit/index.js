@@ -14,7 +14,6 @@ import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
 import { DepositBox, DepositWrapper } from './style';
 
-
 const { Step } = Steps;
 
 const steps = [
@@ -52,10 +51,10 @@ const Deposit = () => {
 
 	const [termAgreed, setTermAgreed] = useState(false);
 
-	const nextStep = () => {
+	const nextStep = async () => {
 
 		if (currentStep === 1) {
-			checkCoinAddressMap();
+			await checkCoinAddressMap();
 		}
 
 		setCurrentStep(currentStep + 1);
@@ -188,7 +187,9 @@ const Deposit = () => {
 
 										{
 											currentStep === 1 && (
-												<Form layout="vertical">
+												<Form layout="vertical" initialValues={{
+													coinAddress: coinAddress
+												}}>
 													<Form.Item
 														name="coinAddress"
 														label={`${tokensList[selectedToken].coin} address`}
@@ -204,7 +205,7 @@ const Deposit = () => {
 											<Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
 												<div className="deposit-info">
 													<Tag icon={<ExclamationCircleOutlined />} color="volcano">
-														In case you don't know how to sign message, please email us for manual mapping at <br /><a href="mailto:developers@thirm.com">developer@thirm.com</a>
+														In case you don't know how to sign message, Please email us for manual mapping at <br /><a href="mailto:developers@thirm.com">developer@thirm.com</a>
 													</Tag>
 												</div>
 
@@ -274,7 +275,7 @@ const Deposit = () => {
 				</Tabs.TabPane>
 			))
 			}
-		</StyledTabs >
+		</StyledTabs>
 	);
 };
 
