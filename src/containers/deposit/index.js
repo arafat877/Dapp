@@ -45,20 +45,18 @@ const Deposit = () => {
 
 	const [currentStep, setCurrentStep] = useState(0);
 
-	const [coinAddress, setCoinAddress] = useState("");
+	const [coinAddress, setCoinAddress] = useState('');
 
 	const [coinAddressMapped, setCoinAddressMapped] = useState(false);
 
 	const [termAgreed, setTermAgreed] = useState(false);
 
 	const nextStep = async () => {
-
 		if (currentStep === 1) {
 			await checkCoinAddressMap();
 		}
 
 		setCurrentStep(currentStep + 1);
-
 	};
 
 	const prevStep = () => {
@@ -94,10 +92,9 @@ const Deposit = () => {
 		setCurrentStep(0);
 	};
 
-
 	const onTermAgreed = (e) => {
 		setTermAgreed(e.target.checked);
-	}
+	};
 
 	const onCoinAddressChanged = ({ target: { value } }) => {
 		setCoinAddress(value);
@@ -114,10 +111,9 @@ const Deposit = () => {
 			console.log(e);
 			setCoinAddressMapped(false);
 		}
-	}
+	};
 
 	const onFinish = async (values) => {
-
 		if (!termAgreed) return;
 
 		try {
@@ -151,7 +147,6 @@ const Deposit = () => {
 					key={tkn.id}
 				>
 					<DepositWrapper>
-
 						<Row gutter={24} justify="space-around">
 							<Col xs={24} xl={12}>
 								<DepositBox>
@@ -181,32 +176,28 @@ const Deposit = () => {
 												<div className="qr-code">
 													<QRCode value={tokensList[selectedToken].depositAddress} size={200} />
 												</div>
-												<p className="deposit-info">Estimated Deposit Fee: {
-													tokensList[selectedToken].depositFee}</p>
+												<p className="deposit-info">Estimated Deposit Fee: {tokensList[selectedToken].depositFee}</p>
 											</div>
 										)}
 
-										{
-											currentStep === 1 && (
-												<Form layout="vertical" initialValues={{
-													coinAddress: coinAddress
-												}}>
-													<Form.Item
-														name="coinAddress"
-														label={`${tokensList[selectedToken].coin} address`}
-														className="deposit-form-item"
-													>
-														<Input placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} onChange={onCoinAddressChanged} />
-													</Form.Item>
-												</Form>
-											)
-
-										}
+										{currentStep === 1 && (
+											<Form
+												layout="vertical"
+												initialValues={{
+													coinAddress: coinAddress,
+												}}
+											>
+												<Form.Item name="coinAddress" label={`${tokensList[selectedToken].coin} address`} className="deposit-form-item">
+													<Input placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} onChange={onCoinAddressChanged} />
+												</Form.Item>
+											</Form>
+										)}
 										{currentStep === 2 && !coinAddressMapped && (
 											<Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
 												<div className="deposit-info">
 													<Tag icon={<ExclamationCircleOutlined />} color="volcano">
-														In case you don't know how to sign message, Please email us for manual mapping at <br /><a href="mailto:developers@thirm.com">developer@thirm.com</a>
+														In case you don't know how to sign message, Please email us for manual mapping at <br />
+														<a href="mailto:developers@thirm.com">developer@thirm.com</a>
 													</Tag>
 												</div>
 
@@ -214,11 +205,15 @@ const Deposit = () => {
 
 												<Form.Item
 													name="ethAddress"
-													rules={[{
-														required: false,
-														message: ''
-													}]}
-													label={`Message To Sign`} className="deposit-form-item">
+													rules={[
+														{
+															required: false,
+															message: '',
+														},
+													]}
+													label={`Message To Sign`}
+													className="deposit-form-item"
+												>
 													<Input placeholder={`Ethereum Address`} />
 												</Form.Item>
 
@@ -239,7 +234,7 @@ const Deposit = () => {
 												<Form.Item className="deposit-form-item">
 													<Checkbox onChange={onTermAgreed} defaultChecked={termAgreed}>
 														I agree that I have used my wallet and not any exchange addresses for the deposit. I'm responsible for the action I have taken.
-														</Checkbox>
+													</Checkbox>
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
@@ -252,10 +247,11 @@ const Deposit = () => {
 
 										{currentStep === 2 && coinAddressMapped && (
 											<div className="deposit-info">
-												<p>You have already mapped your {coinAddress} address</p>
+												<p>
+													You have already mapped your <bold> {coinAddress} </bold> address, all your deposits are going to be automatically minted.
+												</p>
 											</div>
-										)
-										}
+										)}
 									</div>
 									<div className="steps-action">
 										{currentStep < steps.length - 1 && (
@@ -274,8 +270,7 @@ const Deposit = () => {
 						</Row>
 					</DepositWrapper>
 				</Tabs.TabPane>
-			))
-			}
+			))}
 		</StyledTabs>
 	);
 };
