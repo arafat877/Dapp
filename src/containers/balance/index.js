@@ -121,10 +121,10 @@ const Balance = () => {
 										extra={
 											<ul className="external-links">
 												<li>
-													<a href={`https://etherscan.io/token/${item.address}`}>Etherscan</a>
+													<a target="_blank" rel="noopener noreferrer" href={`https://etherscan.io/token/${item.address}`}>Etherscan</a>
 												</li>
 												<li>
-													<a href={`https://uniswap.info/token/${item.address}`}>Uniswap</a>
+													<a target="_blank" rel="noopener noreferrer" href={`https://uniswap.info/token/${item.address}`}>Uniswap</a>
 												</li>
 											</ul>
 										}
