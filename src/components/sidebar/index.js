@@ -56,9 +56,8 @@ const SideBar = () => {
 
 			<SideSocial>
 				<ul>
-					{' '}
 					<li>
-						<a href="https://github.com/thirmprotocol/app">
+						<a href="https://github.com/thirmprotocol">
 							<SocialAvatar src={GithubIcon} />
 						</a>
 					</li>
