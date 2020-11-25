@@ -104,7 +104,7 @@ export const ConnectedAvatar = styled(Avatar)`
 `;
 
 export const StyledPopover = styled(Popover)`
-	width: 300px;
+	width: 360px;
   @media (max-width: 992px) {
 		width: 250px;
     font-size: 90%;

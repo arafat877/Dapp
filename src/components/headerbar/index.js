@@ -87,7 +87,7 @@ const HeaderBar = (props) => {
 								<div className="connection-info">
 									<span className="connection-info-up">{walletName}</span>
 									<span className="connection-info-down">
-										{account && account.substr(0, 5)}...{account && account.substr(39)}
+										{account && account.substr(0, 10)}...{account && account.substr(39)}
 									</span>
 								</div>
 							</div>
@@ -100,21 +100,21 @@ const HeaderBar = (props) => {
 							</div>
 						</StyledPopover>
 					) : (
-						<StyledPopover placement="bottomRight" title={null} content={null} trigger="click" onVisibleChange={onPopoverVisible} visible={false} onClick={() => history.push('/')}>
-							<div className="left-content">
-								{!collapsed && (
-									<Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
-										<ConnectedAvatar src={LoginKeyIcon} />
-									</Badge>
-								)}
-								<div className="connection-info">
-									<span className="connection-info-up">Not Connected</span>
-									<span className="connection-info-down">Connect Wallet</span>
+							<StyledPopover placement="bottomRight" title={null} content={null} trigger="click" onVisibleChange={onPopoverVisible} visible={false} onClick={() => history.push('/')}>
+								<div className="left-content">
+									{!collapsed && (
+										<Badge count={<div className="inactive-dot" />} offset={[-8, 40]}>
+											<ConnectedAvatar src={LoginKeyIcon} />
+										</Badge>
+									)}
+									<div className="connection-info">
+										<span className="connection-info-up">Not Connected</span>
+										<span className="connection-info-down">Connect Wallet</span>
+									</div>
 								</div>
-							</div>
-							<LoginOutlined className="dropdown-icon" />
-						</StyledPopover>
-					)}
+								<LoginOutlined className="dropdown-icon" />
+							</StyledPopover>
+						)}
 				</HeaderMeta>
 			</Col>
 		</Row>

@@ -1,4 +1,4 @@
-import { Card, Drawer, Layout } from 'antd';
+import { Button, Card, Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const ThirmTheme = {
@@ -61,3 +61,25 @@ export const StyledCard = styled(Card)`
 	border: 0;
 	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1), 2px 15px 40px rgba(166, 173, 201, 0.2);
 `;
+
+export const StyledButton = styled(Button)`
+	margin: 8px 0;
+	color: #ffffff;
+	background: #0575E6;
+	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
+	background: linear-gradient(to right, #021B79, #0575E6); 
+	border-radius: 5px;
+	border: 0;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1), 2px 15px 40px rgba(166, 173, 201, 0.2);
+	overflow: hidden;
+
+	transition: background .6s ease-in-out !important;
+
+	&:hover, &:focus {
+		background: #057596;
+		background: -webkit-linear-gradient(to right, #021B79, #057596);
+		background: linear-gradient(to right, #021B79, #057596); 
+		border-radius: 5px;
+	}
+
+`

@@ -12,6 +12,7 @@ import config from '../../utils/config';
 import { StyledTabs, TokenCard } from '../withdraw/style';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
+import { StyledButton } from './../globalStyle';
 import { AddressMappedInfo, DepositBox, DepositWrapper } from './style';
 
 const { Step } = Steps;
@@ -203,9 +204,9 @@ const Deposit = () => {
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
-													<Button className="deposit-button" type="primary" htmlType="submit">
+													<StyledButton className="deposit-button" type="primary" htmlType="submit">
 														Verify
-													</Button>
+													</StyledButton>
 												</Form.Item>
 											</Form>
 										)}
@@ -255,9 +256,9 @@ const Deposit = () => {
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
-													<Button className="deposit-button" type="primary" htmlType="submit" disabled={!termAgreed}>
+													<StyledButton className="deposit-button" type="primary" htmlType="submit" disabled={!termAgreed}>
 														Claim Deposit
-													</Button>
+													</StyledButton>
 												</Form.Item>
 											</Form>
 										)}
@@ -274,9 +275,9 @@ const Deposit = () => {
 									</div>
 									<div className="steps-action">
 										{currentStep === 0 && (
-											<Button className="deposit-button" type="primary" onClick={() => nextStep()}>
+											<StyledButton className="deposit-button" type="primary" onClick={() => nextStep()}>
 												Next
-											</Button>
+											</StyledButton>
 										)}
 										{currentStep > 0 && (
 											<Button style={{ margin: '0 8px' }} onClick={() => prevStep()}>

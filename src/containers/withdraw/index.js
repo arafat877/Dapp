@@ -13,6 +13,7 @@ import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { useThirmContract } from './../../hooks/index';
 import { collapsedState } from './../../utils/recoilStates';
+import { StyledButton } from './../globalStyle';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
 
@@ -287,9 +288,9 @@ const WithDraw = () => {
 										}
 
 										<Form.Item className="withdraw-form-item">
-											<Button className="withdraw-button" type="primary" htmlType="submit">
+											<StyledButton className="withdraw-button" type="primary" htmlType="submit">
 												Withdraw
-											</Button>
+											</StyledButton>
 										</Form.Item>
 									</Form>
 
@@ -303,29 +304,29 @@ const WithDraw = () => {
 										<Steps direction="vertical" current={currentWithdrawStep}>
 
 											<Step title="Approve THIRM" description={
-												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 0 && <CheckOutlined />} onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
+												<StyledButton className="withdraw-button" type="primary" icon={currentWithdrawStep > 0 && <CheckOutlined />} onClick={approveThirm} disabled={currentWithdrawStep !== 0}>
 													{
 														currentWithdrawStep > 0 ? "Approved" : "Approve"
 													}
-												</Button>
+												</StyledButton>
 											}
 												icon={currentWithdrawStep === 0 && processingApproval && <LoadingOutlined />}
 											/>
 
 											<Step title={`Approve ${tokensList[selectedToken].coin}`} description={
-												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 1 && <CheckOutlined />} onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
+												<StyledButton className="withdraw-button" type="primary" icon={currentWithdrawStep > 1 && <CheckOutlined />} onClick={approveCurrentToken} disabled={currentWithdrawStep !== 1}>
 													{
 														currentWithdrawStep > 1 ? "Approved" : "Approve"
 													}
-												</Button>
+												</StyledButton>
 											}
 												icon={currentWithdrawStep === 1 && processingApproval && <LoadingOutlined />}
 											/>
 
 											<Step title="Withdraw" description={
-												<Button className="withdraw-button" type="primary" icon={currentWithdrawStep > 2 && <CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
+												<StyledButton className="withdraw-button" type="primary" icon={currentWithdrawStep > 2 && <CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
 													WithDraw
-											</Button>
+											</StyledButton>
 											}
 												icon={currentWithdrawStep === 2 && processingApproval && <LoadingOutlined />}
 											/>

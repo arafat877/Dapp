@@ -56,7 +56,7 @@ padding: 0 8px 36px 0;
 	background-color: #fff;
 }
 .ant-tabs-nav-list .ant-tabs-tab-active {
-	background: ${ThirmTheme.darkBlue};
+	background: ${ThirmTheme.primaryColor};
 	.ant-card-meta-title {
 		color: #ffffff;
 	}
