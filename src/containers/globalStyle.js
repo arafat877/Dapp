@@ -2,7 +2,7 @@ import { Button, Card, Drawer, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const ThirmTheme = {
-	primaryColor: "#1e3799",
+	primaryColor: "#0652DD",
 	secondaryColor: "#3c6382",
 	primaryDarkColor: "#001f6b",
 	primaryLightColor: "#a7bbef",
@@ -10,7 +10,7 @@ export const ThirmTheme = {
 	textColorWhite: "#F9F9F9",
 	textColorDark: "#858585",
 	textColorGrey: "#bdbdbd",
-	darkBlue: '#0c2461',
+	darkBlue: '#2c2c54',
 	hardDarkBlue: 'rgba(0, 0, 0, 0.3)'
 };
 
@@ -64,13 +64,16 @@ export const StyledCard = styled(Card)`
 
 export const StyledButton = styled(Button)`
 	margin: 8px 0;
+	height: 60px;
+	width: 100%;
+	padding: 20px;
 	color: #ffffff;
 	background: #0575E6;
 	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
 	background: linear-gradient(to right, #021B79, #0575E6); 
 	border-radius: 5px;
 	border: 0;
-	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1), 2px 15px 40px rgba(166, 173, 201, 0.2);
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.2), 2px 15px 40px rgba(166, 173, 201, 0.3);
 	overflow: hidden;
 
 	transition: background .6s ease-in-out !important;

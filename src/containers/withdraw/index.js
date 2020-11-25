@@ -324,7 +324,7 @@ const WithDraw = () => {
 											/>
 
 											<Step title="Withdraw" description={
-												<StyledButton className="withdraw-button" type="primary" icon={currentWithdrawStep > 2 && <CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
+												<StyledButton type="primary" icon={currentWithdrawStep > 2 && <CheckOutlined />} onClick={finishWithdraw} disabled={currentWithdrawStep !== 2}>
 													WithDraw
 											</StyledButton>
 											}

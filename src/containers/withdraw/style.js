@@ -21,11 +21,6 @@ export const WithdrawBox = styled.div`
 		}
 		
 	}
-	.withdraw-button{
-   		height: 50px;
-    	width: 100%;
-    	padding: 16px;
-  	}
 
 		.withdraw-info {
 			text-align: center;

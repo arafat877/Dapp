@@ -22,12 +22,6 @@ export const DepositBox = styled.div`
 			height: 40px;
 		}
 	}
-	.deposit-button{
-   		height: 50px;
-    	width: 100%;
-    	padding: 16px;
-  	}
-
 	.qr-code {
 		text-align: center;
 		padding: 24px;

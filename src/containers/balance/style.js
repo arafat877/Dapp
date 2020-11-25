@@ -61,6 +61,8 @@ export const TTokenTitle = styled.div`
 
 export const TTokenCard = styled(StyledCard)`
   .ant-card-head {
-    background-color: ${ThirmTheme.darkBlue};
+    background: #485563;
+    background: -webkit-linear-gradient(to right, #29323c, #485563);
+    background: linear-gradient(to right, #29323c, #485563);
   }
 `;

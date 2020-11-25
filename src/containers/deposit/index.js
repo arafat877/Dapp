@@ -204,7 +204,7 @@ const Deposit = () => {
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
-													<StyledButton className="deposit-button" type="primary" htmlType="submit">
+													<StyledButton type="primary" htmlType="submit">
 														Verify
 													</StyledButton>
 												</Form.Item>
@@ -256,7 +256,7 @@ const Deposit = () => {
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
-													<StyledButton className="deposit-button" type="primary" htmlType="submit" disabled={!termAgreed}>
+													<StyledButton type="primary" htmlType="submit" disabled={!termAgreed}>
 														Claim Deposit
 													</StyledButton>
 												</Form.Item>
@@ -275,7 +275,7 @@ const Deposit = () => {
 									</div>
 									<div className="steps-action">
 										{currentStep === 0 && (
-											<StyledButton className="deposit-button" type="primary" onClick={() => nextStep()}>
+											<StyledButton type="primary" onClick={() => nextStep()}>
 												Next
 											</StyledButton>
 										)}

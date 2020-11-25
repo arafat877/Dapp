@@ -98,9 +98,9 @@ export const DisconnectButton = styled(Button)`
 export const ConnectedAvatar = styled(Avatar)`
 	height: 48px;
 	width: 48px;
-	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.1);
+	border: 1px solid #e3e3e3;
 	margin-right: 4px;
-  padding: 10px;
+  padding: 8px;
 `;
 
 export const StyledPopover = styled(Popover)`
@@ -110,7 +110,7 @@ export const StyledPopover = styled(Popover)`
     font-size: 90%;
     padding: 2px 4px;
 	}
-	padding: 0 8px;
+	padding: 0 16px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
