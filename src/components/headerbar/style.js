@@ -98,24 +98,27 @@ export const DisconnectButton = styled(Button)`
 export const ConnectedAvatar = styled(Avatar)`
 	height: 48px;
 	width: 48px;
-	border: 1px solid #e3e3e3;
+  background: #fff;
 	margin-right: 4px;
   padding: 8px;
 `;
 
 export const StyledPopover = styled(Popover)`
-	width: 360px;
+	width: 280px;
   @media (max-width: 992px) {
 		width: 250px;
     font-size: 90%;
     padding: 2px 4px;
 	}
-	padding: 0 16px;
+	padding: 8px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-left: 1px solid #e9e9e9;
+  background-color: #f1f1f1;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 16px;
   cursor: pointer;
   .left-content, .right-content {
     display: flex;
@@ -131,17 +134,15 @@ export const StyledPopover = styled(Popover)`
     line-height: 1.4;
     margin: 4px 8px;
     .connection-info-up {
-      font-weight: 600;
+      margin-bottom: 4px;
     }
     .connection-info-down {
       color: #888;
     }
   }
   .dropdown-icon {
-    margin: auto 8px;
-    background: #e9e9e9;
-    padding: 6px;
-    border-radius: 50%;
+   font-size: 20px;
+   color: #666;
   }
   .inactive-dot {
     height: 16px;

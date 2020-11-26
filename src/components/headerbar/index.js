@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CopyOutlined, DownOutlined, LoginOutlined, MenuOutlined, UpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
 import { Badge, Col, notification, Row, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -85,18 +85,14 @@ const HeaderBar = (props) => {
 									</Badge>
 								)}
 								<div className="connection-info">
-									<span className="connection-info-up">{walletName}</span>
+									<span className="connection-info-up"><b>{walletName}</b> ({config.network})</span>
 									<span className="connection-info-down">
-										{account && account.substr(0, 10)}...{account && account.substr(39)}
+										{account && account.substr(0, 10)}...{account && account.substr(36)}
 									</span>
 								</div>
 							</div>
-
 							<div className="right-content">
-								<Tag className="network-name" color="success">
-									{config.network}
-								</Tag>
-								{popoverVisible ? <UpOutlined className="dropdown-icon" /> : <DownOutlined className="dropdown-icon" />}
+								{popoverVisible ? <CaretUpOutlined className="dropdown-icon" /> : <CaretDownOutlined className="dropdown-icon" />}
 							</div>
 						</StyledPopover>
 					) : (
