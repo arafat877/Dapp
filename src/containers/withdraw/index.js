@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CheckOutlined, ExclamationCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs, Tag } from 'antd';
+import { Alert, Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -240,7 +240,7 @@ const WithDraw = () => {
 				>
 					<WithdrawWrapper>
 						<Row gutter={24} justify="space-around">
-							<Col xs={24} xl={12}>
+							<Col xs={24} xl={20} xxl={14}>
 								<WithdrawBox>
 									<Form
 										form={form}
@@ -283,7 +283,8 @@ const WithDraw = () => {
 										<p className="withdraw-info">Withdraw Fee: 1 THIRM</p>
 										{
 											lowThirmWarning && <p className="withdraw-info">
-												<Tag icon={<ExclamationCircleOutlined />} color="volcano">You have less than 10 THIRM. Do you still want to continue?</Tag>
+
+												<Alert message="You have less than 10 THIRM. Do you still want to continue?" type="warning" showIcon />
 											</p>
 										}
 

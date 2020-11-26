@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CopyOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { CopyOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Avatar, Button, Checkbox, Col, Form, Input, notification, Row, Steps, Tabs, Tag } from 'antd';
+import { Alert, Avatar, Button, Checkbox, Col, Form, Input, notification, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
@@ -30,6 +30,9 @@ const steps = [
 ];
 
 const Deposit = () => {
+
+	const collapsed = useRecoilValue(collapsedState);
+
 	const { account, library, chainId } = useWeb3React();
 
 	const mainContract = useMainContract();
@@ -37,8 +40,6 @@ const Deposit = () => {
 	const [tokensList, setTokensList] = useState([]);
 
 	const [selectedToken, setSelectedToken] = useState(0);
-
-	const collapsed = useRecoilValue(collapsedState);
 
 	const [form] = Form.useForm();
 
@@ -149,20 +150,21 @@ const Deposit = () => {
 				>
 					<DepositWrapper>
 						<Row gutter={24} justify="space-around">
-							<Col xs={24} xl={12}>
+							<Col xs={24}>
+								<Steps current={currentStep} direction={collapsed ? 'vertical' : 'horizontal'}>
+									{steps.map((item) => (
+										<Step key={item.title} title={item.title} />
+									))}
+								</Steps>
+							</Col>
+							<Col xs={24} xl={20} xxl={14}>
 								<DepositBox>
-									<Steps current={currentStep}>
-										{steps.map((item) => (
-											<Step key={item.title} title={item.title} />
-										))}
-									</Steps>
-
 									<div className="steps-content">
 										{currentStep === 0 && (
 											<div>
 												<p className="deposit-info">{tokensList[selectedToken].coin} deposit address</p>
 												<div className="deposit-address">
-													<Tag color="magenta">{tokensList[selectedToken].depositAddress}</Tag>
+													<Input value={tokensList[selectedToken].depositAddress} />
 													<CopyOutlined
 														onClick={() => {
 															navigator.clipboard.writeText(tokensList[selectedToken].depositAddress);
@@ -213,10 +215,7 @@ const Deposit = () => {
 										{currentStep === 2 && !coinAddressMapped && (
 											<Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
 												<div className="deposit-info">
-													<Tag icon={<ExclamationCircleOutlined />} color="volcano">
-														In case you don't know how to sign message, Please email us for manual mapping at <br />
-														<a href="mailto:developers@thirm.com">developer@thirm.com</a>
-													</Tag>
+													<Alert message={<p>In case you don't know how to sign message, Please email us for manual mapping at <a href="mailto:developers@thirm.com">developer@thirm.com</a></p>} type="warning" showIcon />
 												</div>
 
 												<p>Sign a message from {tokensList[selectedToken].coin} address you deposited to claim deposit. You only need to do this once & system will automatically credit all future deposits.</p>

@@ -21,13 +21,11 @@ export const WithdrawBox = styled.div`
 		}
 		
 	}
-
 		.withdraw-info {
 			text-align: center;
-				.ant-tag {
-					font-size: 13px;
-					padding: 4px 8px;
-				}
+			.ant-alert {
+				margin: 16px 0;
+			}
 		}
 `;
 

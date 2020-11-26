@@ -33,11 +33,8 @@ export const DepositBox = styled.div`
 
 	.deposit-info {
 		text-align: center;
-		.ant-tag {
-			font-size: 13px;
+		.ant-alert {
 			margin: 16px 0;
-			padding: 4px 8px;
-			width: 100%;
 		}
 	}
 
@@ -47,9 +44,9 @@ export const DepositBox = styled.div`
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		.ant-tag {
-			padding: 4px 8px;
-    	font-size: 13px;
+		input {
+			max-width: 500px;
+			margin-right: 8px;
 		}
 		.anticon {
 			cursor: pointer;
