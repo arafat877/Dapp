@@ -8,14 +8,19 @@ export const SideMenu = styled(Menu)`
 	margin-top: 24px;
 	.ant-menu-item {
 		height: 50px;
-		padding: 6px 0;
+		padding: 8px 0;
 		.anticon {
 			color: #bdbdbd;
+			font-size: 18px;
+		}
+		&:hover, &:focus {
+			background-color: rgba(0,0,0,0.2);
 		}
 	}
 	.ant-menu-item-selected {
 		font-weight: 700;
 		color: #fff;
+		background-color: rgba(0,0,0,0.3) !important;
 		.anticon {
 			color: #fff;
 		}

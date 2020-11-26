@@ -30,7 +30,6 @@ export const LeftSideCard = styled(StyledCard)`
 	}
 
 	.balance-unit {
-		letter-spacing: 0.1rem;
 		color: ${ThirmTheme.primaryColor};
 	}
 

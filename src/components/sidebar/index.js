@@ -36,18 +36,18 @@ const SideBar = () => {
 			</ThirmSideLogo>
 			{active && (
 				<SideMenu mode="inline" defaultSelectedKeys={[activePath]} theme="dark">
-					<Menu.Item icon={<Icon component={dashboardSvg} style={{ fontSize: 18 }} />} key="overview">
+					<Menu.Item icon={<Icon component={dashboardSvg} />} key="overview">
 						<Link to="/">Overview</Link>
 					</Menu.Item>
-					<Menu.Item icon={<Icon component={bitcoinSvg} style={{ fontSize: 18 }} />} key="balance">
+					<Menu.Item icon={<Icon component={bitcoinSvg} />} key="balance">
 						<Link to="/balance">Balance</Link>
 					</Menu.Item>
 
-					<Menu.Item icon={<Icon component={depositSvg} style={{ fontSize: 18 }} />} key="deposit">
+					<Menu.Item icon={<Icon component={depositSvg} />} key="deposit">
 						<Link to="/deposit">Deposit</Link>
 					</Menu.Item>
 
-					<Menu.Item icon={<Icon component={withdrawSvg} style={{ fontSize: 18 }} />} key="withdraw">
+					<Menu.Item icon={<Icon component={withdrawSvg} />} key="withdraw">
 						<Link to="/withdraw">Withdraw</Link>
 					</Menu.Item>
 
