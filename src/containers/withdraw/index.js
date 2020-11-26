@@ -2,7 +2,7 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { useWeb3React } from '@web3-react/core';
-import { Alert, Avatar, Button, Col, Form, Input, Modal, notification, Row, Steps, Tabs } from 'antd';
+import { Alert, Avatar, Button, Col, Form, Modal, notification, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { getThirmTokenContract } from "../../utils/helpers";
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { useThirmContract } from './../../hooks/index';
 import { collapsedState } from './../../utils/recoilStates';
-import { StyledButton } from './../globalStyle';
+import { StyledButton, StyledInput } from './../globalStyle';
 import { StyledTabs, TokenCard, WithdrawBox, WithdrawWrapper } from './style';
 
 
@@ -257,7 +257,7 @@ const WithDraw = () => {
 											}]}
 											label={`${tokensList[selectedToken].coin} address`}
 											className="withdraw-form-item">
-											<Input
+											<StyledInput
 												placeholder={`Enter ${tokensList[selectedToken].coin} address`}
 											/>
 										</Form.Item>
@@ -270,7 +270,7 @@ const WithDraw = () => {
 											}]}
 											label="Number of tokens to withdraw"
 											className="withdraw-form-item">
-											<Input
+											<StyledInput
 												placeholder="Enter Number of tokens to withdraw"
 												suffix={
 													<Button type="primary" danger onClick={onTokenMax}>

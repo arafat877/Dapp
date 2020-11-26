@@ -22,9 +22,9 @@ export const BalanceWrapper = styled.div`
     
   .coin-description{
     .coin-balance {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 600;
-      margin: 8px 0;
+      margin: 16px 0;
       .balance-front {
         color: ${ThirmTheme.textColorBlack};
         font-weight: 700;
@@ -33,11 +33,11 @@ export const BalanceWrapper = styled.div`
         color: ${ThirmTheme.textColorGrey};
       }
       .balance-unit {
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 16px;
+        line-height: 24px;
         font-weight: 700;
-        margin-bottom: -6px;
-		    color: ${ThirmTheme.secondaryColor};
+        margin-bottom: 0;
+		    color: ${ThirmTheme.primaryColor};
       }
       
     }

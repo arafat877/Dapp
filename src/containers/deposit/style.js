@@ -19,7 +19,6 @@ export const DepositBox = styled.div`
 	.deposit-form-item {
 		input {
 			width: 100%;
-			height: 40px;
 		}
 	}
 	.qr-code {
@@ -32,7 +31,6 @@ export const DepositBox = styled.div`
 	}
 
 	.deposit-info {
-		text-align: center;
 		.ant-alert {
 			margin: 16px 0;
 		}
@@ -44,12 +42,9 @@ export const DepositBox = styled.div`
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		input {
-			max-width: 500px;
-			margin-right: 8px;
-		}
 		.anticon {
 			cursor: pointer;
+			margin-left: 16px;
 		}
 	}
 	.expertise-title {

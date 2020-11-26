@@ -17,9 +17,7 @@ export const WithdrawBox = styled.div`
 	.withdraw-form-item {
 		input {
 			width: 100%;
-			height: 40px;
 		}
-		
 	}
 		.withdraw-info {
 			text-align: center;

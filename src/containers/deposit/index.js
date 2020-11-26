@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CopyOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CopyOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Alert, Avatar, Button, Checkbox, Col, Form, Input, notification, Row, Steps, Tabs } from 'antd';
+import { Alert, Avatar, Button, Checkbox, Col, Form, notification, Row, Steps, Tabs } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
@@ -12,7 +12,7 @@ import config from '../../utils/config';
 import { StyledTabs, TokenCard } from '../withdraw/style';
 import LoadingIndicator from './../../components/loadingIndicator/index';
 import { collapsedState } from './../../utils/recoilStates';
-import { StyledButton } from './../globalStyle';
+import { StyledButton, StyledInput } from './../globalStyle';
 import { AddressMappedInfo, DepositBox, DepositWrapper } from './style';
 
 const { Step } = Steps;
@@ -164,7 +164,7 @@ const Deposit = () => {
 											<div>
 												<p className="deposit-info">{tokensList[selectedToken].coin} deposit address</p>
 												<div className="deposit-address">
-													<Input value={tokensList[selectedToken].depositAddress} />
+													<StyledInput value={tokensList[selectedToken].depositAddress} />
 													<CopyOutlined
 														onClick={() => {
 															navigator.clipboard.writeText(tokensList[selectedToken].depositAddress);
@@ -177,7 +177,7 @@ const Deposit = () => {
 													/>
 												</div>
 												<div className="qr-code">
-													<QRCode value={tokensList[selectedToken].depositAddress} size={200} />
+													<QRCode value={tokensList[selectedToken].depositAddress} size={250} />
 												</div>
 												<p className="deposit-info">Estimated Deposit Fee: {tokensList[selectedToken].depositFee}</p>
 											</div>
@@ -202,7 +202,7 @@ const Deposit = () => {
 														},
 													]}
 												>
-													<Input placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} />
+													<StyledInput placeholder={`Enter deposited ${tokensList[selectedToken].coin} address`} />
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
@@ -215,7 +215,7 @@ const Deposit = () => {
 										{currentStep === 2 && !coinAddressMapped && (
 											<Form form={form} layout="vertical" onFinish={onFinish} className="deposit-form" initialValues={{ ethAddress: account }}>
 												<div className="deposit-info">
-													<Alert message={<p>In case you don't know how to sign message, Please email us for manual mapping at <a href="mailto:developers@thirm.com">developer@thirm.com</a></p>} type="warning" showIcon />
+													<Alert message={<span>In case you don't know how to sign message, Please email us for manual mapping at <a href="mailto:developers@thirm.com">developer@thirm.com</a></span>} type="warning" showIcon />
 												</div>
 
 												<p>Sign a message from {tokensList[selectedToken].coin} address you deposited to claim deposit. You only need to do this once & system will automatically credit all future deposits.</p>
@@ -231,7 +231,7 @@ const Deposit = () => {
 													label={`Message To Sign`}
 													className="deposit-form-item"
 												>
-													<Input placeholder={`Ethereum Address`} />
+													<StyledInput placeholder={`Ethereum Address`} />
 												</Form.Item>
 
 												<Form.Item
@@ -245,7 +245,7 @@ const Deposit = () => {
 													label={`${tokensList[selectedToken].coin} signature`}
 													className="deposit-form-item"
 												>
-													<Input placeholder={`Enter ${tokensList[selectedToken].coin} signature`} />
+													<StyledInput placeholder={`Enter ${tokensList[selectedToken].coin} signature`} />
 												</Form.Item>
 
 												<Form.Item className="deposit-form-item">
@@ -279,7 +279,7 @@ const Deposit = () => {
 											</StyledButton>
 										)}
 										{currentStep > 0 && (
-											<Button style={{ margin: '0 8px' }} onClick={() => prevStep()}>
+											<Button style={{ margin: '8px' }} type="dashed" icon={<ArrowLeftOutlined />} onClick={() => prevStep()}>
 												Previous
 											</Button>
 										)}

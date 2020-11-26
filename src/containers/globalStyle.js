@@ -1,4 +1,4 @@
-import { Button, Card, Drawer, Layout } from 'antd';
+import { Button, Card, Drawer, Input, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const ThirmTheme = {
@@ -86,3 +86,26 @@ export const StyledButton = styled(Button)`
 	}
 
 `
+export const StyledInput = styled(Input)`
+	input {
+		background: #f1f1f1;
+	}
+	background: #f1f1f1;
+	padding: 8px 16px;
+	height: 54px;
+	border: 0;
+
+	&:hover {
+		background: #e3e3e3;
+		input {
+			background: #e3e3e3;
+		}
+	}
+
+	&:focus {
+		background: #e3e3e3;
+		input {
+			background: #e3e3e3;
+		}
+	}
+`;

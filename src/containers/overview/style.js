@@ -11,7 +11,7 @@ export const LeftSideCard = styled(StyledCard)`
 	background: linear-gradient(to right, #FFFFFF, #FAFAFA); 
 	.card-text {
 		font-size: 16px;
-		color: ${ThirmTheme.secondaryColor};
+		color: ${ThirmTheme.primaryColor};
 		margin-bottom: -4px;
 		margin-top: -4px;
 		font-weight: 700;
@@ -31,7 +31,7 @@ export const LeftSideCard = styled(StyledCard)`
 
 	.balance-unit {
 		letter-spacing: 0.1rem;
-		color: ${ThirmTheme.secondaryColor};
+		color: ${ThirmTheme.primaryColor};
 	}
 
 
@@ -52,7 +52,7 @@ export const RightSideCard = styled(StyledCard)`
 	background: linear-gradient(to right, #FFFFFF, #FAFAFA); 
 	.card-text {
 		font-size: 16px;
-	color: ${ThirmTheme.secondaryColor};
+		color: ${ThirmTheme.primaryColor};
 		margin-bottom: -4px;
 		margin-top: -4px;
 		font-weight: 700;
