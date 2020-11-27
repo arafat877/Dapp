@@ -46,7 +46,7 @@ export const SideWrapper = styled.div`
 
 export const SideSocial = styled.div`
 	margin-top: auto;
-	margin-bottom: 36px;
+	margin-bottom: 120px;
 	height: 80px;
 	ul {
 		margin: 16px;
@@ -54,6 +54,15 @@ export const SideSocial = styled.div`
 		li {
 			padding-left: 8px;
 		}
+	}
+
+	.alert-message {
+		background-color: ${ThirmTheme.darkBlue};
+		.ant-alert-message {
+			color: #e67e22;
+		}
+	
+		border: 0;
 	}
 `;
 

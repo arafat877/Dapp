@@ -103,11 +103,14 @@ export const DisconnectButton = styled(Button)`
 `;
 
 export const ConnectedAvatar = styled(Avatar)`
-	height: 48px;
-	width: 48px;
+	height: 54px;
+	width: 54px;
   background: #fff;
 	margin-right: 4px;
-  padding: 8px;
+  padding: 10px;
+  border-radius: 16px;
+  margin-left: -8px;
+  border: 1px solid #e3e3e3;
 `;
 
 export const StyledPopover = styled(Popover)`
@@ -150,6 +153,7 @@ export const StyledPopover = styled(Popover)`
   .dropdown-icon {
    font-size: 20px;
    color: #666;
+   margin: 8px;
   }
   .inactive-dot {
     height: 16px;

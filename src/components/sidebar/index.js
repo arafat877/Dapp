@@ -1,6 +1,6 @@
 import Icon from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Menu } from 'antd';
+import { Alert, Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as bitcoinSvg } from "../../assets/icons/bitcoin.svg";
@@ -50,11 +50,11 @@ const SideBar = () => {
 					<Menu.Item icon={<Icon component={withdrawSvg} />} key="withdraw">
 						<Link to="/withdraw">Withdraw</Link>
 					</Menu.Item>
-
 				</SideMenu>
 			)}
 
 			<SideSocial>
+				<Alert className="alert-message" message="This app is under work in progress, contracts are unaudited,  you may find lot of bugs, please do not deposit big amounts." banner />
 				<ul>
 					<li>
 						<a href="https://github.com/thirmprotocol">

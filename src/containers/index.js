@@ -1,4 +1,4 @@
-import { Alert, Layout } from 'antd';
+import { Layout } from 'antd';
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -50,7 +50,6 @@ function MainContent() {
 					{!collapsed && <SideBar />}
 				</StyledSider>
 				<StyledContent>
-					<Alert className="alert-message" message="This app is under work in progress, contracts are unaudited,  you may find lot of bugs, please do not deposit big amounts." banner />
 					<Web3Wrapper>
 						<Switch>
 							<Route exact path="/" component={() => <OverView />} />
