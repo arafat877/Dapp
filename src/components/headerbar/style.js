@@ -103,8 +103,8 @@ export const DisconnectButton = styled(Button)`
 `;
 
 export const ConnectedAvatar = styled(Avatar)`
-	height: 54px;
-	width: 54px;
+	height: 60px;
+	width: 60px;
   background: #fff;
 	margin-right: 4px;
   padding: 10px;
@@ -115,6 +115,7 @@ export const ConnectedAvatar = styled(Avatar)`
 
 export const StyledPopover = styled(Popover)`
 	width: 280px;
+  height: 60px;
   @media (max-width: 992px) {
 		width: 250px;
     font-size: 90%;
@@ -126,13 +127,14 @@ export const StyledPopover = styled(Popover)`
   justify-content: space-between;
   align-items: center;
   background-color: #f1f1f1;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   border-radius: 16px;
   cursor: pointer;
   .left-content, .right-content {
     display: flex;
     flex-direction: row;
+    align-items: center;
   }
 	.network-name {
 		margin: auto 4px;

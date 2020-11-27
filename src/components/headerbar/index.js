@@ -89,7 +89,7 @@ const HeaderBar = (props) => {
 								<div className="connection-info">
 									<span className="connection-info-up"><b>{walletName}</b> ({config.network})</span>
 									<span className="connection-info-down">
-										{account && account.substr(0, 10)}...{account && account.substr(36)}
+										{account && account.substr(0, 4)}...{account && account.substr(36)}
 									</span>
 								</div>
 							</div>
