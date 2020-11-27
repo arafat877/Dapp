@@ -1,5 +1,6 @@
 import { Avatar, Button, Popover } from 'antd';
 import styled from 'styled-components';
+import { ThirmTheme } from './../../containers/globalStyle';
 
 export const ThirmLogo = styled.div`
 	display: flex;
@@ -50,17 +51,23 @@ export const PopverWrapper = styled.div`
  .account-address {
    margin: 16px 4px;
    padding: 8px 16px;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   .anticon {
+     font-size: 20px;
+   }
  }
  .connection-info {
    .connection-info-list {
      display: flex;
      flex-direction: row;
      justify-content: space-between;
-     padding: 8px 0;
-     border-bottom: 1px solid #e9e9e9;
+     padding: 8px;
 
-     &:first-child {
-      border-top: 1px solid #e9e9e9;
+     p {
+       color: ${ThirmTheme.primaryColor}
      }
    }
  }

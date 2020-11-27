@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
 import { useWeb3React } from '@web3-react/core';
-import { Badge, Col, notification, Row, Tag } from 'antd';
+import { Badge, Col, notification, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { StyledInput } from '../../containers/globalStyle';
 import config from '../../utils/config';
 import { injected, walletConnect, walletlink } from './../../hooks/connectors';
 import { collapsedState } from './../../utils/recoilStates';
 import { ConnectedAvatar, DisconnectButton, HeaderMeta, LogoMeta, PopverWrapper, StyledPopover, ThirmLogo } from './style';
+
 
 const LoginKeyIcon = require('../../assets/images/login-key.svg');
 const MetaMaskIcon = require('../../assets/images/metamask.png');
@@ -79,11 +81,11 @@ const HeaderBar = (props) => {
 					{active ? (
 						<StyledPopover placement="bottomRight" title={null} content={() => <ActivePopoverContent account={account} active={active} deactivate={deactivate} walletName={walletName} networkName={config.network} history={history} setPopoverVisible={setPopoverVisible} />} trigger="click" onVisibleChange={onPopoverVisible} visible={popoverVisible}>
 							<div className="left-content">
-								{!collapsed && (
-									<Badge count={<div className="active-dot" />} offset={[-8, 40]}>
-										<ConnectedAvatar src={walletIcon} />
-									</Badge>
-								)}
+
+								<Badge count={<div className="active-dot" />} offset={[-8, 40]}>
+									<ConnectedAvatar src={walletIcon} />
+								</Badge>
+
 								<div className="connection-info">
 									<span className="connection-info-up"><b>{walletName}</b> ({config.network})</span>
 									<span className="connection-info-down">
@@ -120,34 +122,34 @@ const HeaderBar = (props) => {
 const ActivePopoverContent = ({ account, active, deactivate, walletName, networkName, history, setPopoverVisible }) => (
 	<PopverWrapper>
 		<Row justify="center" align="center">
-			<ConnectedAvatar src={`https://robohash.org/${account}?set=set5`} size={60} />
-			<Tag className="account-address">
-				{account}
-				<CopyOutlined
-					onClick={() => {
-						navigator.clipboard.writeText(account);
-						notification['success']({
-							message: 'Account Address',
-							description: 'Your account address has been copied to clipboard.',
-							placement: 'bottomRight',
-						});
-					}}
-				/>
-			</Tag>
-
+			<Col xs={24}>
+				<div className="account-address">
+					<StyledInput value={account} />
+					<CopyOutlined
+						onClick={() => {
+							navigator.clipboard.writeText(account);
+							notification['success']({
+								message: 'Account Address',
+								description: 'Your account address has been copied to clipboard.',
+								placement: 'bottomRight',
+							});
+						}}
+					/>
+				</div>
+			</Col>
 			<Col xs={24}>
 				<ul className="connection-info">
 					<li className="connection-info-list">
-						<div>Status</div>
-						<div>{active ? 'Connected' : ''}</div>
+						<b>Status</b>
+						<p>{active ? 'Connected' : ''}</p>
 					</li>
 					<li className="connection-info-list">
-						<div>Wallet</div>
-						<div>{walletName}</div>
+						<b>Wallet</b>
+						<p>{walletName}</p>
 					</li>
 					<li className="connection-info-list">
-						<div>Network</div>
-						<div>{networkName}</div>
+						<b>Network</b>
+						<p>{networkName}</p>
 					</li>
 				</ul>
 			</Col>
