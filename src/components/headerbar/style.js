@@ -117,9 +117,7 @@ export const StyledPopover = styled(Popover)`
 	width: 280px;
   height: 60px;
   @media (max-width: 992px) {
-		width: 250px;
-    font-size: 90%;
-    padding: 2px 4px;
+    font-size: 85%;
 	}
 	padding: 8px;
   display: flex;
